@@ -110,7 +110,9 @@ export default class Waiter_Functions {
         }).catch(error => console.log(error));
     
     }
-
+    async assignShift() {
+        //one day to many names relationship
+    }
 
 }
 
