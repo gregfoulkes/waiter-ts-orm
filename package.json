@@ -3,18 +3,21 @@
    "version": "0.0.1",
    "description": "Awesome project developed with TypeORM.",
    "devDependencies": {
-      "@types/node": "^8.10.29",
+      "ts-mocha": "^2.0.0",
       "ts-node": "3.3.0",
-      "typescript": "2.5.2"
+      "typescript": "^2.5.2"
    },
    "dependencies": {
+      "@types/mocha": "^5.2.5",
       "@types/pg": "^7.4.10",
+      "mocha": "^5.2.0",
       "mysql": "^2.14.1",
       "pg": "^7.4.3",
       "reflect-metadata": "^0.1.12",
       "typeorm": "^0.2.7"
    },
    "scripts": {
+    "test": "./node_modules/.bin/ts-mocha test/*.ts",
       "start": "ts-node src/index.ts"
    }
 }

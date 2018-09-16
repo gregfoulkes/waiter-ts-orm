@@ -11,6 +11,7 @@ import { User } from "./entity/User";
 
 let waiter = new Waiter_Functions()
 
-waiter.addWeekdays()
+// waiter.addWeekdays()
 waiter.getWeekdays()
-waiter.clearDatabase()
+// waiter.clearDatabase()
+// waiter.insertWaiters()
