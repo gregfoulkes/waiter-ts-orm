@@ -1,17 +1,17 @@
-import {Entity, PrimaryGeneratedColumn, Column} from "typeorm";
+import {Entity, PrimaryGeneratedColumn, Column, ManyToOne} from "typeorm";
+import { Waiter } from "./waiter";
 
 
 @Entity()
-export class Shifts {
+export class Shift {
 
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column()
-    waiter_id: number;
+    @ManyToOne( type => Waiter, waiter => waiter.shifts )
+    waiter: Waiter;
 
     @Column()
     weekday_id: number;
-
 
 }

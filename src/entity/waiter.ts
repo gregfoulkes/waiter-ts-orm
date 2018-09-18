@@ -1,4 +1,5 @@
-import {Entity, PrimaryGeneratedColumn, Column, BaseEntity} from "typeorm";
+import {Entity, PrimaryGeneratedColumn, Column, BaseEntity, OneToMany} from "typeorm";
+import { Shift } from "./shifts";
 
 @Entity()
 export class Waiter extends BaseEntity {
@@ -15,4 +16,7 @@ export class Waiter extends BaseEntity {
     @Column()
     position: string;
 
+    @OneToMany( type => Shift, shift => shift.waiter )
+    shifts : Shift[]
+    
 }

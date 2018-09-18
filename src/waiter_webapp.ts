@@ -1,119 +1,128 @@
-import {createConnection} from "typeorm";
+import { createConnection, Connection, getRepository } from "typeorm";
 
-import {Days} from "./entity/days";
-import {Waiter} from "./entity/waiter";
+import { Days } from "./entity/days";
+import { Waiter } from "./entity/waiter";
 
+interface IWaiter {
+    userName: string,
+    fullName: string,
+    position: string
+}
 
-export default class Waiter_Functions {
+export default class WaiterFunction {
+
+    constructor(private connection: Connection) {
+
+    }
 
     async addWeekdays() {
+        try {
 
-        createConnection().then(async connection => {
             let dayList: Array<string> = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
-            for(let i = 0; i<dayList.length; i++){
-                console.log("Inserting a new user into the database...");
+            for (let i = 0; i < dayList.length; i++) {
                 const day = new Days();
                 day.day_name = dayList[i];
-                await connection.manager.save(day);
-                console.log("Saved a new day with id: " + day.id);
-                console.log("Loading days from the database...");
-                const days = await connection.manager.find(Days);
-                console.log("Loaded users: ", days);
-                console.log("Here you can setup and run express/koa/any other framework.");
-            }
-        }).catch(error => console.log(error));
+                await day.save();
 
+
+            }
+        } catch (error) {
+            console.log(error)
+        }
 
     }
 
     async getWeekdays() {
-          await createConnection().then(async connection => {
-          const day = new Days();
-          const days = await connection.manager.find(Days);
-          console.log('These days are in your database ',days)
-          return days
-         }).catch(error => console.log(error));
+        const days = await Days.find({});
+        return days
 
     }
 
-    // async clearDatabase() {
-    //     createConnection().then(async connection => {
-    //             const day = new Days();
-    //             const days = await connection.manager.find(Days);
-    //             const daysRepo = await connection.getRepository(Days);          
-    //              daysRepo.remove(days)
-    //     }).catch(error => console.log(error));
-    // }
-
     async clearDays() {
-        createConnection().then(async connection => {
-            const day = new Days();
-            const allDays = await Days.find()
-            const daysRepo = await connection.getRepository(Days);          
-            daysRepo.remove(allDays)
-        }).catch(error => console.log(error));
+        const day = new Days();
+        const allDays = await Days.find({})
+        Days.remove(allDays)
     }
 
     async clearWaiters() {
         createConnection().then(async connection => {
             const waiter = new Waiter();
-            const allWaiters = await Waiter.find()
-            const daysRepo = await connection.getRepository(Waiter);          
+            const allWaiters = await Waiter.find(Waiter)
+            const daysRepo = await connection.getRepository(Waiter);
             daysRepo.remove(allWaiters)
         }).catch(error => console.log(error));
     }
 
-    async insertWaiters() {
-        createConnection().then(async connection => {
-            let waiters: { user_name: string , full_name: string, position: string}[] = [
-                {
-                user_name: 'greg',
-                full_name: 'Greg Foulkes',
-                position: 'admin'
-              },
-              {
-                user_name: 'aya',
-                full_name: 'Ayabonga Booi',
-                position: 'waiter'
-          
-              },
-              {
-                user_name: 'luvuyo',
-                full_name: 'Luvuyo Sono',
-                position: 'waiter'
-          
-              },
-              {
-                user_name: 'aviwe',
-                full_name: 'Aviwe Mbekeni',
-                position: 'waiter'
-          
-              }
-            ]
-            
-            for(let i = 0; i<waiters.length; i++){
-                console.log("Inserting a new user into the database...");
-                let waiterIndex = waiters[i]
 
-                const waiter = new Waiter();
-                waiter.username = waiterIndex.user_name;
-                waiter.fullname = waiterIndex.full_name;
-                waiter.position = waiterIndex.position;
 
-                await connection.manager.save(waiter);
-                console.log("Saved a new waiter with id: " + waiter.id);
-                console.log("Loading waiters from the database...");
-                const days = await connection.manager.find(Waiter);
-                console.log("Loaded waiters: ", waiter);
-                console.log("Here you can setup and run express/koa/any other framework.");
-            }
-        }).catch(error => console.log(error));
-    
+    async getWaiters() {
+
+        try {
+            const allWaiters = await Waiter.find({});
+            console.log('These waiters are in the database ', allWaiters)
+            return allWaiters
+
+        } catch (error) {
+            console.log(error)
+        }
     }
-    async assignShift() {
-        //one day to many names relationship
+
+    async insertWaiter(waiter: IWaiter) {
+
+        const waiterModel = new Waiter();
+        waiterModel.username = waiter.userName;
+        waiterModel.fullname = waiter.fullName;
+        waiterModel.position = waiter.position;
+
+        return await waiterModel.save();
+
+    }
+
+    async insertWaiters(connection) {
+        // createConnection().then(async connection => {
+        let waiters: { userName: string, fullName: string, position: string }[] = [
+            {
+                userName: 'greg',
+                fullName: 'Greg Foulkes',
+                position: 'admin'
+            },
+            {
+                userName: 'aya',
+                fullName: 'Ayabonga Booi',
+                position: 'waiter'
+
+            },
+            {
+                userName: 'luvuyo',
+                fullName: 'Luvuyo Sono',
+                position: 'waiter'
+
+            },
+            {
+                userName: 'aviwe',
+                fullName: 'Aviwe Mbekeni',
+                position: 'waiter'
+
+            }
+        ]
+
+        for (let i = 0; i < waiters.length; i++) {
+            console.log("Inserting a new user into the database...");
+            let waiterIndex = waiters[i]
+
+            const waiter = new Waiter();
+            waiter.username = waiterIndex.userName;
+            waiter.fullname = waiterIndex.fullName;
+            waiter.position = waiterIndex.position;
+            await waiter.save();
+            // const days = await connection.manager.find(Waiter);
+            console.log("Inserted waiters: ", waiter);
+        }
+        // }).catch(error => console.log(error));
+
     }
 
 }
 
 //export default Waiter_Functions
+

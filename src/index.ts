@@ -1,17 +1,17 @@
 import "reflect-metadata";
-// import {createConnection} from "typeorm";
-// import { Days } from "./entity/days-model";
+import {createConnection, Connection} from "typeorm";
+import { Days } from "./entity/days";
+//const connection = new Connection();
 
-
-
-import Waiter_Functions from "../src/waiter_webapp";
-import { User } from "./entity/User";
+// let connection:Connection = await createConnection()
+import WaiterFunction from "../src/waiter_webapp";
 
 // await User.find({ name : "Andre" })
 
-let waiter = new Waiter_Functions()
+// let waiter = new WaiterFunction(connection)
 
-// waiter.addWeekdays()
-waiter.getWeekdays()
-// waiter.clearDatabase()
-// waiter.insertWaiters()
+ //waiter.addWeekdays()
+//waiter.getWeekdays()
+// waiter.clearDays()
+// waiter.insertWaiter({userName:'gregfoulkes', fullName:'Greg Foulkes', position:'waiter'})
+// waiter.getWaiters()

@@ -1,9 +1,10 @@
 {
+    "name":"default",
    "type": "postgres",
    "host": "localhost",
    "port": 5432,
-   "username": "gregorybrianfoulkes",
-   "password": "",
+   "username": "coder",
+   "password": "1234",
    "database": "waiter_webapp_test",
    "synchronize": true,
    "logging": false,
