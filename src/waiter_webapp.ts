@@ -17,14 +17,11 @@ export default class WaiterFunction {
 
     async addWeekdays() {
         try {
-
             let dayList: Array<string> = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
             for (let i = 0; i < dayList.length; i++) {
                 const day = new Days();
                 day.day_name = dayList[i];
                 await day.save();
-
-
             }
         } catch (error) {
             console.log(error)
@@ -44,29 +41,6 @@ export default class WaiterFunction {
         Days.remove(allDays)
     }
 
-    async clearWaiters() {
-        createConnection().then(async connection => {
-            const waiter = new Waiter();
-            const allWaiters = await Waiter.find(Waiter)
-            const daysRepo = await connection.getRepository(Waiter);
-            daysRepo.remove(allWaiters)
-        }).catch(error => console.log(error));
-    }
-
-
-
-    async getWaiters() {
-
-        try {
-            const allWaiters = await Waiter.find({});
-            console.log('These waiters are in the database ', allWaiters)
-            return allWaiters
-
-        } catch (error) {
-            console.log(error)
-        }
-    }
-
     async insertWaiter(waiter: IWaiter) {
 
         const waiterModel = new Waiter();
@@ -78,8 +52,8 @@ export default class WaiterFunction {
 
     }
 
-    async insertWaiters(connection) {
-        // createConnection().then(async connection => {
+    async insertWaiters() {
+
         let waiters: { userName: string, fullName: string, position: string }[] = [
             {
                 userName: 'greg',
@@ -107,22 +81,36 @@ export default class WaiterFunction {
         ]
 
         for (let i = 0; i < waiters.length; i++) {
-            console.log("Inserting a new user into the database...");
-            let waiterIndex = waiters[i]
-
             const waiter = new Waiter();
-            waiter.username = waiterIndex.userName;
-            waiter.fullname = waiterIndex.fullName;
-            waiter.position = waiterIndex.position;
+            waiter.username = waiters[i].userName;
+            waiter.fullname = waiters[i].fullName;
+            waiter.position = waiters[i].position;
             await waiter.save();
-            // const days = await connection.manager.find(Waiter);
-            console.log("Inserted waiters: ", waiter);
         }
-        // }).catch(error => console.log(error));
+    }
+
+    async clearWaiters() {
+        try {
+            const waiter = new Waiter();
+            const allWaiters = await Waiter.find({})
+            Waiter.remove(allWaiters)
+        } catch (error) {
+            console.log(error)
+        }
 
     }
 
+    async getWaiters() {
+
+        try {
+            const allWaiters = await Waiter.find({});
+            return allWaiters
+
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+  
+
 }
-
-//export default Waiter_Functions
-

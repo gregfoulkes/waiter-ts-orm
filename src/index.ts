@@ -1,17 +1,42 @@
 import "reflect-metadata";
-import {createConnection, Connection} from "typeorm";
+import {createConnection, Connection, getConnection} from "typeorm";
 import { Days } from "./entity/days";
-//const connection = new Connection();
-
-// let connection:Connection = await createConnection()
 import WaiterFunction from "../src/waiter_webapp";
+//import   { DbConnectionFactory }  from "./config";
 
-// await User.find({ name : "Andre" })
+//const connection =  new DbConnectionFactory('default')
 
-// let waiter = new WaiterFunction(connection)
+import * as express from "express";
+import {Request, Response} from "express";
+import * as bodyParser from  "body-parser";
 
- //waiter.addWeekdays()
-//waiter.getWeekdays()
-// waiter.clearDays()
-// waiter.insertWaiter({userName:'gregfoulkes', fullName:'Greg Foulkes', position:'waiter'})
-// waiter.getWaiters()
+const app = express();
+app.use(bodyParser.json());
+
+app.get("/", async function(req: Request, res: Response) {
+    try {
+        
+    const connection: Connection = await createConnection();
+    let waiterFunc = new WaiterFunction(connection)
+    await waiterFunc.clearDays()
+    await waiterFunc.addWeekdays()
+    let gotDays: any | Days[] = await waiterFunc.getWeekdays()
+    res.send(gotDays)
+    await connection.close()
+
+    } catch (err) {
+        console.log(err)
+    }
+
+    // here we will have logic to return all users
+});
+
+app.get("/waiters/:username", function(req: Request, res: Response) {
+    // here we will have logic to return user by id
+});
+
+app.get("/days", function(req: Request, res: Response) {
+    // here we will have logic to return user by id
+});
+
+app.listen(7000);
