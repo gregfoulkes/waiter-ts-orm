@@ -1,7 +1,7 @@
-import { createConnection, Connection, getRepository } from "typeorm";
+// import { createConnection } from "typeorm";
 
-import { Days } from "./entity/days";
-import { Waiter } from "./entity/waiter";
+import { Day } from "./entity/Day";
+import { Waiter } from "./entity/Waiter";
 
 interface IWaiter {
     userName: string,
@@ -11,7 +11,7 @@ interface IWaiter {
 
 export default class WaiterFunction {
 
-    constructor(private connection: Connection) {
+    constructor() {
 
     }
 
@@ -19,9 +19,9 @@ export default class WaiterFunction {
         try {
             let dayList: Array<string> = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
             for (let i = 0; i < dayList.length; i++) {
-                const day = new Days();
+                const day = new Day();
                 day.day_name = dayList[i];
-                await day.save();
+               await day.save();
             }
         } catch (error) {
             console.log(error)
@@ -30,15 +30,17 @@ export default class WaiterFunction {
     }
 
     async getWeekdays() {
-        const days = await Days.find({});
+        const day = new Day();
+        const days = await Day.find({});
+        //console.log(days)
         return days
 
     }
 
     async clearDays() {
-        const day = new Days();
-        const allDays = await Days.find({})
-        Days.remove(allDays)
+        const day = new Day();
+        const allDays = await Day.find({})
+        Day.remove(allDays)
     }
 
     async insertWaiter(waiter: IWaiter) {

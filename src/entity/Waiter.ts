@@ -1,5 +1,5 @@
 import {Entity, PrimaryGeneratedColumn, Column, BaseEntity, OneToMany} from "typeorm";
-import { Shift } from "./shifts";
+import { Shift } from "./Shift";
 
 @Entity()
 export class Waiter extends BaseEntity {

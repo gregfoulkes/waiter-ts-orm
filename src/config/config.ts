@@ -1,6 +1,6 @@
-import {Waiter} from "../src/entity/waiter"
-import {Days} from "../src/entity/days"
-import { Shift } from "../src/entity/shifts";
+import {Waiter} from "../entity/Waiter"
+import { Day } from "../entity/Day";
+import { Shift } from "../entity/Shift";
 import { createConnection, getConnection } from 'typeorm';
 
 export default async function DbConnectionFactory(dbName:string, logging = []){
@@ -20,7 +20,7 @@ export default async function DbConnectionFactory(dbName:string, logging = []){
             "synchronize": true,
             "logging": logging,
             "entities": [
-                Days,
+                Day,
                 Waiter,
                 Shift
             ],

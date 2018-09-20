@@ -1,5 +1,6 @@
 import {Entity, PrimaryGeneratedColumn, Column, ManyToOne} from "typeorm";
-import { Waiter } from "./waiter";
+import { Waiter } from "./Waiter";
+import { Day } from "./Day";
 
 
 @Entity()
@@ -11,7 +12,7 @@ export class Shift {
     @ManyToOne( type => Waiter, waiter => waiter.shifts )
     waiter: Waiter;
 
-    @Column()
-    weekday_id: number;
+    @ManyToOne( type => Day, day => day.shifts )
+    weekday: Day;
 
 }

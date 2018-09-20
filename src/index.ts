@@ -1,42 +1,48 @@
 import "reflect-metadata";
-import {createConnection, Connection, getConnection} from "typeorm";
-import { Days } from "./entity/days";
-import WaiterFunction from "../src/waiter_webapp";
-//import   { DbConnectionFactory }  from "./config";
-
-//const connection =  new DbConnectionFactory('default')
+import DayRoutes  from './routes/day-routes';
 
 import * as express from "express";
 import {Request, Response} from "express";
 import * as bodyParser from  "body-parser";
 
+import  DbConnectionFactory  from "./config/config";
+import { createConnection } from "typeorm";
+import { log } from "util";
+//const connection =  DbConnectionFactory('default')
+
+let dayRoutes = DayRoutes()
+
 const app = express();
+
 app.use(bodyParser.json());
 
-app.get("/", async function(req: Request, res: Response) {
-    try {
-        
-    const connection: Connection = await createConnection();
-    let waiterFunc = new WaiterFunction(connection)
-    await waiterFunc.clearDays()
-    await waiterFunc.addWeekdays()
-    let gotDays: any | Days[] = await waiterFunc.getWeekdays()
-    res.send(gotDays)
-    await connection.close()
-
-    } catch (err) {
-        console.log(err)
-    }
-
-    // here we will have logic to return all users
-});
+app.get("/", dayRoutes.home) 
 
 app.get("/waiters/:username", function(req: Request, res: Response) {
-    // here we will have logic to return user by id
+    
+    // here we will have logic to send waiter name to db and input it
+
+});
+
+app.post("/waiters/:username", function(req: Request, res: Response) {
+    
+    // here we will have logic to get waiter name from db and select days and input it into shifts
+
+
 });
 
 app.get("/days", function(req: Request, res: Response) {
-    // here we will have logic to return user by id
+    // here we will have logic to return all days and people working on it
 });
 
-app.listen(7000);
+async function start () {
+    try {
+        await createConnection();
+        app.listen(7008)
+    }
+    catch(err) {
+        console.log(err);
+    }
+}
+
+start()
