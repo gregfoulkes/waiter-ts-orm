@@ -8,7 +8,7 @@ export class Day extends BaseEntity {
     id: number;
     
     @Column()
-    day_name: string;
+    dayname: string;
 
     @OneToMany(type => Shift, shift => shift.weekday)
     shifts: Shift[];

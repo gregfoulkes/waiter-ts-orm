@@ -2,6 +2,7 @@
 
 import { Day } from "./entity/Day";
 import { Waiter } from "./entity/Waiter";
+import { Shift } from "./entity/Shift";
 
 interface IWaiter {
     userName: string,
@@ -20,7 +21,7 @@ export default class WaiterFunction {
             let dayList: Array<string> = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
             for (let i = 0; i < dayList.length; i++) {
                 const day = new Day();
-                day.day_name = dayList[i];
+                day.dayname = dayList[i];
                await day.save();
             }
         } catch (error) {
@@ -113,6 +114,48 @@ export default class WaiterFunction {
         }
     }
 
+    async assignShift(waiterName:string, dayName:string) {
+        // let waiter = new Waiter();
+        //let day = new Day();
+
+        let shift = new Shift()
+        
+        //must find id in waiter where waiter = waiterName
+
+        // must find id in day where day = day
+        let foundWaiter = await Waiter.findOne({fullname:waiterName});
+
+        let day = await Day.findOne({dayname:dayName});
+
+        shift.waiter = foundWaiter;
+        shift.weekday = day
+        await shift.save()
+
+    }
+
+    async getShifts() {
+        try {
+            let shift = new Shift()
+            const shifts = await Shift.find();
+            return shifts
+        } catch (error) {
+            console.log(error)
+        }
+       
+
+    }
+
+    async clearShifts() {
+
+        try {
+            //const shift = new Waiter();
+            const allShifts = await Shift.find({})
+            Shift.remove(allShifts)
+        } catch (error) {
+            console.log(error)
+        }
+
+    }
   
 
 }
