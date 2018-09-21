@@ -22,6 +22,6 @@
    },
    "scripts": {
       "test": "./node_modules/.bin/ts-mocha test/*.ts",
-      "start": "ts-node src/index.ts"
+      "start": "node build/index.js"
    }
 }

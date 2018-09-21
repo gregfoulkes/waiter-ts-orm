@@ -1,14 +1,24 @@
-// import { createConnection } from "typeorm";
+import { Connection, SelectQueryBuilder } from "typeorm";
 
 import { Day } from "./entity/Day";
 import { Waiter } from "./entity/Waiter";
 import { Shift } from "./entity/Shift";
+
+import {getRepository} from "typeorm";
+
 
 interface IWaiter {
     userName: string,
     fullName: string,
     position: string
 }
+
+// interface assignWaiter {
+//     fullName: string,
+//     dayName: []
+// }
+
+let connection:Connection
 
 export default class WaiterFunction {
 
@@ -114,7 +124,7 @@ export default class WaiterFunction {
         }
     }
 
-    async assignShift(waiterName:string, dayName:string) {
+    async assignShift(waiterName, dayName) {
         // let waiter = new Waiter();
         //let day = new Day();
 
@@ -123,9 +133,9 @@ export default class WaiterFunction {
         //must find id in waiter where waiter = waiterName
 
         // must find id in day where day = day
-        let foundWaiter = await Waiter.findOne({fullname:waiterName});
+        let foundWaiter = await Waiter.findOne({fullname: waiterName});
 
-        let day = await Day.findOne({dayname:dayName});
+        let day = await Day.findOne({dayname: dayName});
 
         shift.waiter = foundWaiter;
         shift.weekday = day
@@ -135,14 +145,37 @@ export default class WaiterFunction {
 
     async getShifts() {
         try {
-            let shift = new Shift()
-            const shifts = await Shift.find();
-            return shifts
+
+        const shiftRepository = getRepository(Shift); 
+         const shiftRepoQuery = await shiftRepository.createQueryBuilder("Shift")
+         return shiftRepository.find({ relations: ["waiter", "weekday"] });
+
+    //.leftJoin("relEntity", "relEntity.id = :myId", {myId: myValue})
+    // .find()
         } catch (error) {
             console.log(error)
         }
        
 
+    }
+
+    async getShift(waiterName) {
+        try {
+    
+            const oneWaitersShifts = getRepository(Shift)
+            .createQueryBuilder("shift")
+            .innerJoinAndSelect("shift.weekday", "weekday")
+            .leftJoinAndSelect("shift.waiter", "waiter")
+            .where("waiter.fullname = :fullname", { fullname: waiterName })
+            //.andWhere("(.name = :photoName OR photo.name = :bearName)")
+
+            .getMany();
+            return oneWaitersShifts
+            
+        } catch (error) {
+            console.log(error)
+        }
+     
     }
 
     async clearShifts() {

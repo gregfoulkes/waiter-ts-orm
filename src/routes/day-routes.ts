@@ -11,8 +11,8 @@ export default function DayRoutes() {
         try {
         
             let waiterFunc = new WaiterFunction()
-            await waiterFunc.clearDays()
-            await waiterFunc.addWeekdays()
+            //await waiterFunc.clearDays()
+            //await waiterFunc.addWeekdays()
             let gotDays: any | Day[] = await waiterFunc.getWeekdays()
             res.send(gotDays)
         
