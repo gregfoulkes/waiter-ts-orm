@@ -5,12 +5,9 @@ import { Day } from "./Day";
 
 @Entity()
 export class Shift extends BaseEntity {
-    all(arg0: (allShifts: Shift[]) => Shift[]): any {
-        throw new Error("Method not implemented.");
-    }
-
-
-   
+    // all(arg0: (allShifts: Shift[]) => Shift[]): any {
+    //     throw new Error("Method not implemented.");
+    // }
 
     @PrimaryGeneratedColumn()
     id: number;
