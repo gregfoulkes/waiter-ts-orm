@@ -16,16 +16,19 @@ describe('Waiter-Webbapp-Function', function () {
   before(async function () {
 
       try {
+        let connectionUrl = process.env.DB || "postgresql://coder:1234@localhost:5432/waiter_webapp_test"
           connection = await createConnection({
             "name": "default",
             "type": "postgres",
-            "host": "localhost",
-            "port": 5432,
-            "username": "coder",
-            "password": "1234",
-            "database": "waiter_webapp_test",
+            "url":connectionUrl,
+            // "host": "localhost",
+            // "port": 5432,
+            // "username": "coder",
+            // "password": "1234",
+            // "database": "waiter_webapp_test",
             "synchronize": true,
             "logging": false,
+          
             "entities": [
                  "src/entity/**/*.ts"
             ],
@@ -55,9 +58,9 @@ describe('Waiter-Webbapp-Function', function () {
       }
   
 
- });
+  });
 
- beforeEach(async function(){
+  beforeEach(async function(){
 
   const days = await Day.find({})
   const waiter = await Waiter.find({})
