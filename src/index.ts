@@ -10,15 +10,15 @@ import { createConnection } from "typeorm";
 import { log } from "util";
 //const connection =  DbConnectionFactory('default')
 
-let dayRoutes = DayRoutes()
+let dayRoutes = new DayRoutes()
 
 const app = express();
 
 app.use(bodyParser.json());
 
-// app.use(express.static('public'));
+app.use(express.static('public'));
 
-app.get("/", dayRoutes.home) 
+app.get("/api", dayRoutes.home )
 
 app.get("/waiters/:username", function(req: Request, res: Response) {
     // here we will have logic to send waiter name to db and input it

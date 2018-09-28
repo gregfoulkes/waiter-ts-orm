@@ -5,23 +5,55 @@ import WaiterFunction from "../waiter_webapp";
 
 
 
-export default function DayRoutes() {
+export default class DayRoutes {
 
-    async function home(req : express.Request, res : express.Response){
+    // async home(req : express.Request, res : express.Response){
+    //     try {
+        
+    //         let waiterFunc = new WaiterFunction()
+    //         //await waiterFunc.clearDays()
+    //         //await waiterFunc.addWeekdays()
+    //         let gotDays: any | Day[] = await waiterFunc.getWeekdays()
+    //         res.send(gotDays)
+        
+    //         } catch (err) {
+    //             console.log(err)
+    //         }
+    // }
+
+    async home(req : express.Request, res : express.Response){
+        let waiterFunc = new WaiterFunction()
+
         try {
-        
-            let waiterFunc = new WaiterFunction()
-            //await waiterFunc.clearDays()
-            //await waiterFunc.addWeekdays()
-            let gotDays: any | Day[] = await waiterFunc.getWeekdays()
-            res.send(gotDays)
-        
-            } catch (err) {
-                console.log(err)
-            }
+            const days = await waiterFunc.getWeekdays();
+            res.json({
+                status: 'success',
+                data: days
+            });
+        } catch (err) {
+            res.json({
+                status: 'error',
+                error: err.stack
+            });
+        }
     }
 
-    return {
-        home
+    async waiterRoute(req : express.Request, res : express.Response){
+        let waiterFunc = new WaiterFunction()
+        let waiterName = req.params.waiterName
+        try {
+            const days = await waiterFunc.getWeekdays();
+            res.json({
+                status: 'success',
+                data: days
+            });
+        } catch (err) {
+            res.json({
+                status: 'error',
+                error: err.stack
+            });
+        }
     }
+
+    
 }
