@@ -19,10 +19,6 @@
 
 <body>
 
-  <!-- <div id="app">
-  {{ day }}
-</div> -->
-
 <div class="ui one column grid">
     <div class="column">
 
@@ -36,80 +32,21 @@
     </div>
   </div>
 
-
-
-<!-- <div id="dayLoop">
-    <div v-for="item in day">
-        <div class="column">
-
-        <div class="ui checkbox">
-            <input type="checkbox" name="dayName" value=''>
-            <label> {{ item.dayname}}</label>
-        </div>
-        
-    </div>
-  </div>
-</div>
-
-  <div class="column">
-
-      <div class="ui checkbox">
-          <input type="checkbox" name="dayName" value=''>
-          <label> {{ item.dayname}}</label>
-      </div>
-    </div> -->
-
-    <!-- <div id="dayLoop">
-     
-        <div v-for="item in day" :key="item.dayname">
-          <label>{{item.dayname}}</label>
-          <input type="checkbox" v-model="item.dayname" :value="item"/>
-        </div>
-    
-      </div> -->
-
       <div id="dayLoop">
         <div>
           <label>Email</label>
-          <input type="text" v-model="user.username" />
+          <input @input="waiterNameInput($event.target.value)" type="text" v-model="user.username" />
         </div>
         <div v-for="days in day" :key="day.id">
           <label>{{days.dayname}}</label>
           <input type="checkbox" v-model="user.days" :value="days"/>
         </div>
-        
-        <p>User's selected roels</p>
+
+        <p>User</p>
+        {{user.username}}
+        <p>User's selected days</p>
         {{user.days}}
       </div>
-<!-- 
-    <div id='dayLoop'>
-        <div v-for="item in day">
-
-        <input type="checkbox" id="jack"  v-bind:value="{item.dayname}" v-model="day">
-        <label for="mike">{{ item.dayname}}</label>
-        <br>
-      </div>
-    </div> -->
-
-    <!-- <div id='example-3'>
-        <input type="checkbox" id="jack" value="Monday" v-model="checkedDays">
-        <label for="jack">Monday</label>
-        <input type="checkbox" id="john" value="Tuesday" v-model="checkedDays">
-        <label for="john">Tuesday</label>
-        <input type="checkbox" id="mike" value="Wednesday" v-model="checkedDays">
-        <label for="mike">Wednesday</label>
-        <input type="checkbox" id="mike" value="Thursday" v-model="checkedDays">
-        <label for="mike">Thursday</label>
-        <input type="checkbox" id="mike" value="Friday" v-model="checkedDays">
-        <label for="mike">Friday</label>
-        <input type="checkbox" id="mike" value="Saturday" v-model="checkedDays">
-        <label for="mike">Saturday</label>
-        <input type="checkbox" id="mike" value="Sunday" v-model="checkedDays">
-        <label for="mike">Sunday</label>
-        <br>
-        <span>Checked Days: {{ checkedDays }}</span>
-      </div> -->
-
 
   <script src="js/waiter-axios.js"></script>
   <script src="js/waiter-dom.js"></script>

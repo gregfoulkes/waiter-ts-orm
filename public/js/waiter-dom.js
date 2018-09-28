@@ -7,7 +7,7 @@
     el: '#dayLoop',
     data: {
       user: {
-        username: 'greg',
+        username: '',
         days: []
       },
       day: []
@@ -17,6 +17,11 @@
         waiter.getAllDays().then(function(results){
             self.day = results.data.data;
          })
+    },
+    methods: {
+      waiterNameInput(value) {
+        this.inputData = value;
+      }
     }
   })
 
