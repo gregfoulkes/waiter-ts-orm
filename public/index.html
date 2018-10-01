@@ -39,16 +39,21 @@
     <div v-if="loggedIn">
       <h3>{{username}}</h3>
       
-      <div v-for="days in day" :key="day.id">
-        <label>{{days.dayname}}</label>
-        <input type="checkbox" v-model="user.days" :value="days.id" />
+      <div v-for="day in days" :key="days.id">
+        <label>{{day.dayname}}</label>
+        <input type="checkbox" v-model="selectedDays" :value="day.dayname" />
       </div>
+
+      <!-- <div v-for="days in day" :key="day.id">
+          <label>{{days.dayname}}</label>
+          <input type="checkbox" v-model="user.days" :value="days.id" />
+        </div> -->
 
       <!-- <p>{{user.username}}</p> -->
 
-      <p> {{user.username}}'s selected days</p>
+      <p> {{username}}'s selected days</p>
 
-      {{user.days}}
+      {{selectedDays}}
       
         <div>
           <button v-on:click="setShifts" >Set shifts</button>

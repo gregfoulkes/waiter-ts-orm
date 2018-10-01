@@ -31,20 +31,20 @@
       username : '',
       loggedIn : false,
       days : [],
-      selectedDayIds : [],
+      selectedDays : [],
 
-      user: {
-        username: '',
-        days: [],
-      },
+      // user: {
+      //   username: '',
+      //   days: [],
+      // },
 
-      day: []
+      // day: []
     },
     mounted : function() {
         let self = this;
 
         waiter.getAllDays().then(function(results){
-            self.day = results.data.data;
+            self.days = results.data.data;
         });
 
         this.setUsername(location.hash);
