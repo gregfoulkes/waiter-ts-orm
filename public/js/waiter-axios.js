@@ -1,30 +1,31 @@
  function waiterAxiosFunction() {
 
-    function getAllDays() {
-        try {
+   function getAllDays() {
+     try {
 
-          const response = axios.get("/api");
-    
-          return response;
-        } catch (error) {
-          alert(error);
-        }
-      }
+       const response = axios.get("/api");
 
-      function waiterNameRoute() {
-        try{
+       return response;
+     } catch (error) {
+       alert(error);
+     }
+   }
 
-        const response = axios.get("/api/waiter/" + waiterName);
-          
-        return response;
-      } catch (error) {
-        alert(error);
-      }
+   function waiterNameRoute(waiterName) {
+     try {
 
-      }
-    
-      return {
-        getAllDays
-      }
+       const response = axios.get("/api/waiter/" + waiterName);
 
-}
+       return response;
+     } catch (error) {
+       alert(error);
+     }
+
+   }
+
+   return {
+     getAllDays,
+     waiterNameRoute
+   }
+
+ }

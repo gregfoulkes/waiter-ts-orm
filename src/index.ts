@@ -1,5 +1,5 @@
 import "reflect-metadata";
-import DayRoutes  from './routes/day-routes';
+import DayRoutes  from './routes/waiterRoutes';
 
 import * as express from "express";
 import {Request, Response} from "express";

@@ -38,10 +38,15 @@ export default class DayRoutes {
         }
     }
 
-    async waiterRoute(req : express.Request, res : express.Response){
+    async waiterNameRoute(req : express.Request, res : express.Response){
+        
         let waiterFunc = new WaiterFunction()
         let waiterName = req.params.waiterName
-        try {
+        let dayName = req.params.dayName
+
+        try { 
+            await waiterFunc.insertWaiter(waiterName)
+            await waiterFunc.assignShift(waiterName, dayName)
             const days = await waiterFunc.getWeekdays();
             res.json({
                 status: 'success',

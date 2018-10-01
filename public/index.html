@@ -9,7 +9,7 @@
 
   <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
     crossorigin="anonymous"></script>
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
   <script src="/semantic/semantic.min.js"></script>
 
@@ -19,7 +19,7 @@
 
 <body>
 
-<div class="ui one column grid">
+  <div class="ui one column grid">
     <div class="column">
 
       <div class="ui segment">
@@ -32,21 +32,40 @@
     </div>
   </div>
 
-      <div id="dayLoop">
-        <div>
-          <label>Email</label>
-          <input @input="waiterNameInput($event.target.value)" type="text" v-model="user.username" />
-        </div>
-        <div v-for="days in day" :key="day.id">
-          <label>{{days.dayname}}</label>
-          <input type="checkbox" v-model="user.days" :value="days"/>
-        </div>
+  <!-- <list-of-days v-for='days in day' v-bind:key='day.id' v-bind:dayname='days.dayname'></list-of-days> -->
 
-        <p>User</p>
-        {{user.username}}
-        <p>User's selected days</p>
-        {{user.days}}
+  <div id="dayLoop">
+
+    <div v-if="loggedIn">
+      <h3>{{username}}</h3>
+      
+      <div v-for="days in day" :key="day.id">
+        <label>{{days.dayname}}</label>
+        <input type="checkbox" v-model="user.days" :value="days.id" />
       </div>
+
+      <!-- <p>{{user.username}}</p> -->
+
+      <p> {{user.username}}'s selected days</p>
+
+      {{user.days}}
+      
+        <div>
+          <button v-on:click="setShifts" >Set shifts</button>
+          <button v-on:click="logout" >Logout</button>
+        </div>
+    </div>
+    <div v-if="!loggedIn">
+      <strong>Please enter an username</strong>
+
+      <div>
+        <label>Enter your Username:</label>
+        <input type="text" v-model="username" />
+        <button v-on:click="login">Login</button>
+      </div>
+    </div>
+    
+  </div>
 
   <script src="js/waiter-axios.js"></script>
   <script src="js/waiter-dom.js"></script>

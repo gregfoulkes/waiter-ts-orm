@@ -9,8 +9,8 @@ import {getRepository} from "typeorm";
 
 interface IWaiter {
     userName: string,
-    fullName: string,
-    position: string
+    fullName?: string,
+    position?: string
 }
 
 // interface assignWaiter {
