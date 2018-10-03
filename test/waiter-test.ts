@@ -1,5 +1,5 @@
 import * as assert from "assert";
-import WaiterFunction from "../src/waiter_webapp";
+import WaiterFunction from "../src/services/waiter_webapp";
 import {createConnection, Connection} from "typeorm";
 import { Day } from "../src/entity/Day";
 import {Waiter} from "../src/entity/Waiter";
@@ -126,9 +126,11 @@ describe('Waiter-Webbapp-Function', function () {
 
   it ('Should return the name and day of all the shifts', async function () {
 
+    let shiftData = {username: 'gregfoulkes', days:['Monday','Tuesday']}
+
     await waiterFunc.insertWaiter({userName:'gregfoulkes', fullName:'Greg Foulkes', position:'waiter'})
     
-    await waiterFunc.assignShift('Greg Foulkes', 'Monday')
+    await waiterFunc.assignShift(shiftData)
     
     let allShifts = await waiterFunc.getShifts()
 
@@ -136,36 +138,44 @@ describe('Waiter-Webbapp-Function', function () {
     for (let list of allShifts){
 
       shiftList.push({dayname:list.weekday.dayname,
-      fullname:list.waiter.fullname
+      username:list.waiter.username
       })
 
     }
-     assert.deepEqual(shiftList, [{dayname: 'Monday', fullname:'Greg Foulkes'}])
+
+    //console.log(allShifts)
+     assert.deepEqual(shiftList, [{dayname: 'Monday', username:'gregfoulkes'},
+     {dayname: 'Tuesday', username:'gregfoulkes'}
+    ])
 
   })
 
   it ('Should take in the name of a waiter and return thier shifts', async function () {
-
+    let shiftData = {username: 'gregfoulkes', days:['Monday','Tuesday']}
+    let shiftData2 = {username: 'andrew', days:['Wednesday']}
     await waiterFunc.insertWaiter({userName:'gregfoulkes', fullName:'Greg Foulkes', position:'waiter'})
-    
-    await waiterFunc.assignShift('Greg Foulkes', 'Monday')
-    await waiterFunc.assignShift('Greg Foulkes', 'Tuesday')
-    await waiterFunc.assignShift('Andrew Monamodi', 'Wednesday')
+    await waiterFunc.insertWaiter({userName:'andrew', fullName:'Andrew Monamodi', position:'waiter'})
 
-    let allShifts = await waiterFunc.getShift('Greg Foulkes')
+    await waiterFunc.assignShift(shiftData)
+    //await waiterFunc.assignShift('Greg Foulkes', 'Tuesday')
+    //await waiterFunc.assignShift(shiftData2)
 
+    let allShifts = await waiterFunc.getShiftByUserName('gregfoulkes')
+
+//console.log(allShifts)
     let shiftList = []
     for (let list of allShifts){
 
       shiftList.push({dayname:list.weekday.dayname,
-      fullname:list.waiter.fullname
+      fullname:list.waiter.username
       })
 
     }
 
-    console.log(allShifts)
-     assert.deepEqual(shiftList, [{dayname: 'Monday', fullname:'Greg Foulkes'},
-     {dayname: 'Tuesday', fullname:'Greg Foulkes'}])
+    //asser.equal(allShifts.)
+    //console.log(shiftList)
+     assert.deepEqual(shiftList, [{dayname: 'Monday', username:'gregfoulkes'},
+     {dayname: 'Tuesday', username:'gregfoulkes'}])
 
   })
 });

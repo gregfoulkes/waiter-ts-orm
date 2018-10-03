@@ -1,7 +1,7 @@
 import * as express from "express";
 
 import { Day } from "../entity/Day";
-import WaiterFunction from "../waiter_webapp";
+import WaiterFunction from "../services/waiter_webapp";
 
 
 
@@ -38,15 +38,40 @@ export default class DayRoutes {
         }
     }
 
-    async waiterNameRoute(req : express.Request, res : express.Response){
+    async waiterNameGetRoute(req : express.Request, res : express.Response){
         
         let waiterFunc = new WaiterFunction()
         let waiterName = req.params.waiterName
-        let dayName = req.params.dayName
+        //let dayName = req.body.dayName
+
+        try { 
+            //await waiterFunc.insertWaiter(waiterName)
+            //await waiterFunc.assignShift(shiftData)
+            let oneWaitersShifts = await waiterFunc.getShiftByUserName(waiterName)
+
+            const days = await waiterFunc.getWeekdays();
+            res.json({
+                status: 'success',
+                data: days,
+                shifts:oneWaitersShifts
+            });
+        } catch (err) {
+            res.json({
+                status: 'error',
+                error: err.stack
+            });
+        }
+    }
+
+    async waiterNamePostRoute(req : express.Request, res : express.Response){
+        
+        let waiterFunc = new WaiterFunction()
+        let waiterName = req.params
+        //let dayName = req.body.dayName
 
         try { 
             await waiterFunc.insertWaiter(waiterName)
-            await waiterFunc.assignShift(waiterName, dayName)
+            await waiterFunc.assignShift(shiftData)
             const days = await waiterFunc.getWeekdays();
             res.json({
                 status: 'success',

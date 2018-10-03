@@ -11,7 +11,7 @@
      }
    }
 
-   function waiterNameRoute(waiterName) {
+   function waiterNameApiGetRoute(waiterName) {
      try {
 
        const response = axios.get("/api/waiter/" + waiterName);
@@ -23,9 +23,23 @@
 
    }
 
+   function waiterNameApiPostRoute(shiftData) {
+     try {
+       const response = axios.post("/api/waiter/" + shiftData);
+
+       return response;
+     } catch (error) {
+       alert(error);
+     }
+
+
+
+   }
+
    return {
      getAllDays,
-     waiterNameRoute
+     waiterNameApiGetRoute,
+     waiterNameApiPostRoute
    }
 
  }

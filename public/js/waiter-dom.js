@@ -3,32 +3,12 @@
 
  let waiter = waiterAxiosFunction()
 
-  // Vue.component('list-of-days', {
-  //   data: function() {
-  //     return{ user: {
-  //       username: '',
-  //       days: []
-  //     },
-  //     day: []
-  //   }
-  // },
-  //   mounted : function() {
-  //       let self = this;
-  //       waiter.getAllDays().then(function(results){
-  //           self.day = results.data.data;
-  //       })
-  //   },
-  //   methods: {
-  //     waiterNameInput(value) {
-  //       this.inputData = value;
-  //     }
-  //   } 
-  // })
-
   var app = new Vue({
     el: '#dayLoop',
     data: {
       username : '',
+      fullname:'',
+      position:'waiter',
       loggedIn : false,
       days : [],
       selectedDays : [],
@@ -55,23 +35,29 @@
 
 
     },
+
     methods: {
-      waiterNameInput(value) {
-        this.inputData = value;
-      },
+  
       waiterShifts : function() {
+        let self = this;
         let waiterName = this.username;
-        return axios.get();
+        return waiterFunc.waiterNameApiGetRoute(waiterName).then(function(results){
+          self.selectedDays = results.data.shifts
+        })
       },
+
       setShifts : function() {
 
         let userShiftData = {
           username : this.username,
-          shiftDays : this.selectedDayIds
+          shiftDays : this.selectedDays
         };
+
+        return waiterFunc.waiterNameApiPostRoute(userShiftData).then()
 
         alert('set!');
       },
+      
       setUsername : function(hash) {
         let self = this; 
         let parts = hash.split('#');
@@ -96,6 +82,7 @@
       logout: function() {
         this.loggedIn = false;
         this.username = '';
+        // this.selectedDays = [];
         location.hash="";
       }
 
