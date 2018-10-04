@@ -4,7 +4,7 @@ import { Day } from "../entity/Day";
 import { Waiter } from "../entity/Waiter";
 import { Shift } from "../entity/Shift";
 
-import {getRepository} from "typeorm";
+import { getRepository } from "typeorm";
 
 
 interface IWaiter {
@@ -14,12 +14,12 @@ interface IWaiter {
 }
 
 interface shiftDataInterface {
-   username: string,
-    days: any []
-   
+    username: string,
+    days: any[]
+
 }
 
-let connection:Connection
+let connection: Connection
 
 export default class WaiterFunction {
 
@@ -33,7 +33,7 @@ export default class WaiterFunction {
             for (let i = 0; i < dayList.length; i++) {
                 const day = new Day();
                 day.dayname = dayList[i];
-               await day.save();
+                await day.save();
             }
         } catch (error) {
             console.log(error)
@@ -130,50 +130,60 @@ export default class WaiterFunction {
     //     days
     // }
 
-    
 
-    async assignShift(shiftData:shiftDataInterface) {
+
+    async assignShift(shiftData: shiftDataInterface) {
 
         let shiftDays = shiftData.days
         //console.log(shiftDays)
-        let shift = new Shift()
-        
-        let foundWaiter = await Waiter.findOne({username: shiftData.username});
-        for(let i = 0; i<shiftDays.length; i++){
-       //for(let oneDay of shiftDays){
-           // console.log(shiftDays[i])
-            let day = await Day.findOne({dayname: shiftDays[i]});
-           // console.log(day)
+        // let shift = new Shift()
 
+        let foundWaiter = await Waiter.findOne({ username: shiftData.username });
+        for (let i = 0; i < shiftDays.length; i++) {
+            //for(let oneDay of shiftDays){
+            let day = await Day.findOne({ dayname: shiftDays[i] });
+           // console.log(day)
+            
+            let shift = new Shift();
             shift.waiter = foundWaiter;
             shift.weekday = day
             let savedDays = await shift.save()
-            console.log(savedDays)
-            }
-            //await shift.save()
+            // console.log('/---')
+            // console.log(savedDays)
+            // console.log('---/')
+        }
+        //await shift.save()
 
         //}
-       
+
 
     }
 
     async getShifts() {
-        try {
+        // try {
 
-        const shiftRepository = getRepository(Shift); 
-         const shiftRepoQuery = await shiftRepository.createQueryBuilder("Shift")
-         return shiftRepository.find({ relations: ["waiter", "weekday"] });
+            const shiftRepository = getRepository(Shift);
+            
+            // const shiftRepoQuery = await shiftRepository
+            //     .createQueryBuilder("Shift")
+            //     .innerJoinAndSelect("")
 
-        } catch (error) {
-            console.log(error)
-        }
-       
+            // shiftRepository.
+
+            let shifts = await shiftRepository.find({ relations: ["waiter", "weekday"] });
+           // console.log(shifts);    
+            return shifts;
+
+        // } catch (error) {
+            //console.log(error)
+        // }
+
 
     }
 
     // async getShiftByFullName(waiterName) {
     //     try {
-    
+
     //         const oneWaitersShifts = getRepository(Shift)
     //             .createQueryBuilder("shift")
     //             .innerJoinAndSelect("shift.weekday", "weekday")
@@ -183,31 +193,32 @@ export default class WaiterFunction {
 
     //         .getMany();
     //         return oneWaitersShifts
-            
+
     //     } catch (error) {
     //         console.log(error)
     //     }
-     
+
     // }
 
     async getShiftByUserName(waiterName) {
         try {
-    
-            const oneWaitersShifts = getRepository(Shift)
+
+            const oneWaitersShifts = await getRepository(Shift)
                 .createQueryBuilder("shift")
                 .innerJoinAndSelect("shift.weekday", "weekday")
-                .leftJoinAndSelect("shift.waiter", "waiter")
+                .innerJoinAndSelect("shift.waiter", "waiter")
                 .where("waiter.username = :username", { username: waiterName })
-            //.andWhere("(.name = :photoName OR photo.name = :bearName)")
+                //.andWhere("(.name = :photoName OR photo.name = :bearName)")
 
-            .getMany();
-            return oneWaitersShifts
+                .getMany();
            // console.log(oneWaitersShifts)
+
+            return oneWaitersShifts
 
         } catch (error) {
             console.log(error)
         }
-     
+
     }
 
     async clearShifts() {
@@ -221,5 +232,5 @@ export default class WaiterFunction {
         }
 
     }
-  
+
 }

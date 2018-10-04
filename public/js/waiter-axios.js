@@ -14,7 +14,7 @@
    function waiterNameApiGetRoute(waiterName) {
      try {
 
-       const response = axios.get("/api/waiter/" + waiterName);
+       const response = axios.get("/api/" + waiterName);
 
        return response;
      } catch (error) {
@@ -25,8 +25,8 @@
 
    function waiterNameApiPostRoute(shiftData) {
      try {
-       const response = axios.post("/api/waiter/" + shiftData);
-
+       const response = axios.post("/api/" + shiftData.username, {shift:shiftData});
+     // console.log(response)
        return response;
      } catch (error) {
        alert(error);

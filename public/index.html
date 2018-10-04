@@ -38,7 +38,7 @@
 
     <div v-if="loggedIn">
       <h3>{{username}}</h3>
-      
+      <form action="/waiter/{{username}}" method='post'>
       <div v-for="day in days" :key="days.id">
         <label>{{day.dayname}}</label>
         <input type="checkbox" v-model="selectedDays" :value="day.dayname" />
@@ -56,7 +56,8 @@
       {{selectedDays}}
       
         <div>
-          <button v-on:click="setShifts" >Set shifts</button>
+          <button type='submit' v-on:click="setShifts" >Set shifts</button>
+        </form>
           <button v-on:click="logout" >Logout</button>
         </div>
     </div>
@@ -68,7 +69,7 @@
         <input type="text" v-model="username" />
         <label>Enter your Full Name:</label>
         <input type="text" v-model="fullname" />
-        <button v-on:click="login waiterShifts">Login</button>
+        <button v-on:click="login ">Login</button>
       </div>
     </div>
     

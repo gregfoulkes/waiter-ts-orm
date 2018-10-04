@@ -38,13 +38,13 @@
 
     methods: {
   
-      waiterShifts : function() {
-        let self = this;
-        let waiterName = this.username;
-        return waiterFunc.waiterNameApiGetRoute(waiterName).then(function(results){
-          self.selectedDays = results.data.shifts
-        })
-      },
+      // waiterShifts : function() {
+      //   let self = this;
+      //   let waiterName = this.username;
+      //   return waiterFunc.waiterNameApiGetRoute(waiterName).then(function(results){
+      //     self.selectedDays = results.data.shifts
+      //   })
+      // },
 
       setShifts : function() {
 
@@ -53,9 +53,16 @@
           shiftDays : this.selectedDays
         };
 
-        return waiterFunc.waiterNameApiPostRoute(userShiftData).then()
-
         alert('set!');
+
+          return waiter.waiterNameApiPostRoute(userShiftData).then(function(results){
+            alert('post: ' + results.data);
+
+            console.log(results)       
+        })
+
+       
+
       },
       
       setUsername : function(hash) {
@@ -64,6 +71,11 @@
         if (parts.length === 2) {
           this.username = parts[1];
           this.loggedIn = true;
+
+          // this.waiterNameApiGetRoute()
+          // .then(function(result){ 
+          //   alert(result)
+          // })
 
           // this.waiterShifts()
           //   .then(function() {
@@ -76,12 +88,19 @@
           this.loggedIn = false;
         }
       },
+
       login : function() {
-        location.hash = this.username
+        location.hash = this.username;
+        let self = this;
+        let waiterName = this.username;
+        return waiter.waiterNameApiGetRoute(waiterName).then(function(results){
+          self.selectedDays = results.data.shifts
+        })
       },
+
       logout: function() {
         this.loggedIn = false;
-        this.username = '';
+        // this.username = '';
         // this.selectedDays = [];
         location.hash="";
       }

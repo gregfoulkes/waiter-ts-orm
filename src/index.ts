@@ -20,11 +20,9 @@ app.use(express.static('public'));
 
 app.get("/api", dayRoutes.home )
 
-app.get("/waiters/:username", dayRoutes.waiterNameGetRoute) 
+app.get("/api/:username", dayRoutes.waiterNameGetRoute) 
 
-app.post("/waiters/:username", function(req: Request, res: Response) {
-    // here we will have logic to get waiter name from db and select days and input it into shifts
-});
+app.post("/api/:username", dayRoutes.waiterNameGetRoute) 
 
 app.get("/days", function(req: Request, res: Response) {
     // here we will have logic to return all days and people working on it
@@ -41,3 +39,5 @@ async function start () {
 }
 
 start()
+
+module.exports = app
