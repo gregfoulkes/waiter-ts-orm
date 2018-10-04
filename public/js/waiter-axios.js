@@ -25,9 +25,9 @@
 
    function waiterNameApiPostRoute(shiftData) {
      try {
-       const response = axios.post("/api/" + shiftData.username, {shift:shiftData});
+       return axios.post("/api/" + shiftData.username, {shift:shiftData});
      // console.log(response)
-       return response;
+       //return response;
      } catch (error) {
        alert(error);
      }

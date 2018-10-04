@@ -32,24 +32,15 @@
     </div>
   </div>
 
-  <!-- <list-of-days v-for='days in day' v-bind:key='day.id' v-bind:dayname='days.dayname'></list-of-days> -->
-
   <div id="dayLoop">
 
     <div v-if="loggedIn">
       <h3>{{username}}</h3>
-      <form action="/waiter/{{username}}" method='post'>
+      <!-- <form action="/waiter/{{username}}" method='post'> -->
       <div v-for="day in days" :key="days.id">
         <label>{{day.dayname}}</label>
         <input type="checkbox" v-model="selectedDays" :value="day.dayname" />
       </div>
-
-      <!-- <div v-for="days in day" :key="day.id">
-          <label>{{days.dayname}}</label>
-          <input type="checkbox" v-model="user.days" :value="days.id" />
-        </div> -->
-
-      <!-- <p>{{user.username}}</p> -->
 
       <p> {{username}}'s selected days</p>
 
@@ -57,7 +48,7 @@
       
         <div>
           <button type='submit' v-on:click="setShifts" >Set shifts</button>
-        </form>
+        <!-- </form> -->
           <button v-on:click="logout" >Logout</button>
         </div>
     </div>

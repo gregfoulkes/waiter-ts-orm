@@ -22,7 +22,7 @@ app.get("/api", dayRoutes.home )
 
 app.get("/api/:username", dayRoutes.waiterNameGetRoute) 
 
-app.post("/api/:username", dayRoutes.waiterNameGetRoute) 
+app.post("/api/:username", dayRoutes.waiterNamePostRoute) 
 
 app.get("/days", function(req: Request, res: Response) {
     // here we will have logic to return all days and people working on it

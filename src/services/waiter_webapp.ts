@@ -125,53 +125,29 @@ export default class WaiterFunction {
 
     }
 
-    // var shiftData = {
-    //     waiterName,
-    //     days
-    // }
-
-
-
     async assignShift(shiftData: shiftDataInterface) {
 
         let shiftDays = shiftData.days
-        //console.log(shiftDays)
-        // let shift = new Shift()
+        console.log(shiftData.days)
 
         let foundWaiter = await Waiter.findOne({ username: shiftData.username });
         for (let i = 0; i < shiftDays.length; i++) {
-            //for(let oneDay of shiftDays){
             let day = await Day.findOne({ dayname: shiftDays[i] });
-           // console.log(day)
-            
             let shift = new Shift();
             shift.waiter = foundWaiter;
             shift.weekday = day
             let savedDays = await shift.save()
-            // console.log('/---')
-            // console.log(savedDays)
-            // console.log('---/')
+
         }
-        //await shift.save()
-
-        //}
-
 
     }
 
     async getShifts() {
-        // try {
 
             const shiftRepository = getRepository(Shift);
-            
-            // const shiftRepoQuery = await shiftRepository
-            //     .createQueryBuilder("Shift")
-            //     .innerJoinAndSelect("")
-
-            // shiftRepository.
 
             let shifts = await shiftRepository.find({ relations: ["waiter", "weekday"] });
-           // console.log(shifts);    
+
             return shifts;
 
         // } catch (error) {
@@ -181,25 +157,6 @@ export default class WaiterFunction {
 
     }
 
-    // async getShiftByFullName(waiterName) {
-    //     try {
-
-    //         const oneWaitersShifts = getRepository(Shift)
-    //             .createQueryBuilder("shift")
-    //             .innerJoinAndSelect("shift.weekday", "weekday")
-    //             .leftJoinAndSelect("shift.waiter", "waiter")
-    //             .where("waiter.fullname = :fullname", { fullname: waiterName })
-    //         //.andWhere("(.name = :photoName OR photo.name = :bearName)")
-
-    //         .getMany();
-    //         return oneWaitersShifts
-
-    //     } catch (error) {
-    //         console.log(error)
-    //     }
-
-    // }
-
     async getShiftByUserName(waiterName) {
         try {
 
@@ -208,7 +165,6 @@ export default class WaiterFunction {
                 .innerJoinAndSelect("shift.weekday", "weekday")
                 .innerJoinAndSelect("shift.waiter", "waiter")
                 .where("waiter.username = :username", { username: waiterName })
-                //.andWhere("(.name = :photoName OR photo.name = :bearName)")
 
                 .getMany();
            // console.log(oneWaitersShifts)

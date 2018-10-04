@@ -50,15 +50,16 @@
 
         let userShiftData = {
           username : this.username,
-          shiftDays : this.selectedDays
+          days : this.selectedDays
         };
 
         alert('set!');
 
-          return waiter.waiterNameApiPostRoute(userShiftData).then(function(results){
+          return waiter.waiterNameApiPostRoute(userShiftData)
+          .then(function(results){
             alert('post: ' + results.data);
 
-            console.log(results)       
+            //console.log(results)       
         })
 
        
@@ -93,6 +94,7 @@
         location.hash = this.username;
         let self = this;
         let waiterName = this.username;
+        console.log(waiterName)
         return waiter.waiterNameApiGetRoute(waiterName).then(function(results){
           self.selectedDays = results.data.shifts
         })
