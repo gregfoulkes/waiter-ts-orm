@@ -177,7 +177,17 @@ export default class WaiterFunction {
                 .getMany();
            // console.log(oneWaitersShifts)
 
-            return oneWaitersShifts
+           let shiftData = {
+                userName: waiterName,
+                shifts: []
+           };
+
+           oneWaitersShifts.forEach((shift) =>{
+               let day = shift.weekday.dayname;
+               shiftData.shifts.push(day);
+           })
+
+            return shiftData;
 
         } catch (error) {
             console.log(error)

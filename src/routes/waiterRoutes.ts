@@ -36,9 +36,9 @@ export default class DayRoutes {
             //await waiterFunc.insertWaiter(waiterName)
             //await waiterFunc.assignShift(shiftData)
             let oneWaitersShifts = await waiterFunc.getShiftByUserName(req.params.username)
-            console.log('----')
-            console.log(oneWaitersShifts)
-            console.log('----')
+            // console.log('----')
+            // console.log(oneWaitersShifts)
+            // console.log('----')
 
             const days = await waiterFunc.getWeekdays();
             res.json({

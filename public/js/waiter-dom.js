@@ -38,7 +38,12 @@
         alert('set!');
           return waiter.waiterNameApiPostRoute(userShiftData)
           .then(function(results){
-            alert('post: ' + results.data);
+           // alert('post: ' + results.data);
+           waiter.waiterNameApiGetRoute(waiterName).then(function(results){
+            let shiftData = results.data.shifts
+            // console.log(shifts.dayname)
+            self.selectedDays = shiftData.shifts;
+          })
         })
       },
       
@@ -61,9 +66,9 @@
         let waiterName = this.username;
         console.log('waiter:' + waiterName)
         return waiter.waiterNameApiGetRoute(waiterName).then(function(results){
-          let shifts = results.data.shifts
-          console.log(results.data.shifts)
-          self.selectedDays = results.data.shifts
+          let shiftData = results.data.shifts
+          // console.log(shifts.dayname)
+          self.selectedDays = shiftData.shifts;
         })
       },
 
