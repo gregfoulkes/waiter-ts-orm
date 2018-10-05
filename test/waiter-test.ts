@@ -184,7 +184,25 @@ describe('Waiter-Webbapp-Function', function () {
 
   })
 
-  
+  it('should update the days of a waiters shifts', async function () {
+
+    let shiftData = { username: 'gregfoulkes', days: [1, 2] }
+    let shiftData2 = {username: 'gregfoulkes', days:[3]}
+
+    await waiterFunc.insertWaiter({
+      userName: 'gregfoulkes',
+      fullName: 'Greg Foulkes',
+      position: 'waiter'
+    })
+
+    await waiterFunc.assignShift(shiftData)
+    await waiterFunc.updateShiftsByUserName(shiftData2)
+    let allShifts = await waiterFunc.getShiftByUserName('gregfoulkes')
+
+    assert.equal(3, allShifts.shifts.length)
+
+  })
+
 });
 
 

@@ -1,8 +1,8 @@
-drop table day cascade;
-create table day (
-	id serial not null primary key,
-    dayname varchar(20)
-);
+-- drop table day cascade;
+-- create table day (
+-- 	id serial not null primary key,
+--     dayname varchar(20) not null
+-- );
 
 insert into day (dayname) values('Monday');
 insert into day (dayname) values('Tuesday');

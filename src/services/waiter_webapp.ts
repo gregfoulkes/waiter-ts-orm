@@ -1,4 +1,4 @@
-import { Connection, SelectQueryBuilder } from "typeorm";
+import { Connection, SelectQueryBuilder, getConnection } from "typeorm";
 
 import { Day } from "../entity/Day";
 import { Waiter } from "../entity/Waiter";
@@ -196,18 +196,24 @@ export default class WaiterFunction {
 
     }
 
+    async removeWaiterShifts (username: string) {
+        const waiterShifts = await 
+            getRepository(Shift)
+                .createQueryBuilder("shift")
+                .innerJoinAndSelect("shift.waiter", "waiter")
+                .where("waiter.username = :username")
+                .setParameter("username", username)
+                .getMany();
+
+        const removedShifts = waiterShifts.map(( shift ) => shift.remove);
+        await Promise.all(removedShifts);
+    }
+
     async updateShiftsByUserName(shiftData: shiftDataInterface) {
         let days = shiftData.days
 
-        days.forEach(async day  => {
-            const oneWaitersShifts = await getRepository(Shift)
-            .createQueryBuilder("shift")
-            .update(Shift)
-            .set({ weekday: day})
-            .where("id = :id", { id: 1 })
-            .execute();
-        })
-    
+        await this.removeWaiterShifts(shiftData.username);
+        await this.assignShift(shiftData);    
 
     }
 
