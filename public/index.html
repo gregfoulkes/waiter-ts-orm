@@ -39,7 +39,7 @@
       <!-- <form action="/waiter/{{username}}" method='post'> -->
       <div v-for="day in days" :key="days.id">
         <label>{{day.dayname}}</label>
-        <input type="checkbox" v-model="selectedDays" :value="day.dayname" />
+        <input type="checkbox" v-model="selectedDays" :value="day.id" />
       </div>
 
       <p> {{username}}'s selected days</p>

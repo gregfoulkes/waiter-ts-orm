@@ -45,7 +45,7 @@ describe('Waiter-Webbapp-Function', function () {
         }
       });
 
-      const days = await Day.find({})
+      //const days = await Day.find({})
       // const waiter = await Waiter.find({})
       // const shift = await Shift.find({})
       // await Shift.remove(shift);
@@ -62,106 +62,106 @@ describe('Waiter-Webbapp-Function', function () {
 
   beforeEach(async function () {
 
-    const days = await Day.find({})
+    //const days = await Day.find({})
     const waiter = await Waiter.find({})
     const shift = await Shift.find({})
     await Shift.remove(shift);
 
-    await Day.remove(days);
+    //await Day.remove(days);
     await Waiter.remove(waiter)
-    await waiterFunc.addWeekdays()
+    //await waiterFunc.addWeekdays()
 
   })
 
   after(async function () {
 
-    const days = await Day.find({})
+    //const days = await Day.find({})
     const waiter = await Waiter.find({})
     const shift = await Shift.find({})
     await Shift.remove(shift);
 
-    await Day.remove(days);
+    //await Day.remove(days);
     await Waiter.remove(waiter)
-    await waiterFunc.addWeekdays()
+    //await waiterFunc.addWeekdays()
     connection.close();
   })
 
-  // it('should input day names into the database and return the days', async function () {
+  it('should input day names into the database and return the days', async function () {
 
-  //   let gotDays: Day[] = await waiterFunc.getWeekdays()
+    let gotDays: Day[] = await waiterFunc.getWeekdays()
 
-  //   let daymap = gotDays.map( day => day.dayname);
+    let daymap = gotDays.map( day => day.dayname);
 
-  //   assert.deepEqual(daymap,
-  //     ['Monday',
-  //       'Tuesday',
-  //       'Wednesday',
-  //       'Thursday',
-  //       'Friday',
-  //       'Saturday',
-  //       'Sunday']
-  //   );
-  // })
+    assert.deepEqual(daymap,
+      ['Monday',
+        'Tuesday',
+        'Wednesday',
+        'Thursday',
+        'Friday',
+        'Saturday',
+        'Sunday']
+    );
+  })
 
-  // it('should input a list of waiter names into the database and return the days', async function () {
+  it('should input a list of waiter names into the database and return the days', async function () {
 
-  //   await waiterFunc.insertWaiters()
+    await waiterFunc.insertWaiters()
 
-  //   let result: any | Waiter[] = await waiterFunc.getWaiters()
+    let result: any | Waiter[] = await waiterFunc.getWaiters()
 
-  //   let waiterList = []
+    let waiterList = []
 
-  //   for (let i = 0; i < result.length; i++) {
-  //     waiterList.push(result[i].fullname)
-  //   }
+    for (let i = 0; i < result.length; i++) {
+      waiterList.push(result[i].fullname)
+    }
 
-  //   assert.deepEqual(waiterList, [
-  //     'Greg Foulkes' ,
-  //     'Ayabonga Booi' ,
-  //     'Luvuyo Sono' ,
-  //     'Aviwe Mbekeni' 
-  //   ]);
-  // })
+    assert.deepEqual(waiterList, [
+      'Greg Foulkes' ,
+      'Ayabonga Booi' ,
+      'Luvuyo Sono' ,
+      'Aviwe Mbekeni' 
+    ]);
+  })
 
-  // it('should input a waiter name and user name into the database and return the days', async function () {
+  it('should input a waiter name and user name into the database and return the days', async function () {
 
-  //   let result = await waiterFunc.insertWaiter({userName:'gregfoulkes', fullName:'Greg Foulkes', position:'waiter'})
+    let result = await waiterFunc.insertWaiter({userName:'gregfoulkes', fullName:'Greg Foulkes', position:'waiter'})
 
-  //   assert.equal('gregfoulkes', result.username);
-  //   assert.equal('Greg Foulkes', result.fullname);
-  //   assert.equal('waiter', result.position);
+    assert.equal('gregfoulkes', result.username);
+    assert.equal('Greg Foulkes', result.fullname);
+    assert.equal('waiter', result.position);
 
-  // })
+  })
 
-  // it ('Should return the name and day of all the shifts', async function () {
+  it ('Should return the name and day of all the shifts', async function () {
 
-  //   let shiftData = {username: 'gregfoulkes', days:['Monday','Tuesday']}
+    let shiftData = {username: 'gregfoulkes', days:[1,2]}
 
-  //   await waiterFunc.insertWaiter({userName:'gregfoulkes', fullName:'Greg Foulkes', position:'waiter'})
+    await waiterFunc.insertWaiter({userName:'gregfoulkes', fullName:'Greg Foulkes', position:'waiter'})
 
-  //   await waiterFunc.assignShift(shiftData)
+    await waiterFunc.assignShift(shiftData)
 
-  //   let allShifts = await waiterFunc.getShifts()
+    let allShifts = await waiterFunc.getShifts()
 
-  //   let shiftList = []
-  //   for (let list of allShifts){
-  //     shiftList.push({dayname:list.weekday.dayname,
-  //     username:list.waiter.username
-  //     })
+    let shiftList = []
+    for (let list of allShifts){
+      shiftList.push({dayname:list.weekday.dayname,
+      username:list.waiter.username
+      })
 
-  //   }
+    }
 
-  //   //console.log(allShifts)
-  //    assert.deepEqual(shiftList, [
-  //      { dayname: 'Monday', username:'gregfoulkes'},
-  //      { dayname: 'Tuesday', username:'gregfoulkes'}])
+    //console.log(allShifts)
+     assert.deepEqual(shiftList, [
+       { dayname: 'Monday', username:'gregfoulkes'},
+       { dayname: 'Tuesday', username:'gregfoulkes'}])
 
-  // })
+  })
 
   it('Should take in the name of a waiter and return thier shifts', async function () {
 
-    let shiftData = { username: 'gregfoulkes', days: ['Monday', 'Tuesday'] }
-    // let shiftData2 = {username: 'andrew', days:['Wednesday']}
+    let shiftData = { username: 'gregfoulkes', days: [1, 2] }
+    let shiftData2 = {username: 'andrew', days:[3]}
 
     await waiterFunc.insertWaiter({
       userName: 'gregfoulkes',
@@ -169,37 +169,18 @@ describe('Waiter-Webbapp-Function', function () {
       position: 'waiter'
     })
 
-    // await waiterFunc.insertWaiter({
-    //   userName:'andrew', 
-    //   fullName:'Andrew Monamodi', 
-    //   position:'waiter'})
+    await waiterFunc.insertWaiter({
+      userName:'andrew', 
+      fullName:'Andrew Monamodi', 
+      position:'waiter'})
 
     await waiterFunc.assignShift(shiftData)
-    // await waiterFunc.assignShift(shiftData2)
+    await waiterFunc.assignShift(shiftData2)
 
-    //await waiterFunc.assignShift('Greg Foulkes', 'Tuesday')
 
     let allShifts = await waiterFunc.getShiftByUserName('gregfoulkes')
-
-    assert.equal(2, allShifts.length)
-
-
-    /*
-    //console.log(allShifts)
-    let shiftList = []
-    for (let list of allShifts){
-
-      shiftList.push({dayname:list.weekday.dayname,
-      fullname:list.waiter.username
-      })
-
-    }
-    */
-
-    //asser.equal(allShifts.)
-    //console.log(shiftList)
-    //  assert.deepEqual(shiftList, [{dayname: 'Monday', username:'gregfoulkes'},
-    //  {dayname: 'Tuesday', username:'gregfoulkes'}])
+   // console.log(allShifts)
+    assert.equal(2, allShifts.shifts.length)
 
   })
 });

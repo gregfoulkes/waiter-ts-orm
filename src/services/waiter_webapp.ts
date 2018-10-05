@@ -134,18 +134,20 @@ export default class WaiterFunction {
     }
 
     async assignShift(shiftData: shiftDataInterface) {
-
+        //console.log(shiftData)
         let shiftDays = shiftData.days
-        console.log(shiftData.days)
+        //console.log(shiftData.days)
 
         let foundWaiter = await Waiter.findOne({ username: shiftData.username });
+       // console.log(foundWaiter)
         for (let i = 0; i < shiftDays.length; i++) {
-            let day = await Day.findOne({ dayname: shiftDays[i] });
+            let day = await Day.findOne({ id: shiftDays[i] });
+           // console.log(day)
             let shift = new Shift();
             shift.waiter = foundWaiter;
             shift.weekday = day
             let savedDays = await shift.save()
-
+           // console.log(savedDays)
         }
 
     }
@@ -175,7 +177,6 @@ export default class WaiterFunction {
                 .where("waiter.username = :username", { username: waiterName })
 
                 .getMany();
-           // console.log(oneWaitersShifts)
 
            let shiftData = {
                 userName: waiterName,
@@ -192,6 +193,21 @@ export default class WaiterFunction {
         } catch (error) {
             console.log(error)
         }
+
+    }
+
+    async updateShiftsByUserName(shiftData: shiftDataInterface) {
+        let days = shiftData.days
+
+        days.forEach(async day  => {
+            const oneWaitersShifts = await getRepository(Shift)
+            .createQueryBuilder("shift")
+            .update(Shift)
+            .set({ weekday: day})
+            .where("id = :id", { id: 1 })
+            .execute();
+        })
+    
 
     }
 
