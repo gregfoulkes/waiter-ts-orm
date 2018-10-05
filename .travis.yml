@@ -9,7 +9,7 @@ node_js:
 before_script:
 
   - psql -c 'create database  waiter_webapp_test;' -U postgres
-  # - psql -U postgres -d waiter_webapp_test -a -f waiter_webapp_table.sql
+  - psql -U postgres -d waiter_webapp_test -a -f sql-scripts/insert-days.sql
 
 addons:
     apt:
