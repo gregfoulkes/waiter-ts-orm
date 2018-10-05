@@ -5,7 +5,7 @@
     "port": 5432,
     "username": "coder",
     "password": "1234",
-    "database": "waiter_webapp_test",
+    "database": "waiter_webapp",
     "synchronize": true,
     "logging": false,
     "entities": [

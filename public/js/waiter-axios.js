@@ -32,6 +32,14 @@
        alert(error);
      }
 
+    function loginApiRoute(username) {
+      try {
+        
+      } catch (error) {
+        alert(error)
+      }
+    }
+
 
 
    }

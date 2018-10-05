@@ -57,12 +57,20 @@ export default class WaiterFunction {
 
     async insertWaiter(waiter: IWaiter) {
 
-        const waiterModel = new Waiter();
-        waiterModel.username = waiter.userName;
-        waiterModel.fullname = waiter.fullName;
-        waiterModel.position = waiter.position;
+       // let foundWaiter = await Waiter.findOne({ username: waiter.userName });
+        //console.log(foundWaiter)
+       // if(foundWaiter == 0){
+            const waiterModel = new Waiter();
+            waiterModel.username = waiter.userName;
+            waiterModel.fullname = waiter.fullName;
+            waiterModel.position = waiter.position;
+    
+            return await waiterModel.save();
 
-        return await waiterModel.save();
+        // }else{
+        //     return 'Please register with us'
+        //}
+     
 
     }
 

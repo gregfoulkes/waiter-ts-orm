@@ -11,14 +11,7 @@
       position:'waiter',
       loggedIn : false,
       days : [],
-      selectedDays : [],
-
-      // user: {
-      //   username: '',
-      //   days: [],
-      // },
-
-      // day: []
+      selectedDays : []
     },
     mounted : function() {
         let self = this;
@@ -32,19 +25,9 @@
         window.addEventListener("hashchange", function() {
           self.setUsername(location.hash);
         });
-
-
     },
 
     methods: {
-  
-      // waiterShifts : function() {
-      //   let self = this;
-      //   let waiterName = this.username;
-      //   return waiterFunc.waiterNameApiGetRoute(waiterName).then(function(results){
-      //     self.selectedDays = results.data.shifts
-      //   })
-      // },
 
       setShifts : function() {
 
@@ -52,18 +35,11 @@
           username : this.username,
           days : this.selectedDays
         };
-
         alert('set!');
-
           return waiter.waiterNameApiPostRoute(userShiftData)
           .then(function(results){
             alert('post: ' + results.data);
-
-            //console.log(results)       
         })
-
-       
-
       },
       
       setUsername : function(hash) {
@@ -72,17 +48,6 @@
         if (parts.length === 2) {
           this.username = parts[1];
           this.loggedIn = true;
-
-          // this.waiterNameApiGetRoute()
-          // .then(function(result){ 
-          //   alert(result)
-          // })
-
-          // this.waiterShifts()
-          //   .then(function() {
-
-          //   });
-
         }
         else {
           this.username = '';
@@ -94,8 +59,10 @@
         location.hash = this.username;
         let self = this;
         let waiterName = this.username;
-        console.log(waiterName)
+        console.log('waiter:' + waiterName)
         return waiter.waiterNameApiGetRoute(waiterName).then(function(results){
+          let shifts = results.data.shifts
+          console.log(results.data.shifts)
           self.selectedDays = results.data.shifts
         })
       },

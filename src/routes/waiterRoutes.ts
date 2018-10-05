@@ -27,7 +27,7 @@ export default class DayRoutes {
     async waiterNameGetRoute(req : express.Request, res : express.Response){
         
         let waiterFunc = new WaiterFunction()
-        let waiterName = req.params.waiterName
+        //let waiterName = req.params.waiterName
         //let waiterName = req.body.waiterName
 
         //let dayName = req.body.dayName
@@ -60,7 +60,7 @@ export default class DayRoutes {
         let shiftData = req.body.shift
         let waiterName = req.params.username
 
-       // console.log(shiftData)
+        console.log(shiftData)
         try { 
             await waiterFunc.assignShift(shiftData)
             res.json({

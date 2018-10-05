@@ -5,9 +5,7 @@ import * as express from "express";
 import {Request, Response} from "express";
 import * as bodyParser from  "body-parser";
 
-import  DbConnectionFactory  from "./config/config";
 import { createConnection } from "typeorm";
-import { log } from "util";
 //const connection =  DbConnectionFactory('default')
 
 let dayRoutes = new DayRoutes()
@@ -18,7 +16,7 @@ app.use(bodyParser.json());
 
 app.use(express.static('public'));
 
-app.get("/api", dayRoutes.home )
+app.get("/api", dayRoutes.home)
 
 app.get("/api/:username", dayRoutes.waiterNameGetRoute) 
 

@@ -1,0 +1,1 @@
+insert into waiter (username,fullname,position) values('gregfoulkes', 'Greg Foulkes', 'waiter');
