@@ -167,7 +167,7 @@ export default class WaiterFunction {
 
     }
 
-    async getShiftByUserName(waiterName) {
+    async getShiftByUserName(waiterName:string) {
         try {
 
             const oneWaitersShifts = await getRepository(Shift)
