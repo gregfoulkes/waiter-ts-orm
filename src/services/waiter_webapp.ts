@@ -44,7 +44,6 @@ export default class WaiterFunction {
     async getWeekdays() {
         const day = new Day();
         const days = await Day.find({});
-        //console.log(days)
         return days
 
     }
@@ -134,20 +133,15 @@ export default class WaiterFunction {
     }
 
     async assignShift(shiftData: shiftDataInterface) {
-        //console.log(shiftData)
         let shiftDays = shiftData.days
-        //console.log(shiftData.days)
 
         let foundWaiter = await Waiter.findOne({ username: shiftData.username });
-       // console.log(foundWaiter)
         for (let i = 0; i < shiftDays.length; i++) {
             let day = await Day.findOne({ id: shiftDays[i] });
-           // console.log(day)
             let shift = new Shift();
             shift.waiter = foundWaiter;
             shift.weekday = day
             let savedDays = await shift.save()
-           // console.log(savedDays)
         }
 
     }
@@ -159,11 +153,6 @@ export default class WaiterFunction {
             let shifts = await shiftRepository.find({ relations: ["waiter", "weekday"] });
 
             return shifts;
-
-        // } catch (error) {
-            //console.log(error)
-        // }
-
 
     }
 

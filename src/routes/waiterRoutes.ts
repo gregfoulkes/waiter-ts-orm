@@ -62,7 +62,7 @@ export default class DayRoutes {
 
         console.log(shiftData)
         try { 
-            await waiterFunc.assignShift(shiftData)
+            await waiterFunc.updateShiftsByUserName(shiftData)
             res.json({
                 status: 'success'
             });
