@@ -212,7 +212,7 @@ describe('Waiter-Webbapp-Function', function () {
     // console.log(foundId2)
 
     let shiftData = { username: 'gregfoulkes', days: [foundId1.id, foundId2.id] }
-    let shiftData2 = {username: 'gregfoulkes', days:[foundId3.id]}
+    let shiftData2 = {username: 'gregfoulkes', days:[foundId1.id,foundId3.id]}
 
     await waiterFunc.insertWaiter({
       userName: 'gregfoulkes',
@@ -225,7 +225,7 @@ describe('Waiter-Webbapp-Function', function () {
     let allShifts = await waiterFunc.getShiftByUserName('gregfoulkes')
     //console.log(allShifts)
 
-    assert.equal(3, allShifts.shifts.length)
+    assert.equal(2, allShifts.shifts.length)
 
   })
 

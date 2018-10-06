@@ -201,11 +201,20 @@ export default class WaiterFunction {
             getRepository(Shift)
                 .createQueryBuilder("shift")
                 .innerJoinAndSelect("shift.waiter", "waiter")
+                .innerJoinAndSelect("shift.weekday", "weekday")
+
                 .where("waiter.username = :username")
                 .setParameter("username", username)
                 .getMany();
 
-        const removedShifts = waiterShifts.map(( shift ) => shift.remove);
+        const removedShifts = waiterShifts.map(( shift ) => {
+            console.log( shift)
+
+            shift.remove()        }
+        );
+
+
+
         await Promise.all(removedShifts);
     }
 
