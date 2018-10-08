@@ -16,7 +16,7 @@ export class Waiter extends BaseEntity {
     @Column()
     position: string;
 
-    @OneToMany( type => Shift, shift => shift.waiter )
+    @OneToMany( type => Shift, shift =>{return shift.waiter} )
     shifts : Shift[]
     
 }

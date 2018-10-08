@@ -2,7 +2,7 @@
 
    function getAllDays() {
      try {
-
+      //decorator?
        const response = axios.get("/api");
 
        return response;
