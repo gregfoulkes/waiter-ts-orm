@@ -55,13 +55,6 @@ export default class WaiterFunction {
             .leftJoinAndSelect('shift.waiter', 'waiter')
             .getMany();
 
-            // days.forEach((day) => {
-            //         let shiftDays = day.shifts
-            //        // console.log(day)
-            //         console.log(() )
-            //     })
-            // console.log(days)
-
             let shiftsPerDay = days.map((day) => {
                 return {
                     day: day.dayname,
@@ -69,43 +62,24 @@ export default class WaiterFunction {
                 }
             })
 
-
-            // for (let day of days) {
-            //     console.log(day.dayname)
-            //     console.log(day.shifts.map((shift) => shift.waiter.fullname))
-            //     console.log('---------------------');    
-            // }
-
-
-            // console.log(days[0].shifts.map((shift) => shift.waiter.fullname))
-
         return shiftsPerDay
 
     }
-
 
     async clearDays() {
         const day = new Day();
         const allDays = await Day.find({})
         Day.remove(allDays)
     }
-    allShifts
+    
     async insertWaiter(waiter: IWaiter) {
 
-        // let foundWaiter = await Waiter.findOne({ username: waiter.userName });
-        //console.log(foundWaiter)
-        // if(foundWaiter == 0){
         const waiterModel = new Waiter();
         waiterModel.username = waiter.userName;
         waiterModel.fullname = waiter.fullName;
         waiterModel.position = waiter.position;
 
         return await waiterModel.save();
-
-        // }else{
-        //     return 'Please register with us'
-        //}
-
 
     }
 
@@ -263,7 +237,6 @@ export default class WaiterFunction {
 
         const removedShifts = waiterShifts.map((shift) => {
             return shift.remove()
-           // console.log(shift)
         }
         );
         
