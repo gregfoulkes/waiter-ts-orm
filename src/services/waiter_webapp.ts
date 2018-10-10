@@ -85,7 +85,7 @@ export default class WaiterFunction {
 
     async insertWaiters() {
 
-        let waiters: { userName: string, fullName: string, position: string }[] = [
+        let waiters: IWaiter[] = [
             {
                 userName: 'greg',
                 fullName: 'Greg Foulkes',
@@ -175,7 +175,6 @@ export default class WaiterFunction {
         }
 
         let shiftList: WaitersForDay[] = [];
-        console.log(allDays)
         for (let i = 0; i < allDays.length; i++) {
 
             let waitersForDay: WaitersForDay = {
@@ -190,7 +189,6 @@ export default class WaiterFunction {
                 }
             }
             shiftList.push(waitersForDay);
-          //  console.log(shiftList)
             return shiftList
 
         }
@@ -208,15 +206,15 @@ export default class WaiterFunction {
                 .getMany();
 
             let shiftData = {
-                userName: waiterName,
+                username: waiterName,
                 shifts: []
             };
 
             oneWaitersShifts.forEach((shift) => {
-                let day = shift.weekday.dayname;
-                shiftData.shifts.push(day);
+                let dayId = shift.weekday.id;
+                shiftData.shifts.push(dayId);
             })
-
+            console.log(shiftData)
             return shiftData;
 
         } catch (error) {
@@ -240,7 +238,6 @@ export default class WaiterFunction {
         }
         );
         
-        // console.log(removedShifts)
         await Promise.all(removedShifts);
     }
 

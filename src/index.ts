@@ -18,18 +18,16 @@ app.use(express.static('public'));
 
 app.get("/api", dayRoutes.home)
 
-app.get("/api/:username", dayRoutes.waiterNameGetRoute) 
+app.get("/api/waiter/:username", dayRoutes.waiterNameGetRoute) 
 
-app.post("/api/:username", dayRoutes.waiterNamePostRoute) 
+app.post("/api/waiter/:username", dayRoutes.waiterNamePostRoute) 
 
-app.get("/days", function(req: Request, res: Response) {
-    // here we will have logic to return all days and people working on it
-});
+app.get("/api/days", dayRoutes.getShiftsForDaysRoute) 
 
 async function start () {
     try {
         await createConnection();
-        app.listen(7008)
+        app.listen(7010)
     }
     catch(err) {
         console.log(err);

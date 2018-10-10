@@ -7,7 +7,7 @@
     el: '#dayLoop',
     data: {
       username : '',
-      fullname:'',
+      fullname:'Greg Foulkes',
       position:'waiter',
       loggedIn : false,
       days : [],
@@ -30,19 +30,20 @@
     methods: {
 
       setShifts : function() {
+        let self = this;
 
         let userShiftData = {
           username : this.username,
           days : this.selectedDays
         };
-        alert('set!');
+       // alert('set!');
           return waiter.waiterNameApiPostRoute(userShiftData)
           .then(function(results){
-           // alert('post: ' + results.data);
-           waiter.waiterNameApiGetRoute(waiterName).then(function(results){
+           waiter.waiterNameApiGetRoute(self.username).then(function(results){
             let shiftData = results.data.shifts
-            // console.log(shifts.dayname)
             self.selectedDays = shiftData.shifts;
+            console.log(shiftData.shifts)
+
           })
         })
       },
@@ -63,19 +64,18 @@
       login : function() {
         location.hash = this.username;
         let self = this;
-        let waiterName = this.username;
-        console.log('waiter:' + waiterName)
+        let waiterName = self.username;
         return waiter.waiterNameApiGetRoute(waiterName).then(function(results){
           let shiftData = results.data.shifts
-          // console.log(shifts.dayname)
+           console.log(shiftData)
           self.selectedDays = shiftData.shifts;
         })
       },
 
       logout: function() {
         this.loggedIn = false;
-        // this.username = '';
-        // this.selectedDays = [];
+        this.username = '';
+        this.selectedDays = [];
         location.hash="";
       }
 

@@ -2,7 +2,7 @@
 
    function getAllDays() {
      try {
-      //decorator?
+       //decorator?
        const response = axios.get("/api");
 
        return response;
@@ -14,7 +14,7 @@
    function waiterNameApiGetRoute(waiterName) {
      try {
 
-       const response = axios.get("/api/" + waiterName);
+       const response = axios.get("/api/waiter/" + waiterName);
 
        return response;
      } catch (error) {
@@ -25,29 +25,33 @@
 
    function waiterNameApiPostRoute(shiftData) {
      try {
-       return axios.post("/api/" + shiftData.username, {shift:shiftData});
-     // console.log(response)
-       //return response;
+       return axios.post("/api/waiter/" + shiftData.username, {
+         shift: shiftData
+       });
+     
      } catch (error) {
        alert(error);
      }
-
-    function loginApiRoute(username) {
-      try {
-        
-      } catch (error) {
-        alert(error)
-      }
     }
 
+     function getShiftsForDaysApiRoute() {
 
+       try {
+         const response = axios.get("/api/days");
+
+         return response;
+
+       } catch (error) {
+         alert(error)
+       }
+
+     }
+
+     return {
+       getAllDays,
+       waiterNameApiGetRoute,
+       waiterNameApiPostRoute,
+       getShiftsForDaysApiRoute
+     }
 
    }
-
-   return {
-     getAllDays,
-     waiterNameApiGetRoute,
-     waiterNameApiPostRoute
-   }
-
- }

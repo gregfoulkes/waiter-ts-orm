@@ -31,21 +31,18 @@ export default class DayRoutes {
         //let waiterName = req.body.waiterName
 
         //let dayName = req.body.dayName
-        console.log(req.params)
         try { 
             //await waiterFunc.insertWaiter(waiterName)
             //await waiterFunc.assignShift(shiftData)
             let oneWaitersShifts = await waiterFunc.getShiftByUserName(req.params.username)
-            // console.log('----')
-            // console.log(oneWaitersShifts)
-            // console.log('----')
-
-            const days = await waiterFunc.getWeekdays();
+            console.log(oneWaitersShifts)
+            //const days = await waiterFunc.getWeekdays();
             res.json({
                 status: 'success',
-                data: days,
+                //data: days,
                 shifts:oneWaitersShifts
             });
+
         } catch (err) {
             res.json({
                 status: 'error',
@@ -59,8 +56,7 @@ export default class DayRoutes {
         let waiterFunc = new WaiterFunction()
         let shiftData = req.body.shift
         let waiterName = req.params.username
-
-        console.log(shiftData)
+       // console.log(shiftData)
         try { 
             await waiterFunc.updateShiftsByUserName(shiftData)
             res.json({
@@ -72,6 +68,24 @@ export default class DayRoutes {
                 error: err.stack
             });
         }
+    }
+
+    async getShiftsForDaysRoute (req : express.Request, res : express.Response) {
+        let waiterFunc = new WaiterFunction()
+
+        try { 
+            let allShifts = await waiterFunc.getWeekdayShifts()
+            res.json({
+                status: 'success',
+                data: allShifts
+            });
+        } catch (err) {
+            res.json({
+                status: 'error',
+                error: err.stack
+            });
+        }
+
     }
 
     

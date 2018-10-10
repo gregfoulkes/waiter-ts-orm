@@ -208,7 +208,7 @@ describe('Waiter-Webbapp-Function', function () {
     await waiterFunc.assignShift(shiftData)
     await waiterFunc.updateShiftsByUserName(shiftData2)
     let allShifts = await waiterFunc.getShiftByUserName('gregfoulkes')
-
+    //console.log(allShifts)
     assert.equal(2, allShifts.shifts.length)
 
   })
