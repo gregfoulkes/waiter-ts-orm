@@ -1,17 +1,33 @@
+
+//Import Mocha
 import * as assert from "assert";
-import WaiterFunction from "../src/services/waiter_webapp";
+
+//import connections
 import { createConnection, Connection, getRepository } from "typeorm";
+
+//Import Models
 import { Day } from "../src/entity/Day";
-import { Waiter } from "../src/entity/Waiter";
+import { User } from "../src/entity/User";
 import { Shift } from "../src/entity/Shift";
 
-import "reflect-metadata";
+//Import Services
+import DayService from '../src/services/DayService'
+import ShiftService from '../src/services/ShiftService'
+import WaiterService from '../src/services/WaiterService'
 
-let waiterFunc = new WaiterFunction()
+
+//??
+import "reflect-metadata";
 
 describe('Waiter-Webbapp-Function', function () {
 
   let connection: Connection;
+  
+//Instantiate each service
+  let dayService = new DayService()
+  let waiterService = new WaiterService()
+  let shiftService = new ShiftService();
+
 
   before(async function () {
 
@@ -21,11 +37,6 @@ describe('Waiter-Webbapp-Function', function () {
         "name": "default",
         "type": "postgres",
         "url": connectionUrl,
-        // "host": "localhost",
-        // "port": 5432,
-        // "username": "coder",
-        // "password": "1234",
-        // "database": "waiter_webapp_test",
         "synchronize": true,
         "logging": false,
 
@@ -50,35 +61,34 @@ describe('Waiter-Webbapp-Function', function () {
       console.log(err);
     }
 
-
   });
 
   beforeEach(async function () {
-
+   
+    
     const days = await Day.find({})
-    const waiter = await Waiter.find({})
+    const user = await User.find({})
     const shift = await Shift.find({})
+    
     await Shift.remove(shift);
-
     await Day.remove(days);
-    await Waiter.remove(waiter)
-    await waiterFunc.addWeekdays()
+    await User.remove(user);
+
+    await dayService.addWeekdays()
+    await waiterService.insertWaiters()
+
 
   })
 
   after(async function () {
-
-    // const waiter = await Waiter.find({})
-    // const shift = await Shift.find({})
-    // await Shift.remove(shift);
-
-    // await Waiter.remove(waiter)
     connection.close();
   })
 
   it('should input day names into the database and return the days', async function () {
 
-    let gotDays: Day[] = await waiterFunc.getWeekdays()
+    // let dayService = new DayService()
+
+    let gotDays: Day[] = await dayService.getWeekdays()
 
     let daymap = gotDays.map(day => day.dayname);
 
@@ -95,9 +105,9 @@ describe('Waiter-Webbapp-Function', function () {
 
   it('should input a list of waiter names into the database and return the days', async function () {
 
-    await waiterFunc.insertWaiters()
+    await waiterService.insertWaiters()
 
-    let result: any | Waiter[] = await waiterFunc.getWaiters()
+    let result: any | User[] = await waiterService.getWaiters()
 
     let waiterList = []
 
@@ -115,7 +125,7 @@ describe('Waiter-Webbapp-Function', function () {
 
   it('should input a waiter name and user name into the database and return the days', async function () {
 
-    let result = await waiterFunc.insertWaiter({ userName: 'gregfoulkes', fullName: 'Greg Foulkes', position: 'waiter' })
+    let result = await waiterService.insertWaiter({ userName: 'gregfoulkes', fullName: 'Greg Foulkes', position: 'waiter' })
 
     assert.equal('gregfoulkes', result.username);
     assert.equal('Greg Foulkes', result.fullname);
@@ -125,25 +135,23 @@ describe('Waiter-Webbapp-Function', function () {
 
   it('Should return the name and day of all the shifts', async function () {
 
-    let day = new Day
-
     let foundId1 = await Day.findOne({ dayname: 'Monday' })
 
     let foundId2 = await Day.findOne({ dayname: 'Tuesday' })
 
     let shiftData = { username: 'gregfoulkes', days: [foundId1.id, foundId2.id] }
 
-    await waiterFunc.insertWaiter({ userName: 'gregfoulkes', fullName: 'Greg Foulkes', position: 'waiter' })
+    await waiterService.insertWaiter({ userName: 'gregfoulkes', fullName: 'Greg Foulkes', position: 'waiter' })
 
-    await waiterFunc.assignShift(shiftData)
+    await shiftService.assignShift(shiftData)
 
-    let allShifts = await waiterFunc.getShifts()
+    let allShifts = await shiftService.getShifts()
 
     let shiftList = []
     for (let list of allShifts) {
       shiftList.push({
         dayname: list.weekday.dayname,
-        username: list.waiter.username
+        username: list.user.username
       })
 
     }
@@ -165,30 +173,28 @@ describe('Waiter-Webbapp-Function', function () {
     let shiftData = { username: 'gregfoulkes', days: [foundId1.id, foundId2.id] }
     let shiftData2 = { username: 'andrew', days: [foundId3.id] }
 
-    await waiterFunc.insertWaiter({
+    await waiterService.insertWaiter({
       userName: 'gregfoulkes',
       fullName: 'Greg Foulkes',
       position: 'waiter'
     })
 
-    await waiterFunc.insertWaiter({
+    await waiterService.insertWaiter({
       userName: 'andrew',
       fullName: 'Andrew Monamodi',
       position: 'waiter'
     })
 
-    await waiterFunc.assignShift(shiftData)
-    await waiterFunc.assignShift(shiftData2)
+    await shiftService.assignShift(shiftData)
+    await shiftService.assignShift(shiftData2)
 
 
-    let allShifts = await waiterFunc.getShiftByUserName('gregfoulkes')
+    let allShifts = await shiftService.getShiftByUserName('gregfoulkes')
     assert.equal(2, allShifts.shifts.length)
 
   })
 
   it('should update the days of a waiters shifts', async function () {
-
-    let day = new Day
 
     let foundId1 = await Day.findOne({ dayname: 'Monday' })
 
@@ -199,16 +205,15 @@ describe('Waiter-Webbapp-Function', function () {
     let shiftData = { username: 'gregfoulkes', days: [foundId1.id, foundId2.id] }
     let shiftData2 = { username: 'gregfoulkes', days: [foundId1.id, foundId3.id] }
 
-    await waiterFunc.insertWaiter({
+    await waiterService.insertWaiter({
       userName: 'gregfoulkes',
       fullName: 'Greg Foulkes',
       position: 'waiter'
     })
 
-    await waiterFunc.assignShift(shiftData)
-    await waiterFunc.updateShiftsByUserName(shiftData2)
-    let allShifts = await waiterFunc.getShiftByUserName('gregfoulkes')
-    //console.log(allShifts)
+    await shiftService.assignShift(shiftData)
+    await shiftService.updateShiftsByUserName(shiftData2)
+    let allShifts = await shiftService.getShiftByUserName('gregfoulkes')
     assert.equal(2, allShifts.shifts.length)
 
   })
@@ -225,30 +230,24 @@ describe('Waiter-Webbapp-Function', function () {
 
     let shiftData2 = { username: 'andrew', days: [foundId1.id, foundId3.id] }
 
-    await waiterFunc.insertWaiter({
+    await waiterService.insertWaiter({
       userName: 'gregfoulkes',
       fullName: 'Greg Foulkes',
       position: 'waiter'
     })
 
-    await waiterFunc.insertWaiter({
+    await waiterService.insertWaiter({
       userName: 'andrew',
       fullName: 'Andrew Monamodi',
       position: 'waiter'
     })
 
-    await waiterFunc.assignShift(shiftData)
+    await shiftService.assignShift(shiftData)
 
-    await waiterFunc.assignShift(shiftData2)
+    await shiftService.assignShift(shiftData2)
 
+    let allShifts = await shiftService.getWeekdayShifts();
 
-    let allShifts = await waiterFunc.getWeekdayShifts();
-
-    //console.log(allShifts)
-
-
-
-    // waiterFunc.getDaysAndNames()
   })
 
 
@@ -263,17 +262,17 @@ describe('Waiter-Webbapp-Function', function () {
     let shiftData = { username: 'gregfoulkes', days: [foundId1.id, foundId2.id] }
     let shiftData2 = { username: 'gregfoulkes', days: [foundId1.id, foundId3.id] }
 
-    await waiterFunc.insertWaiter({
+    await waiterService.insertWaiter({
       userName: 'gregfoulkes',
       fullName: 'Greg Foulkes',
       position: 'waiter'
     })
 
-    await waiterFunc.assignShift(shiftData)
+    await shiftService.assignShift(shiftData)
 
-    //console.log(allShifts)
-    await waiterFunc.removeWaiterShiftsByUsername('gregfoulkes')
-    let allShifts = await waiterFunc.getShiftByUserName('gregfoulkes')
+    await shiftService.removeWaiterShiftsByUsername('gregfoulkes')
+
+    let allShifts = await shiftService.getShiftByUserName('gregfoulkes')
 
     assert.deepEqual([], allShifts.shifts)
 
