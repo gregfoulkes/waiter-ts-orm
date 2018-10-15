@@ -1,4 +1,3 @@
-
 //Import Mocha
 import * as assert from "assert";
 
@@ -22,7 +21,7 @@ import "reflect-metadata";
 describe('Waiter-Webbapp-Function', function () {
 
   let connection: Connection;
-  
+
 //Instantiate each service
   let dayService = new DayService()
   let waiterService = new WaiterService()
@@ -63,10 +62,10 @@ describe('Waiter-Webbapp-Function', function () {
 
   });
 
-  beforeEach(async function () {
-   
-    
-    const days = await Day.find({})
+  beforeEach(async function (next) {
+
+    try {
+      const days = await Day.find({})
     const user = await User.find({})
     const shift = await Shift.find({})
     
@@ -76,7 +75,9 @@ describe('Waiter-Webbapp-Function', function () {
 
     await dayService.addWeekdays()
     await waiterService.insertWaiters()
-
+    } catch (error) {
+      console.log(error)
+    }
 
   })
 
@@ -85,8 +86,6 @@ describe('Waiter-Webbapp-Function', function () {
   })
 
   it('should input day names into the database and return the days', async function () {
-
-    // let dayService = new DayService()
 
     let gotDays: Day[] = await dayService.getWeekdays()
 
@@ -250,7 +249,6 @@ describe('Waiter-Webbapp-Function', function () {
 
   })
 
-
   it('Should add a waiters shifts and then clear them while returning an empty list', async function () {
 
     let foundId1 = await Day.findOne({ dayname: 'Monday' })
@@ -277,6 +275,7 @@ describe('Waiter-Webbapp-Function', function () {
     assert.deepEqual([], allShifts.shifts)
 
   })
+  
 });
 
 

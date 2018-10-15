@@ -28,7 +28,7 @@ export default class ShiftService {
             .getRepository(Day)
             .createQueryBuilder('day')
             .leftJoinAndSelect('day.shifts', 'shift')
-            .leftJoinAndSelect('shift.waiter', 'waiter')
+            .leftJoinAndSelect('shift.user', 'user')
             .getMany();
 
             let shiftsPerDay = days.map((day) => {
@@ -39,7 +39,6 @@ export default class ShiftService {
             })
 
         return shiftsPerDay
-
     }
 
     //Assign a shift to a user
@@ -103,8 +102,8 @@ export default class ShiftService {
             const oneWaitersShifts = await getRepository(Shift)
                 .createQueryBuilder("shift")
                 .innerJoinAndSelect("shift.weekday", "weekday")
-                .innerJoinAndSelect("shift.waiter", "waiter")
-                .where("waiter.username = :username", { username: username })
+                .innerJoinAndSelect("shift.user", "user")
+                .where("user.username = :username", { username: username })
                 .getMany();
 
             let shiftData = {
@@ -129,9 +128,9 @@ export default class ShiftService {
         const waiterShifts = await
             getRepository(Shift)
                 .createQueryBuilder("shift")
-                .innerJoinAndSelect("shift.waiter", "waiter")
+                .innerJoinAndSelect("shift.user", "user")
                 .innerJoinAndSelect("shift.weekday", "weekday")
-                .where("waiter.username = :username")
+                .where("user.username = :username")
                 .setParameter("username", username)
                 .getMany();
 

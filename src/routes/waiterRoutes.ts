@@ -1,17 +1,22 @@
 import * as express from "express";
 
 import { Day } from "../entity/Day";
-import WaiterFunction from "../services/waiter_webapp";
+//Import Services
+import DayService from '../services/DayService'
+import ShiftService from '../services/ShiftService'
+import WaiterService from '../services/WaiterService'
 
-
+//Instatiate new services
+let waiterService = new WaiterService()
+let dayService = new DayService()
+let shiftService = new ShiftService()
 
 export default class DayRoutes {
 
     async home(req : express.Request, res : express.Response){
-        let waiterFunc = new WaiterFunction()
-
+       
         try {
-            const days = await waiterFunc.getWeekdays();
+            const days = await dayService.getWeekdays();
             res.json({
                 status: 'success',
                 data: days
@@ -25,18 +30,11 @@ export default class DayRoutes {
     }
 
     async waiterNameGetRoute(req : express.Request, res : express.Response){
-        
-        let waiterFunc = new WaiterFunction()
-        //let waiterName = req.params.waiterName
-        //let waiterName = req.body.waiterName
 
-        //let dayName = req.body.dayName
         try { 
-            //await waiterFunc.insertWaiter(waiterName)
-            //await waiterFunc.assignShift(shiftData)
-            let oneWaitersShifts = await waiterFunc.getShiftByUserName(req.params.username)
-            console.log(oneWaitersShifts)
-            //const days = await waiterFunc.getWeekdays();
+
+            let oneWaitersShifts = await shiftService.getShiftByUserName(req.params.username)
+            
             res.json({
                 status: 'success',
                 //data: days,
@@ -53,12 +51,11 @@ export default class DayRoutes {
 
     async waiterNamePostRoute(req : express.Request, res : express.Response){
         
-        let waiterFunc = new WaiterFunction()
         let shiftData = req.body.shift
         let waiterName = req.params.username
-       // console.log(shiftData)
+
         try { 
-            await waiterFunc.updateShiftsByUserName(shiftData)
+            await shiftService.updateShiftsByUserName(shiftData)
             res.json({
                 status: 'success'
             });
@@ -71,10 +68,9 @@ export default class DayRoutes {
     }
 
     async getShiftsForDaysRoute (req : express.Request, res : express.Response) {
-        let waiterFunc = new WaiterFunction()
 
         try { 
-            let allShifts = await waiterFunc.getWeekdayShifts()
+            let allShifts = await shiftService.getWeekdayShifts()
             res.json({
                 status: 'success',
                 data: allShifts

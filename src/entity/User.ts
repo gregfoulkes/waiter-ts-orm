@@ -16,7 +16,7 @@ export class User extends BaseEntity {
     @Column()
     position: string;
 
-    @OneToMany( type => Shift, shift =>{return shift.user} )
+    @OneToMany( type => Shift, shift => {return shift.user} )
     shifts : Shift[]
     
 }
