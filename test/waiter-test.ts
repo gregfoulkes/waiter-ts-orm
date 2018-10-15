@@ -14,7 +14,6 @@ import DayService from '../src/services/DayService'
 import ShiftService from '../src/services/ShiftService'
 import WaiterService from '../src/services/WaiterService'
 
-
 //??
 import "reflect-metadata";
 
@@ -275,7 +274,7 @@ describe('Waiter-Webbapp-Function', function () {
     assert.deepEqual([], allShifts.shifts)
 
   })
-  
+
 });
 
 
