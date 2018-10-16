@@ -5,7 +5,7 @@ import { Connection, SelectQueryBuilder, getConnection } from "typeorm";
 import { getRepository } from "typeorm";
 
 //import models
-import { User } from "../entity/User";
+import { Waiter } from "../entity/Waiter";
 import { Shift } from "../entity/Shift";
 import {Day} from "../entity/Day";
 
@@ -28,13 +28,13 @@ export default class ShiftService {
             .getRepository(Day)
             .createQueryBuilder('day')
             .leftJoinAndSelect('day.shifts', 'shift')
-            .leftJoinAndSelect('shift.user', 'user')
+            .leftJoinAndSelect('shift.waiter', 'waiter')
             .getMany();
 
             let shiftsPerDay = days.map((day) => {
                 return {
                     day: day.dayname,
-                    waiters: day.shifts.map((shift) => shift.user.fullname)
+                    waiters: day.shifts.map((shift) => shift.waiter.fullname)
                 }
             })
 
@@ -45,11 +45,11 @@ export default class ShiftService {
     async assignShift(shiftData: shiftDataInterface) {
         let shiftDays = shiftData.days
 
-        let foundWaiter = await User.findOne({ username: shiftData.username });
+        let foundWaiter = await Waiter.findOne({ username: shiftData.username });
         for (let i = 0; i < shiftDays.length; i++) {
             let day = await Day.findOne({ id: shiftDays[i] });
             let shift = new Shift();
-            shift.user = foundWaiter;
+            shift.waiter = foundWaiter;
             shift.weekday = day
             let savedDays = await shift.save()
         }
@@ -59,7 +59,7 @@ export default class ShiftService {
 
         const shiftRepository = getRepository(Shift);
 
-        let shifts = await shiftRepository.find({ relations: ["user", "weekday"] });
+        let shifts = await shiftRepository.find({ relations: ["waiter", "weekday"] });
 
         return shifts;
 
@@ -85,7 +85,7 @@ export default class ShiftService {
 
             for (let i = 0; i < allShifts.length; i++) {
                 if (allDays[i].dayname == allShifts[i].weekday.dayname) {
-                    waitersForDay.waiters.push(allShifts[i].user.fullname)
+                    waitersForDay.waiters.push(allShifts[i].waiter.fullname)
 
                 }
             }
@@ -102,8 +102,8 @@ export default class ShiftService {
             const oneWaitersShifts = await getRepository(Shift)
                 .createQueryBuilder("shift")
                 .innerJoinAndSelect("shift.weekday", "weekday")
-                .innerJoinAndSelect("shift.user", "user")
-                .where("user.username = :username", { username: username })
+                .innerJoinAndSelect("shift.waiter", "waiter")
+                .where("waiter.username = :username", { username: username })
                 .getMany();
 
             let shiftData = {
@@ -128,9 +128,9 @@ export default class ShiftService {
         const waiterShifts = await
             getRepository(Shift)
                 .createQueryBuilder("shift")
-                .innerJoinAndSelect("shift.user", "user")
+                .innerJoinAndSelect("shift.waiter", "waiter")
                 .innerJoinAndSelect("shift.weekday", "weekday")
-                .where("user.username = :username")
+                .where("waiter.username = :username")
                 .setParameter("username", username)
                 .getMany();
 

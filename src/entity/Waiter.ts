@@ -2,7 +2,7 @@ import {Entity, PrimaryGeneratedColumn, Column, BaseEntity, OneToMany} from "typ
 import { Shift } from "./Shift";
 
 @Entity()
-export class User extends BaseEntity {
+export class Waiter extends BaseEntity {
 
     @PrimaryGeneratedColumn()
     id: number;
@@ -22,7 +22,7 @@ export class User extends BaseEntity {
     @Column()
     position: string;
 
-    @OneToMany( type => Shift, shift => {return shift.user} )
+    @OneToMany( type => Shift, shift => {return shift.waiter} )
     shifts : Shift[]
     
 }

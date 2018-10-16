@@ -1,4 +1,4 @@
-import {User} from "../entity/User"
+import {Waiter} from "../entity/Waiter"
 import { Day } from "../entity/Day";
 import { Shift } from "../entity/Shift";
 import { createConnection, getConnection } from 'typeorm';
@@ -21,7 +21,7 @@ export default async function DbConnectionFactory(dbName:string, logging = []){
             "logging": logging,
             "entities": [
                 Day,
-                User,
+                Waiter,
                 Shift
             ],
             "migrations": [

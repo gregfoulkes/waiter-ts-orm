@@ -1,5 +1,5 @@
 //import Models
-import { User } from "../entity/User";
+import { Waiter } from "../entity/Waiter";
 
 
 //Import Interfaces
@@ -13,7 +13,7 @@ export default class WaiterService {
 
     async insertWaiter(waiter: IUser) {
 
-        const waiterModel = new User();
+        const waiterModel = new Waiter();
         waiterModel.username = waiter.userName;
         waiterModel.fullname = waiter.fullName;
         waiterModel.position = waiter.position;
@@ -54,7 +54,7 @@ export default class WaiterService {
         ]
 
         for (let i = 0; i < waiters.length; i++) {
-            const waiter = new User();
+            const waiter = new Waiter();
             waiter.username = waiters[i].userName;
             waiter.fullname = waiters[i].fullName;
             waiter.position = waiters[i].position;
@@ -66,7 +66,7 @@ export default class WaiterService {
     async getWaiters() {
 
         try {
-            const allWaiters = await User.find({});
+            const allWaiters = await Waiter.find({});
             return allWaiters
 
         } catch (error) {
@@ -77,9 +77,9 @@ export default class WaiterService {
     //Clears users from database
     async clearWaiters() {
         try {
-            const waiter = new User();
-            const allWaiters = await User.find({})
-            User.remove(allWaiters)
+            const waiter = new Waiter();
+            const allWaiters = await Waiter.find({})
+            Waiter.remove(allWaiters)
         } catch (error) {
             console.log(error)
         }

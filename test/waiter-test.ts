@@ -6,7 +6,7 @@ import { createConnection, Connection, getRepository } from "typeorm";
 
 //Import Models
 import { Day } from "../src/entity/Day";
-import { User } from "../src/entity/User";
+import { Waiter } from "../src/entity/Waiter";
 import { Shift } from "../src/entity/Shift";
 
 //Import Services
@@ -21,7 +21,7 @@ describe('Waiter-Webbapp-Function', function () {
 
   let connection: Connection;
 
-//Instantiate each service
+  //Instantiate each service
   let dayService = new DayService()
   let waiterService = new WaiterService()
   let shiftService = new ShiftService();
@@ -29,54 +29,57 @@ describe('Waiter-Webbapp-Function', function () {
 
   before(async function () {
 
-    try {
-      let connectionUrl = process.env.DB || "postgresql://coder:1234@localhost:5432/waiter_webapp_test"
-      connection = await createConnection({
-        "name": "default",
-        "type": "postgres",
-        "url": connectionUrl,
-        "synchronize": true,
-        "logging": false,
+    // try {
+    let connectionUrl = process.env.DB || "postgresql://coder:1234@localhost:5432/waiter_webapp_test"
+    connection = await createConnection({
+      "name": "default",
+      "type": "postgres",
+      "url": connectionUrl,
+      "synchronize": true,
+      "logging": false,
 
-        "entities": [
-          "src/entity/**/*.ts"
-        ],
-        "migrations": [
-          "src/migration/**/*.ts"
-        ],
-        "subscribers": [
-          "src/subscriber/**/*.ts"
-        ],
-        "cli": {
-          "entitiesDir": "src/entity",
-          "migrationsDir": "src/migration",
-          "subscribersDir": "src/subscriber"
-        }
-      });
+      "entities": [
+        "src/entity/**/*.ts"
+      ],
+      "migrations": [
+        "src/migration/**/*.ts"
+      ],
+      "subscribers": [
+        "src/subscriber/**/*.ts"
+      ],
+      "cli": {
+        "entitiesDir": "src/entity",
+        "migrationsDir": "src/migration",
+        "subscribersDir": "src/subscriber"
+      }
+    });
 
-    }
-    catch (err) {
-      console.log(err);
-    }
+    console.log('done!')
+
+    // }
+    // catch (err) {
+    //   console.log(err);
+    // }
 
   });
 
-  beforeEach(async function (next) {
+  beforeEach(async function () {
 
-    try {
+    // try {
       const days = await Day.find({})
-    const user = await User.find({})
-    const shift = await Shift.find({})
-    
-    await Shift.remove(shift);
-    await Day.remove(days);
-    await User.remove(user);
+      const user = await Waiter.find({})
+      const shift = await Shift.find({})
 
-    await dayService.addWeekdays()
-    await waiterService.insertWaiters()
-    } catch (error) {
-      console.log(error)
-    }
+      await Shift.remove(shift);
+      await Day.remove(days);
+      await Waiter.remove(user);
+
+      await dayService.addWeekdays()
+      // await waiterService.insertWaiters()
+    // } catch (error) {
+    //   console.log(error)
+    //   done(err)
+    // }
 
   })
 
@@ -105,7 +108,7 @@ describe('Waiter-Webbapp-Function', function () {
 
     await waiterService.insertWaiters()
 
-    let result: any | User[] = await waiterService.getWaiters()
+    let result: any | Waiter[] = await waiterService.getWaiters()
 
     let waiterList = []
 
@@ -149,7 +152,7 @@ describe('Waiter-Webbapp-Function', function () {
     for (let list of allShifts) {
       shiftList.push({
         dayname: list.weekday.dayname,
-        username: list.user.username
+        username: list.waiter.username
       })
 
     }

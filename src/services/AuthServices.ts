@@ -2,7 +2,7 @@ import { Connection, SelectQueryBuilder, getConnection } from "typeorm";
 
  import * as bcrypt from 'bcrypt-nodejs';
 
-import { User } from "../entity/User";
+import { Waiter } from "../entity/Waiter";
 
 import { ILogin,IRegister } from "../interfaces/interfaces";
 
@@ -12,7 +12,7 @@ export class UserAuth {
 
     async login(loginDetails:ILogin) {
 
-        let foundUser = await User.findOne({ username: loginDetails.username });
+        let foundUser = await Waiter.findOne({ username: loginDetails.username });
         console.log([foundUser].length == 1)
 
         let checkPassword = await bcrypt.compareSync(loginDetails.password, foundUser.password)
@@ -24,7 +24,7 @@ export class UserAuth {
              }
              foundUser['match']= Object.assign({'found':checkPassword})
 
-                return foundUser
+            return foundUser
     }
 
     async logout() {
@@ -33,7 +33,7 @@ export class UserAuth {
 
     async registerUser(registrationDetails:IRegister) {
 
-        const user = new User();
+        const user = new Waiter();
 
         let hashPassword =  bcrypt.hashSync(registrationDetails.password)
         //console.log(hashPassword)

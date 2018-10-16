@@ -24,6 +24,10 @@ app.post("/api/waiter/:username", dayRoutes.waiterNamePostRoute)
 
 app.get("/api/days", dayRoutes.getShiftsForDaysRoute) 
 
+app.post("/api/register")
+
+app.get("/api/login")
+
 async function start () {
     try {
         await createConnection();

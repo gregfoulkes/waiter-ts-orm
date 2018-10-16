@@ -38,7 +38,8 @@
         };
        // alert('set!');
           return waiter.waiterNameApiPostRoute(userShiftData)
-          .then(function(results){
+          .then(function(){
+            console.log(self.username)
            waiter.waiterNameApiGetRoute(self.username).then(function(results){
             let shiftData = results.data.shifts
             self.selectedDays = shiftData.shifts;
