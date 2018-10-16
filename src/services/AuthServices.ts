@@ -8,7 +8,7 @@ import { ILogin,IRegister } from "../interfaces/interfaces";
 
 let connection: Connection
 
-export class UserAuth {
+export  default class UserAuth {
 
     async login(loginDetails:ILogin) {
 

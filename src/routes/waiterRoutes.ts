@@ -13,8 +13,8 @@ let shiftService = new ShiftService()
 
 export default class DayRoutes {
 
-    async home(req : express.Request, res : express.Response){
-       
+    async home(req: express.Request, res: express.Response) {
+
         try {
             const days = await dayService.getWeekdays();
             res.json({
@@ -29,16 +29,14 @@ export default class DayRoutes {
         }
     }
 
-    async waiterNameGetRoute(req : express.Request, res : express.Response){
+    async waiterNameGetRoute(req: express.Request, res: express.Response) {
 
-        try { 
+        try {
 
             let oneWaitersShifts = await shiftService.getShiftByUserName(req.params.username)
-            
             res.json({
                 status: 'success',
-                //data: days,
-                shifts:oneWaitersShifts
+                shifts: oneWaitersShifts
             });
 
         } catch (err) {
@@ -49,12 +47,12 @@ export default class DayRoutes {
         }
     }
 
-    async waiterNamePostRoute(req : express.Request, res : express.Response){
-        
+    async waiterNamePostRoute(req: express.Request, res: express.Response) {
+
         let shiftData = req.body.shift
         let waiterName = req.params.username
 
-        try { 
+        try {
             await shiftService.updateShiftsByUserName(shiftData)
             res.json({
                 status: 'success'
@@ -67,9 +65,9 @@ export default class DayRoutes {
         }
     }
 
-    async getShiftsForDaysRoute (req : express.Request, res : express.Response) {
+    async getShiftsForDaysRoute(req: express.Request, res: express.Response) {
 
-        try { 
+        try {
             let allShifts = await shiftService.getWeekdayShifts()
             res.json({
                 status: 'success',
@@ -84,5 +82,5 @@ export default class DayRoutes {
 
     }
 
-    
+
 }

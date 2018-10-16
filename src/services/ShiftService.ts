@@ -7,7 +7,7 @@ import { getRepository } from "typeorm";
 //import models
 import { Waiter } from "../entity/Waiter";
 import { Shift } from "../entity/Shift";
-import {Day} from "../entity/Day";
+import { Day } from "../entity/Day";
 
 //import interfaces
 import { shiftDataInterface } from "../interfaces/interfaces";
@@ -21,7 +21,7 @@ let dayService = new DayService()
 
 export default class ShiftService {
 
-  //Get all the shifts for all users
+    //Get all the shifts for all users
     async getWeekdayShifts() {
 
         let days = await getConnection()
@@ -31,12 +31,12 @@ export default class ShiftService {
             .leftJoinAndSelect('shift.waiter', 'waiter')
             .getMany();
 
-            let shiftsPerDay = days.map((day) => {
-                return {
-                    day: day.dayname,
-                    waiters: day.shifts.map((shift) => shift.waiter.fullname)
-                }
-            })
+        let shiftsPerDay = days.map((day) => {
+            return {
+                day: day.dayname,
+                waiters: day.shifts.map((shift) => shift.waiter.fullname)
+            }
+        })
 
         return shiftsPerDay
     }
@@ -115,7 +115,6 @@ export default class ShiftService {
                 let dayId = shift.weekday.id;
                 shiftData.shifts.push(dayId);
             })
-            console.log(shiftData)
             return shiftData;
 
         } catch (error) {
@@ -138,7 +137,7 @@ export default class ShiftService {
             return shift.remove()
         }
         );
-        
+
         await Promise.all(removedShifts);
     }
 

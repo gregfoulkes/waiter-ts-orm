@@ -28,30 +28,30 @@
        return axios.post("/api/waiter/" + shiftData.username, {
          shift: shiftData
        });
-     
+
      } catch (error) {
        alert(error);
      }
-    }
+   }
 
-     function getShiftsForDaysApiRoute() {
+   function getShiftsForDaysApiRoute() {
 
-       try {
-         const response = axios.get("/api/days");
+     try {
+       const response = axios.get("/api/days");
 
-         return response;
+       return response;
 
-       } catch (error) {
-         alert(error)
-       }
-
-     }
-
-     return {
-       getAllDays,
-       waiterNameApiGetRoute,
-       waiterNameApiPostRoute,
-       getShiftsForDaysApiRoute
+     } catch (error) {
+       alert(error)
      }
 
    }
+
+   return {
+     getAllDays,
+     waiterNameApiGetRoute,
+     waiterNameApiPostRoute,
+     getShiftsForDaysApiRoute
+   }
+
+ }

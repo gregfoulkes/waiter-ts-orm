@@ -13,6 +13,7 @@ import { Shift } from "../src/entity/Shift";
 import DayService from '../src/services/DayService'
 import ShiftService from '../src/services/ShiftService'
 import WaiterService from '../src/services/WaiterService'
+import  UserAuth  from "../src/services/AuthServices";
 
 //??
 import "reflect-metadata";
@@ -29,7 +30,6 @@ describe('Waiter-Webbapp-Function', function () {
 
   before(async function () {
 
-    // try {
     let connectionUrl = process.env.DB || "postgresql://coder:1234@localhost:5432/waiter_webapp_test"
     connection = await createConnection({
       "name": "default",
@@ -54,32 +54,19 @@ describe('Waiter-Webbapp-Function', function () {
       }
     });
 
-    console.log('done!')
-
-    // }
-    // catch (err) {
-    //   console.log(err);
-    // }
-
   });
 
   beforeEach(async function () {
 
-    // try {
-      const days = await Day.find({})
-      const user = await Waiter.find({})
-      const shift = await Shift.find({})
+    const days = await Day.find({})
+    const user = await Waiter.find({})
+    const shift = await Shift.find({})
 
-      await Shift.remove(shift);
-      await Day.remove(days);
-      await Waiter.remove(user);
+    await Shift.remove(shift);
+    await Day.remove(days);
+    await Waiter.remove(user);
 
-      await dayService.addWeekdays()
-      // await waiterService.insertWaiters()
-    // } catch (error) {
-    //   console.log(error)
-    //   done(err)
-    // }
+    await dayService.addWeekdays()
 
   })
 
@@ -277,6 +264,98 @@ describe('Waiter-Webbapp-Function', function () {
     assert.deepEqual([], allShifts.shifts)
 
   })
+
+});
+
+describe('Authorisation-Functions', function () {
+
+  let connection: Connection;
+
+  //Instantiate each service
+  let dayService = new DayService()
+  let waiterService = new WaiterService()
+  let shiftService = new ShiftService();
+
+  let userAuth = new UserAuth()
+  before(async function () {
+
+    let connectionUrl = process.env.DB || "postgresql://coder:1234@localhost:5432/waiter_webapp_test"
+    connection = await createConnection({
+      "name": "default",
+      "type": "postgres",
+      "url": connectionUrl,
+      "synchronize": true,
+      "logging": false,
+
+      "entities": [
+        "src/entity/**/*.ts"
+      ],
+      "migrations": [
+        "src/migration/**/*.ts"
+      ],
+      "subscribers": [
+        "src/subscriber/**/*.ts"
+      ],
+      "cli": {
+        "entitiesDir": "src/entity",
+        "migrationsDir": "src/migration",
+        "subscribersDir": "src/subscriber"
+      }
+    });
+
+  });
+
+  beforeEach(async function () {
+
+    const days = await Day.find({})
+    const user = await Waiter.find({})
+    const shift = await Shift.find({})
+
+    await Shift.remove(shift);
+    await Day.remove(days);
+    await Waiter.remove(user);
+
+    await dayService.addWeekdays()
+
+  })
+
+  after(async function () {
+    connection.close();
+  })
+
+  it('should return true for the valid password entered', async function(){
+    let user = new Waiter
+    let oneUSer = {
+      username:'gregfoulkes',
+      fullname:'Greg Foulkes',
+      email:'greg_foulkes@live.com',
+      password:'1234'
+    }
+    await userAuth.registerUser(oneUSer)
+    let checkThisUser = await userAuth.login({username:'gregfoulkes', password:'1234'})
+    console.log(checkThisUser)
+
+    assert.equal(checkThisUser.username,'gregfoulkes')
+    assert.equal(true,checkThisUser.match.found)
+
+  })
+
+  it('should return false for the invalid password entered', async function(){
+    let user = new Waiter
+    let oneUSer = {
+      username:'gregfoulkes',
+      fullname:'Greg Foulkes',
+      email:'greg_foulkes@live.com',
+      password:'1234'
+    }
+    await userAuth.registerUser(oneUSer)
+    let checkThisUser = await userAuth.login({username:'gregfoulkes', password:'123'})
+
+    assert.equal(checkThisUser.username,'gregfoulkes')
+    assert.equal(false,checkThisUser.match.found)
+
+  })
+
 
 });
 
