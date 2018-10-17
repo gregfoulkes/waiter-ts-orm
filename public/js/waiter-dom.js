@@ -6,9 +6,9 @@ var app = new Vue({
   el: '#dayLoop',
   data: {
     username: '',
-    fullname: 'Greg Foulkes',
+    firstname: '',
+    lastname: '',
     position: 'waiter',
-    //password: ''
     loggedIn: false,
     days: [],
     selectedDays: []
@@ -25,7 +25,7 @@ var app = new Vue({
     window.addEventListener('load', function () {
 
       waiter.waiterNameApiGetRoute(self.username).then(function (results) {
-        //console.log(results.data)
+       // console.log(results.data)
         let shiftData = results.data.shifts
         self.selectedDays = shiftData.shifts;
         // console.log(shiftData.shifts)
@@ -48,11 +48,15 @@ var app = new Vue({
         username: this.username,
         days: this.selectedDays
       };
-
+      //console.log(userShiftData)
       return waiter.waiterNameApiPostRoute(userShiftData)
         .then(function (results) {
+          //console.log(results)
+          console.log(self.username)
           waiter.waiterNameApiGetRoute(self.username).then(function (results) {
             let shiftData = results.data.shifts
+           console.log(results.data.shifts)
+
             self.selectedDays = shiftData.shifts;
           })
         })
@@ -69,6 +73,16 @@ var app = new Vue({
         this.loggedIn = false;
       }
     },
+
+    // login: function () {
+    //   location.hash = this.username;
+    //   let self = this;
+    //   let waiterName = self.username;
+    //   return waiter.waiterNameApiGetRoute(waiterName).then(function (results) {
+    //     let shiftData = results.data.shifts
+    //     self.selectedDays = shiftData.shifts;
+    //   })
+    // },  
 
     login: function () {
       location.hash = this.username;

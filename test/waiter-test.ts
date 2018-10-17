@@ -34,7 +34,7 @@ describe('Waiter-Webbapp-Function', function () {
   }
 
   let registerWaiterTwo = {
-    username: 'gregfoulkes',
+    username: 'andrew',
     firstname: 'Andrew',
     lastname:'Monamodi',
     email: 'greg_foulkes@gmail.com',
@@ -215,30 +215,30 @@ describe('Waiter-Webbapp-Function', function () {
 
   })
 
-  // it('Should get all days and the names of the waiters working on them', async function () {
+  it('Should get all days and the names of the waiters working on them', async function () {
 
-  //   let foundId1 = await Day.findOne({ dayname: 'Monday' })
+    let foundId1 = await Day.findOne({ dayname: 'Monday' })
 
-  //   let foundId2 = await Day.findOne({ dayname: 'Tuesday' })
+    let foundId2 = await Day.findOne({ dayname: 'Tuesday' })
 
-  //   let foundId3 = await Day.findOne({ dayname: 'Wednesday' })
+    let foundId3 = await Day.findOne({ dayname: 'Wednesday' })
 
-  //   let shiftData = { username: 'gregfoulkes', days: [foundId1.id, foundId2.id] }
+    let shiftData = { username: 'gregfoulkes', days: [foundId1.id, foundId2.id] }
 
-  //   let shiftData2 = { username: 'andrew', days: [foundId1.id, foundId3.id] }
+    let shiftData2 = { username: 'andrew', days: [foundId1.id, foundId3.id] }
 
-  //   await authService.registerUser(registerWaiterOne)
-  //   await authService.registerUser(registerWaiterTwo)
+    await authService.registerUser(registerWaiterOne)
+    await authService.registerUser(registerWaiterTwo)
 
-  //   await shiftService.assignShift(shiftData)
+    await shiftService.assignShift(shiftData)
 
-  //   await shiftService.assignShift(shiftData2)
+    await shiftService.assignShift(shiftData2)
 
-  //   let allShifts = await shiftService.getWeekdayShifts();
+    let allShifts = await shiftService.getWeekdayShifts();
 
-  //   console.log(allShifts)
+    //console.log(allShifts)
 
-  // })
+  })
 
   it('Should add a waiters shifts and then clear them while returning an empty list', async function () {
 
@@ -265,96 +265,92 @@ describe('Waiter-Webbapp-Function', function () {
 
 });
 
-// describe('Authorisation-Functions', function () {
+describe('Authorisation-Functions', function () {
 
-//   let connection: Connection;
+  let connection: Connection;
 
-//   //Instantiate each service
-//   let dayService = new DayService()
-//   let waiterService = new WaiterService()
-//   let shiftService = new ShiftService();
+  //Instantiate each service
+  let dayService = new DayService()
+  let waiterService = new WaiterService()
+  let shiftService = new ShiftService();
 
-//   let userAuth = new UserAuth()
-//   before(async function () {
+  let userAuth = new UserAuth()
+  before(async function () {
 
-//     let connectionUrl = process.env.DB || "postgresql://coder:1234@localhost:5432/waiter_webapp_test"
-//     connection = await createConnection({
-//       "name": "default",
-//       "type": "postgres",
-//       "url": connectionUrl,
-//       "synchronize": true,
-//       "logging": false,
+    let connectionUrl = process.env.DB || "postgresql://coder:1234@localhost:5432/waiter_webapp_test"
+    connection = await createConnection({
+      "name": "default",
+      "type": "postgres",
+      "url": connectionUrl,
+      "synchronize": true,
+      "logging": false,
 
-//       "entities": [
-//         "src/entity/**/*.ts"
-//       ],
-//       "migrations": [
-//         "src/migration/**/*.ts"
-//       ],
-//       "subscribers": [
-//         "src/subscriber/**/*.ts"
-//       ],
-//       "cli": {
-//         "entitiesDir": "src/entity",
-//         "migrationsDir": "src/migration",
-//         "subscribersDir": "src/subscriber"
-//       }
-//     });
+      "entities": [
+        "src/entity/**/*.ts"
+      ],
+      "migrations": [
+        "src/migration/**/*.ts"
+      ],
+      "subscribers": [
+        "src/subscriber/**/*.ts"
+      ],
+      "cli": {
+        "entitiesDir": "src/entity",
+        "migrationsDir": "src/migration",
+        "subscribersDir": "src/subscriber"
+      }
+    });
 
-//   });
+  });
 
-//   beforeEach(async function () {
+  beforeEach(async function () {
 
-//     const days = await Day.find({})
-//     const user = await Waiter.find({})
-//     const shift = await Shift.find({})
+    const days = await Day.find({})
+    const user = await Waiter.find({})
+    const shift = await Shift.find({})
 
-//     await Shift.remove(shift);
-//     await Day.remove(days);
-//     await Waiter.remove(user);
+    await Shift.remove(shift);
+    await Day.remove(days);
+    await Waiter.remove(user);
 
-//     await dayService.addWeekdays()
+    await dayService.addWeekdays()
 
-//   })
+  })
 
-//   after(async function () {
-//     connection.close();
-//   })
+  after(async function () {
+    connection.close();
+  })
 
-//   it('should return true for the valid password entered', async function(){
-//     let user = new Waiter
-//     let oneUSer = {
-//       username:'gregfoulkes',
-//       fullname:'Greg Foulkes',
-//       email:'greg_foulkes@live.com',
-//       password:'1234'
-//     }
-//     await userAuth.registerUser(oneUSer)
-//     let checkThisUser = await userAuth.login({username:'gregfoulkes', password:'1234'})
-//     console.log(checkThisUser)
+  let oneUSer = {
+    username:'gregfoulkes',
+    firstname:'Greg',
+    lastname:'Foulkes',
+    email:'greg_foulkes@live.com',
+    password:'1234',
+    position:'waiter'
+  }
 
-//     assert.equal(checkThisUser.username,'gregfoulkes')
-//     assert.equal(true,checkThisUser.match.found)
+  it('should return true for the valid password entered', async function(){
+    let user = new Waiter
 
-//   })
+    await userAuth.registerUser(oneUSer)
+    let checkThisUser = await userAuth.login({username:'gregfoulkes', password:'1234'})
+    console.log(checkThisUser)
 
-//   it('should return false for the invalid password entered', async function(){
-//     let user = new Waiter
-//     let oneUSer = {
-//       username:'gregfoulkes',
-//       fullname:'Greg Foulkes',
-//       email:'greg_foulkes@live.com',
-//       password:'1234'
-//     }
-//     await userAuth.registerUser(oneUSer)
-//     let checkThisUser = await userAuth.login({username:'gregfoulkes', password:'123'})
+    assert.equal(checkThisUser.username,'gregfoulkes')
+    assert.equal(true,checkThisUser.match.found)
 
-//     assert.equal(checkThisUser.username,'gregfoulkes')
-//     assert.equal(false,checkThisUser.match.found)
+  })
 
-//   })
+  it('should return false for the invalid password entered', async function(){
+    let user = new Waiter
+    await userAuth.registerUser(oneUSer)
+    let checkThisUser = await userAuth.login({username:'gregfoulkes', password:'123'})
+    console.log(checkThisUser)
+    assert.equal(false,checkThisUser)
+  })
 
 
-// });
+});
 
 

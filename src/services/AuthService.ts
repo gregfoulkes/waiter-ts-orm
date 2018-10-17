@@ -1,42 +1,45 @@
 import { Connection, SelectQueryBuilder, getConnection } from "typeorm";
 
- import * as bcrypt from 'bcrypt-nodejs';
+import * as bcrypt from 'bcrypt-nodejs';
 
 import { Waiter } from "../entity/Waiter";
 
-import { ILogin,IRegister } from "../interfaces/interfaces";
+import { ILogin, IRegister } from "../interfaces/interfaces";
 
 let connection: Connection
 
-export  default class UserAuth {
+export default class UserAuth {
 
-    async login(loginDetails:ILogin) {
+    async login(loginDetails: ILogin) {
 
         let foundUser = await Waiter.findOne({ username: loginDetails.username });
-        console.log([foundUser].length == 1)
 
         let checkPassword = await bcrypt.compareSync(loginDetails.password, foundUser.password)
-            if(checkPassword){
-                if([foundUser].length == 0 || foundUser == undefined){
-                    return 'Please enter a valid username or password'
-                 }
+        if (!checkPassword) {
 
-             }
-             foundUser['match']= Object.assign({'found':checkPassword})
+            return false
+        }
 
+        if (checkPassword) {
+
+            if ([foundUser].length == 0 || foundUser == undefined) {
+                return false
+            }
+
+            foundUser['match'] = Object.assign({ 'found': checkPassword })
             return foundUser
+        }
     }
 
     async logout() {
 
     }
 
-    async registerUser(registrationDetails:IRegister) {
+    async registerUser(registrationDetails: IRegister) {
 
         const user = new Waiter();
 
-        let hashPassword =  bcrypt.hashSync(registrationDetails.password)
-        //console.log(hashPassword)
+        let hashPassword = bcrypt.hashSync(registrationDetails.password)
         user.username = registrationDetails.username;
         user.firstname = registrationDetails.firstname;
         user.lastname = registrationDetails.lastname
