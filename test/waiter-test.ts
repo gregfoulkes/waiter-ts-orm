@@ -191,6 +191,7 @@ describe('Waiter-Webbapp-Function', function () {
 
 
     let allShifts = await shiftService.getShiftByUserName('gregfoulkes')
+    //console.log(allShifts)
     assert.equal(2, allShifts.shifts.length)
 
   })
@@ -211,6 +212,7 @@ describe('Waiter-Webbapp-Function', function () {
     await shiftService.assignShift(shiftData)
     await shiftService.updateShiftsByUserName(shiftData2)
     let allShifts = await shiftService.getShiftByUserName('gregfoulkes')
+   //console.log(allShifts)
     assert.equal(2, allShifts.shifts.length)
 
   })
@@ -236,7 +238,7 @@ describe('Waiter-Webbapp-Function', function () {
 
     let allShifts = await shiftService.getWeekdayShifts();
 
-    //console.log(allShifts)
+   // console.log(allShifts)
 
   })
 
@@ -335,8 +337,6 @@ describe('Authorisation-Functions', function () {
 
     await userAuth.registerUser(oneUSer)
     let checkThisUser = await userAuth.login({username:'gregfoulkes', password:'1234'})
-    console.log(checkThisUser)
-
     assert.equal(checkThisUser.username,'gregfoulkes')
     assert.equal(true,checkThisUser.match.found)
 

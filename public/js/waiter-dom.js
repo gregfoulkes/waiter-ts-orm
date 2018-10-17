@@ -52,7 +52,7 @@ var app = new Vue({
       return waiter.waiterNameApiPostRoute(userShiftData)
         .then(function (results) {
           //console.log(results)
-          console.log(self.username)
+          //console.log(self.username)
           waiter.waiterNameApiGetRoute(self.username).then(function (results) {
             let shiftData = results.data.shifts
            console.log(results.data.shifts)

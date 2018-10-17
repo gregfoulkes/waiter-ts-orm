@@ -95,6 +95,7 @@ export default class ShiftService {
     }
 
     async getShiftByUserName(username: string) {
+        console.log(username)
         try {
 
             const oneWaitersShifts = await getRepository(Shift)
@@ -103,6 +104,8 @@ export default class ShiftService {
                 .innerJoinAndSelect("shift.waiter", "waiter")
                 .where("waiter.username = :username", { username: username })
                 .getMany();
+
+               // console.log( oneWaitersShifts)
             let shiftData = {
                 username: username,
                 shifts: []
@@ -112,6 +115,7 @@ export default class ShiftService {
                 let dayId = shift.weekday.id;
                 shiftData.shifts.push(dayId);
             })
+            //console.log(shiftData)
             return shiftData;
 
         } catch (error) {
