@@ -8,6 +8,7 @@ var app = new Vue({
     username: '',
     fullname: 'Greg Foulkes',
     position: 'waiter',
+    //password: ''
     loggedIn: false,
     days: [],
     selectedDays: []

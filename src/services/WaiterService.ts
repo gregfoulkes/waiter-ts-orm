@@ -11,56 +11,56 @@ export default class WaiterService {
     //Insert a single waiter
     //Used to reguster a new user.
 
-    async insertWaiter(waiter: IUser) {
+    // async insertWaiter(waiter: IUser) {
 
-        const waiterModel = new Waiter();
-        waiterModel.username = waiter.userName;
-        waiterModel.fullname = waiter.fullName;
-        waiterModel.position = waiter.position;
+    //     const waiterModel = new Waiter();
+    //     waiterModel.username = waiter.userName;
+    //     waiterModel.fullname = waiter.fullName;
+    //     waiterModel.position = waiter.position;
 
-        return await waiterModel.save();
+    //     return await waiterModel.save();
 
-    }
+    // }
 
     //Inserts a list of predefined users
     //For testing purposes
 
-    async insertWaiters() {
+    // async insertWaiters() {
 
-        let waiters: IUser[] = [
-            {
-                userName: 'greg',
-                fullName: 'Greg Foulkes',
-                position: 'admin'
-            },
-            {
-                userName: 'aya',
-                fullName: 'Ayabonga Booi',
-                position: 'waiter'
+    //     let waiters: IUser[] = [
+    //         {
+    //             userName: 'greg',
+    //             fullName: 'Greg Foulkes',
+    //             position: 'admin'
+    //         },
+    //         {
+    //             userName: 'aya',
+    //             fullName: 'Ayabonga Booi',
+    //             position: 'waiter'
 
-            },
-            {
-                userName: 'luvuyo',
-                fullName: 'Luvuyo Sono',
-                position: 'waiter'
+    //         },
+    //         {
+    //             userName: 'luvuyo',
+    //             fullName: 'Luvuyo Sono',
+    //             position: 'waiter'
 
-            },
-            {
-                userName: 'aviwe',
-                fullName: 'Aviwe Mbekeni',
-                position: 'waiter'
+    //         },
+    //         {
+    //             userName: 'aviwe',
+    //             fullName: 'Aviwe Mbekeni',
+    //             position: 'waiter'
 
-            }
-        ]
+    //         }
+    //     ]
 
-        for (let i = 0; i < waiters.length; i++) {
-            const waiter = new Waiter();
-            waiter.username = waiters[i].userName;
-            waiter.fullname = waiters[i].fullName;
-            waiter.position = waiters[i].position;
-            await waiter.save();
-        }
-    }
+    //     for (let i = 0; i < waiters.length; i++) {
+    //         const waiter = new Waiter();
+    //         waiter.username = waiters[i].userName;
+    //         waiter.fullname = waiters[i].fullName;
+    //         waiter.position = waiters[i].position;
+    //         await waiter.save();
+    //     }
+    // }
 
     //Returns a list of users
     async getWaiters() {

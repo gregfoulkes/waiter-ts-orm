@@ -38,9 +38,11 @@ export  default class UserAuth {
         let hashPassword =  bcrypt.hashSync(registrationDetails.password)
         //console.log(hashPassword)
         user.username = registrationDetails.username;
-        user.fullname = registrationDetails.fullname;
+        user.firstname = registrationDetails.firstname;
+        user.lastname = registrationDetails.lastname
         user.email = registrationDetails.email;
-        user.password = hashPassword
+        user.password = hashPassword;
+        user.position = registrationDetails.position
         return await user.save();
 
     }

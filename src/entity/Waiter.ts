@@ -11,18 +11,21 @@ export class Waiter extends BaseEntity {
     username: string;
 
     @Column()
-    fullname: string;
+    firstname: string;
 
-    // @Column()
-    // email: string;
+    @Column()
+    lastname: string;
 
-    // @Column()
-    // password: string;
+    @Column()
+    email: string;
+
+    @Column()
+    password: string;
 
     @Column()
     position: string;
 
-    @OneToMany( type => Shift, shift => {return shift.waiter} )
+    @OneToMany( type => Shift, shift =>  shift.waiter )
     shifts : Shift[]
     
 }

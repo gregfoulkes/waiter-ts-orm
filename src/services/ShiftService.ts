@@ -30,14 +30,13 @@ export default class ShiftService {
             .leftJoinAndSelect('day.shifts', 'shift')
             .leftJoinAndSelect('shift.waiter', 'waiter')
             .getMany();
-
+       // console.log(days.map((day)=> day.shifts))
         let shiftsPerDay = days.map((day) => {
             return {
                 day: day.dayname,
-                waiters: day.shifts.map((shift) => shift.waiter.fullname)
+                waiters: day.shifts.map((shift) => shift.waiter.firstname)
             }
         })
-
         return shiftsPerDay
     }
 
@@ -65,36 +64,36 @@ export default class ShiftService {
 
     }
 
-    async getDaysAndNames() {
+    // async getDaysAndNames() {
 
-        let allDays = await dayService.getWeekdays();
-        let allShifts = await this.getShifts()
+    //     let allDays = await dayService.getWeekdays();
+    //     let allShifts = await this.getShifts()
 
-        interface WaitersForDay {
-            day: string
-            waiters: string[]
-        }
+    //     interface WaitersForDay {
+    //         day: string
+    //         waiters: string[]
+    //     }
 
-        let shiftList: WaitersForDay[] = [];
-        for (let i = 0; i < allDays.length; i++) {
+    //     let shiftList: WaitersForDay[] = [];
+    //     for (let i = 0; i < allDays.length; i++) {
 
-            let waitersForDay: WaitersForDay = {
-                day: allDays[i].dayname,
-                waiters: []
-            }
+    //         let waitersForDay: WaitersForDay = {
+    //             day: allDays[i].dayname,
+    //             waiters: []
+    //         }
 
-            for (let i = 0; i < allShifts.length; i++) {
-                if (allDays[i].dayname == allShifts[i].weekday.dayname) {
-                    waitersForDay.waiters.push(allShifts[i].waiter.fullname)
+    //         for (let i = 0; i < allShifts.length; i++) {
+    //             if (allDays[i].dayname == allShifts[i].weekday.dayname) {
+    //                 waitersForDay.waiters.push(allShifts[i].waiter.firstname)
 
-                }
-            }
-            shiftList.push(waitersForDay);
-            return shiftList
+    //             }
+    //         }
+    //         shiftList.push(waitersForDay);
+    //         return shiftList
 
-        }
+    //     }
 
-    }
+    // }
 
     async getShiftByUserName(username: string) {
         try {

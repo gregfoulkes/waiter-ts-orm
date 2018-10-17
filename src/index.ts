@@ -1,5 +1,5 @@
 import "reflect-metadata";
-import DayRoutes from './routes/waiterRoutes';
+import WaiterRoutes from './routes/waiterRoutes';
 
 import * as express from "express";
 import { Request, Response } from "express";
@@ -8,7 +8,7 @@ import * as bodyParser from "body-parser";
 import { createConnection } from "typeorm";
 //const connection =  DbConnectionFactory('default')
 
-let dayRoutes = new DayRoutes()
+let waiterRoutes = new WaiterRoutes()
 
 const app = express();
 
@@ -16,15 +16,15 @@ app.use(bodyParser.json());
 
 app.use(express.static('public'));
 
-app.get("/api", dayRoutes.home)
+app.get("/api", waiterRoutes.home)
 
-app.get("/api/waiter/:username", dayRoutes.waiterNameGetRoute)
+app.get("/api/waiter/:username", waiterRoutes.waiterNameGetRoute)
 
-app.post("/api/waiter/:username", dayRoutes.waiterNamePostRoute)
+app.post("/api/waiter/:username", waiterRoutes.waiterNamePostRoute)
 
-app.get("/api/days", dayRoutes.getShiftsForDaysRoute)
+app.get("/api/days", waiterRoutes.getShiftsForDaysRoute)
 
-app.post("/api/register")
+app.post("/api/register",waiterRoutes.register)
 
 app.get("/api/login")
 

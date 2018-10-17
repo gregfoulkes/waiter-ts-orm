@@ -5,13 +5,15 @@ import { Day } from "../entity/Day";
 import DayService from '../services/DayService'
 import ShiftService from '../services/ShiftService'
 import WaiterService from '../services/WaiterService'
+import  UserAuth  from "../services/AuthService";
 
 //Instatiate new services
 let waiterService = new WaiterService()
 let dayService = new DayService()
 let shiftService = new ShiftService()
+let authService = new UserAuth()
 
-export default class DayRoutes {
+export default class WaiterRoutes {
 
     async home(req: express.Request, res: express.Response) {
 
@@ -81,6 +83,25 @@ export default class DayRoutes {
         }
 
     }
+
+    async register(req: express.Request, res: express.Response) {
+
+        try {
+            let registerData = await authService.registerUser(req.body)
+            res.json({
+                status: 'success',
+                data: registerData
+            });
+        } catch (err) {
+            res.json({
+                status: 'error',
+                error: err.stack
+            });
+        }
+
+    }
+
+    
 
 
 }
