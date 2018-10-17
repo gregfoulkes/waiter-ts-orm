@@ -47,6 +47,21 @@
 
    }
 
+   function loginApiRoute(shiftData) {
+
+    try {
+      const response = axios.get("/api/login", + shiftData.username, {
+        shift: shiftData
+      });
+
+      return response;
+
+    } catch (error) {
+      alert(error)
+    }
+
+  }
+
    return {
      getAllDays,
      waiterNameApiGetRoute,

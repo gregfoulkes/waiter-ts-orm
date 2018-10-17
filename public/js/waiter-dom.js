@@ -8,7 +8,7 @@ var app = new Vue({
     username: '',
     fullname: 'Greg Foulkes',
     position: 'waiter',
-    //password: ''
+    // password: '' 
     loggedIn: false,
     days: [],
     selectedDays: []
@@ -69,6 +69,16 @@ var app = new Vue({
         this.loggedIn = false;
       }
     },
+
+    // login: function () {
+    //   location.hash = this.username;
+    //   let self = this;
+    //   let waiterName = self.username;
+    //   return waiter.waiterNameApiGetRoute(waiterName).then(function (results) {
+    //     let shiftData = results.data.shifts
+    //     self.selectedDays = shiftData.shifts;
+    //   })
+    // },
 
     login: function () {
       location.hash = this.username;

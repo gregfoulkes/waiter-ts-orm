@@ -101,6 +101,25 @@ export default class WaiterRoutes {
 
     }
 
+    async waiterNameLoginRoute(req: express.Request, res: express.Response) {
+
+        let shiftData = req.body.shift
+        let waiterName = req.params.username
+
+        try {
+            await authService.login(shiftData)
+            res.json({
+                status: 'success'
+            });
+        } catch (err) {
+            res.json({
+                status: 'error',
+                error: err.stack
+            });
+        }
+    }
+
+
     
 
 
