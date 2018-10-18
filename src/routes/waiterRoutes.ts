@@ -5,7 +5,7 @@ import { Day } from "../entity/Day";
 import DayService from '../services/DayService'
 import ShiftService from '../services/ShiftService'
 import WaiterService from '../services/WaiterService'
-import  UserAuth  from "../services/AuthService";
+import UserAuth from "../services/AuthService";
 
 //Instatiate new services
 let waiterService = new WaiterService()
@@ -34,8 +34,10 @@ export default class WaiterRoutes {
     async waiterNameGetRoute(req: express.Request, res: express.Response) {
 
         try {
-
+            // console.log(req.params.username)
             let oneWaitersShifts = await shiftService.getShiftByUserName(req.params.username)
+
+            //console.log(oneWaitersShifts)
             res.json({
                 status: 'success',
                 shifts: oneWaitersShifts
@@ -52,8 +54,8 @@ export default class WaiterRoutes {
     async waiterNamePostRoute(req: express.Request, res: express.Response) {
 
         let shiftData = req.body.shift
-        let waiterName = req.params.username
-
+        // let waiterName = req.params.username
+        // console.log(shiftData)
         try {
             await shiftService.updateShiftsByUserName(shiftData)
             res.json({
@@ -92,35 +94,32 @@ export default class WaiterRoutes {
                 status: 'success',
                 data: registerData
             });
+            
         } catch (err) {
             res.json({
                 status: 'error',
                 error: err.stack
             });
         }
-
     }
 
-    async waiterNameLoginRoute(req: express.Request, res: express.Response) {
 
-        let shiftData = req.body.shift
-        let waiterName = req.params.username
-
+    async login(req: express.Request, res: express.Response) {
+        console.log(req.body)
         try {
-            await authService.login(shiftData)
+            let loginData = await authService.login(req.body.login)
+            //console.log(loginData)
             res.json({
-                status: 'success'
+                status: 'success',
+                data: loginData
             });
         } catch (err) {
             res.json({
                 status: 'error',
-                error: err.stack
+                error: err,
+                stack: err.stack
             });
         }
+        //sdafglfegwqahfwgelqhf
     }
-
-
-    
-
-
 }

@@ -23,11 +23,27 @@
 
    }
 
+
    function waiterNameApiPostRoute(shiftData) {
      try {
        return axios.post("/api/waiter/" + shiftData.username, {
          shift: shiftData
        });
+
+     } catch (error) {
+       alert(error);
+     }
+   }
+
+   function waiterNameLoginApiRoute(loginData) {
+     //console.log(loginData)
+     try {
+
+       let result = axios.post("/api/login", {
+         login: loginData
+       });
+       //console.log(result)
+       return result
 
      } catch (error) {
        alert(error);
@@ -66,7 +82,8 @@
      getAllDays,
      waiterNameApiGetRoute,
      waiterNameApiPostRoute,
-     getShiftsForDaysApiRoute
+     getShiftsForDaysApiRoute,
+     waiterNameLoginApiRoute
    }
 
  }

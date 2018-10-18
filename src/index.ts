@@ -24,9 +24,9 @@ app.post("/api/waiter/:username", waiterRoutes.waiterNamePostRoute)
 
 app.get("/api/days", waiterRoutes.getShiftsForDaysRoute)
 
-app.post("/api/register",waiterRoutes.register)
+app.post("/api/login", waiterRoutes.login)
 
-app.get("/api/login", waiterRoutes.waiterNameLoginRoute)
+app.post("/api/register", waiterRoutes.register)
 
 async function start() {
     try {
