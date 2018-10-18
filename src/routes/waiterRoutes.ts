@@ -54,8 +54,7 @@ export default class WaiterRoutes {
     async waiterNamePostRoute(req: express.Request, res: express.Response) {
 
         let shiftData = req.body.shift
-        // let waiterName = req.params.username
-        // console.log(shiftData)
+      
         try {
             await shiftService.updateShiftsByUserName(shiftData)
             res.json({
@@ -105,10 +104,10 @@ export default class WaiterRoutes {
 
 
     async login(req: express.Request, res: express.Response) {
-        console.log(req.body.login)
+       // console.log(req.body.login)
         try {
             let loginData = await authService.login(req.body.login)
-            console.log(loginData)
+            //console.log(loginData)
             res.json({
                 status: 'success',
                 data: loginData

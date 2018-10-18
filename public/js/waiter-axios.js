@@ -63,27 +63,28 @@
 
    }
 
-   function loginApiRoute(shiftData) {
+  //  function registerApiRoute(registerData) {
 
-    try {
-      const response = axios.get("/api/login", + shiftData.username, {
-        shift: shiftData
-      });
+  //   try {
+  //     const response = axios.get("/api/register", {
+  //       register: registerData
+  //     });
 
-      return response;
+  //     return response;
 
-    } catch (error) {
-      alert(error)
-    }
+  //   } catch (error) {
+  //     alert(error)
+  //   }
 
-  }
+  // }
 
    return {
      getAllDays,
      waiterNameApiGetRoute,
      waiterNameApiPostRoute,
      getShiftsForDaysApiRoute,
-     waiterNameLoginApiRoute
+     waiterNameLoginApiRoute,
+    //  waiterRegisterApiRoute
    }
 
  }

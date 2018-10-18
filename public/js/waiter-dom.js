@@ -27,49 +27,38 @@ var app = new Vue({
     window.addEventListener('load', function () {
 
       waiter.waiterNameApiGetRoute(self.username).then(function (results) {
-        // console.log(results.data)
         let shiftData = results.data.shifts
         self.selectedDays = shiftData.shifts;
-        // console.log(shiftData.shifts)
-
       })
-
     })
 
     window.addEventListener("hashchange", function () {
       self.setUsername(location.hash);
     });
   },
-
   methods: {
 
     setShifts: function () {
       let self = this;
-
       let userShiftData = {
         username: this.username,
         days: this.selectedDays
       };
-      //console.log(userShiftData)
       return waiter.waiterNameApiPostRoute(userShiftData)
         .then(function (results) {
-          //console.log(results)
-          //console.log(self.username)
           waiter.waiterNameApiGetRoute(self.username).then(function (results) {
             let shiftData = results.data.shifts
-            console.log(results.data.shifts)
-
             self.selectedDays = shiftData.shifts;
           })
         })
     },
 
     setUsername: function (hash) {
-      let self = this;
       let parts = hash.split('#');
       if (parts.length === 2) {
         this.username = parts[1];
         this.loggedIn = true;
+        console.log(this.loggedIn)
       } else {
         this.username = '';
         this.loggedIn = false;
@@ -96,12 +85,12 @@ var app = new Vue({
         username: waiterName,
         password: password
       }
-      console.log(loginData)
+
       return waiter.waiterNameLoginApiRoute(loginData)
         .then(function (results) {
-          console.log(results)
           let userData = results.data
-          self.username = userData.username
+          console.log(userData.username)
+          self.username = loginData.username
           self.firstname = userData.firstname
           self.lastname = userData.lastname
           self.email = userData.email
