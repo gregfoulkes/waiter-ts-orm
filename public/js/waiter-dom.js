@@ -100,12 +100,12 @@ var app = new Vue({
       return waiter.waiterNameLoginApiRoute(loginData)
         .then(function (results) {
           console.log(results)
-          let userData = results.data.login
+          let userData = results.data
           self.username = userData.username
           self.firstname = userData.firstname
           self.lastname = userData.lastname
           self.email = userData.email
-          self.password = userdata.password
+          self.password = userData.password
           self.position = userData.position
 
           waiter.waiterNameApiGetRoute(waiterName).then(function (results) {

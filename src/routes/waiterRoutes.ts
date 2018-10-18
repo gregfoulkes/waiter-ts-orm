@@ -105,10 +105,10 @@ export default class WaiterRoutes {
 
 
     async login(req: express.Request, res: express.Response) {
-        console.log(req.body)
+        console.log(req.body.login)
         try {
             let loginData = await authService.login(req.body.login)
-            //console.log(loginData)
+            console.log(loginData)
             res.json({
                 status: 'success',
                 data: loginData
