@@ -58,11 +58,29 @@
       <div>
         <label>Enter your Username:</label>
         <input type="text" v-model="username" />
-        <!-- <label>Enter your Full Name:</label>
-        <input type="text" v-model="fullname" /> -->
+        <label>Enter your Password:</label>
+        <input type="text" v-model="password" />
         <button v-on:click="login ">Login</button>
       </div>
     </div>
+
+    <!-- <div v-if="!loggedIn">
+      <strong>Please Register</strong>
+
+      <div>
+        <label>Enter a Username:</label>
+        <input type="text" v-model="username" />
+        <label>Enter a Password:</label>
+        <input type="text" v-model="password" />
+        <label>Enter Your First Name:</label>
+        <input type="text" v-model="firstname" />
+        <label>Enter your Last Name:</label>
+        <input type="text" v-model="lastname" />
+        <label>Enter your E-Mail:</label>
+        <input type="text" v-model="email" />
+        <button v-on:click="login ">Login</button>
+      </div>
+    </div> -->
     
   </div>
 

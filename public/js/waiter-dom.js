@@ -8,7 +8,9 @@ var app = new Vue({
     username: '',
     firstname: '',
     lastname: '',
-    position: 'waiter',
+    email: '',
+    password: '',
+    position: '',
     loggedIn: false,
     days: [],
     selectedDays: []
@@ -25,7 +27,7 @@ var app = new Vue({
     window.addEventListener('load', function () {
 
       waiter.waiterNameApiGetRoute(self.username).then(function (results) {
-       // console.log(results.data)
+        // console.log(results.data)
         let shiftData = results.data.shifts
         self.selectedDays = shiftData.shifts;
         // console.log(shiftData.shifts)
@@ -55,7 +57,7 @@ var app = new Vue({
           //console.log(self.username)
           waiter.waiterNameApiGetRoute(self.username).then(function (results) {
             let shiftData = results.data.shifts
-           console.log(results.data.shifts)
+            console.log(results.data.shifts)
 
             self.selectedDays = shiftData.shifts;
           })
@@ -88,10 +90,35 @@ var app = new Vue({
       location.hash = this.username;
       let self = this;
       let waiterName = self.username;
-      return waiter.waiterNameApiGetRoute(waiterName).then(function (results) {
-        let shiftData = results.data.shifts
-        self.selectedDays = shiftData.shifts;
-      })
+      let password = this.password
+
+      let loginData = {
+        username: waiterName,
+        password: password
+      }
+      console.log(loginData)
+      return waiter.waiterNameLoginApiRoute(loginData)
+        .then(function (results) {
+          console.log(results)
+          let userData = results.data.login
+          self.username = userData.username
+          self.firstname = userData.firstname
+          self.lastname = userData.lastname
+          self.email = userData.email
+          self.password = userdata.password
+          self.position = userData.position
+
+          waiter.waiterNameApiGetRoute(waiterName).then(function (results) {
+            let shiftData = results.data.shifts
+            self.selectedDays = shiftData.shifts;
+          })
+        })
+    },
+
+    register: function () {
+
+
+
     },
 
     logout: function () {

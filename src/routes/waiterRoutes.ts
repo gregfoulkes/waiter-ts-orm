@@ -34,7 +34,7 @@ export default class WaiterRoutes {
     async waiterNameGetRoute(req: express.Request, res: express.Response) {
 
         try {
-           // console.log(req.params.username)
+            // console.log(req.params.username)
             let oneWaitersShifts = await shiftService.getShiftByUserName(req.params.username)
 
             //console.log(oneWaitersShifts)
@@ -55,7 +55,7 @@ export default class WaiterRoutes {
 
         let shiftData = req.body.shift
         // let waiterName = req.params.username
-       // console.log(shiftData)
+        // console.log(shiftData)
         try {
             await shiftService.updateShiftsByUserName(shiftData)
             res.json({
@@ -104,19 +104,21 @@ export default class WaiterRoutes {
 
 
     async login(req: express.Request, res: express.Response) {
-
+        console.log(req.body)
         try {
-            let registerData = await authService.login(req.body)
+            let loginData = await authService.login(req.body.login)
+            //console.log(loginData)
             res.json({
                 status: 'success',
-                data: registerData
+                data: loginData
             });
         } catch (err) {
             res.json({
                 status: 'error',
-                error: err.stack
+                error: err,
+                stack: err.stack
             });
         }
-//sdafglfegwqahfwgelqhf
+        //sdafglfegwqahfwgelqhf
     }
 }
