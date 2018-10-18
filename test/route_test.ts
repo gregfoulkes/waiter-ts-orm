@@ -3,7 +3,7 @@ let assert = require("assert");
 import * as express from "express";
 import  DayRoutes  from "../src/routes/waiterRoutes";
 
-import app from "../src/index"
+// import app from "../src/index"
 //var express = require("../build/index.js");
 //let waiterRoutes = new DayRoutes
 
