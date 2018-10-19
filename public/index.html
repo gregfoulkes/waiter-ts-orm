@@ -12,14 +12,14 @@
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
   <!-- <script src="/semantic/semantic.min.js"></script> -->
-    <script src="css/some.css"></script>
+  <script src="css/some.css"></script>
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 
   <style>
 
-    .layover {
+    #overlay {
     position: fixed; 
-    display: none; 
+    display: block; 
     width: 100%; 
     height: 100%;
     top: 0; 
@@ -30,7 +30,6 @@
     z-index: 2; 
     cursor: pointer;
 }
-
   
   </style>
 
@@ -53,9 +52,9 @@
 
   <div id="dayLoop">
 
-    <div  v-if="loggedIn">
+    <div v-if="loggedIn" >
       <h3>{{username}}</h3>
-      <!-- <form action="/waiter/{{username}}" method='post'> -->
+
       <div v-for="day in days" :key="days.id">
         <label>{{day.dayname}}</label>
         <input type="checkbox" v-model="selectedDays" :value="day.id" />
@@ -64,25 +63,25 @@
       <p> {{username}}'s selected days</p>
 
       {{selectedDays}}
-      
-        <div>
-          <button type='submit' v-on:click="setShifts" >Set shifts</button>
-        <!-- </form> -->
-          <button v-on:click="logout" >Logout</button>
-        </div>
+
+      <div>
+        <button type='submit' v-on:click="setShifts">Set shifts</button>
+
+        <button v-on:click="logout">Logout</button>
+      </div>
     </div>
-    <!-- <div class = "layover"  v-if="!loggedIn"> -->
-        <div  v-if="!loggedIn">
+    <div id="overlay"  v-if="!loggedIn ">
 
       <strong>Please enter an username</strong>
 
-      <div>
-        <label>Enter your Username:</label>
-        <input type="text" v-model="username" />
-        <label>Enter your Password:</label>
-        <input type="text" v-model="password" />
-        <button v-on:click="login ">Login</button>
-      </div>
+        <div>
+          <label>Enter your Username:</label>
+          <input type="text" v-model="username" />
+          <label>Enter your Password:</label>
+          <input type="text" v-model="password" />
+          <button v-on:click="login ">Login</button>
+        </div>
+
     </div>
 
     <!-- <div v-if="!loggedIn">
@@ -102,11 +101,21 @@
         <button v-on:click="login ">Login</button>
       </div>
     </div> -->
-    
+
   </div>
 
   <script src="js/waiter-axios.js"></script>
   <script src="js/waiter-dom.js"></script>
+
+  <script>
+  function on() {
+    document.getElementById("overlay").style.display = "block";
+}
+function off() {
+    document.getElementById("overlay").style.display = "none";
+}
+
+  </script>
 
 </body>
 
