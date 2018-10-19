@@ -3,13 +3,12 @@
 let waiter = waiterAxiosFunction()
 
 var app = new Vue({
-  el: '#dayLoop',
+  el: '#selectDays',
   data: {
     username: '',
     firstname: '',
     lastname: '',
     email: '',
-    password: '',
     position: '',
     loggedIn: false,
     days: [],
@@ -22,7 +21,7 @@ var app = new Vue({
       self.days = results.data.data;
     });
 
-    this.setUsername(location.hash);
+    self.setUsername(location.hash);
 
     window.addEventListener('load', function () {
 
@@ -41,9 +40,10 @@ var app = new Vue({
     setShifts: function () {
       let self = this;
       let userShiftData = {
-        username: this.username,
-        days: this.selectedDays
+        username: self.username,
+        days: self.selectedDays
       };
+      console.log(userShiftData)
       return waiter.waiterNameApiPostRoute(userShiftData)
         .then(function (results) {
           waiter.waiterNameApiGetRoute(self.username).then(function (results) {
@@ -58,7 +58,6 @@ var app = new Vue({
       if (parts.length === 2) {
         this.username = parts[1];
         this.loggedIn = true;
-        console.log(this.loggedIn)
       } else {
         this.username = '';
         this.loggedIn = false;
@@ -76,10 +75,9 @@ var app = new Vue({
     // },  
 
     login: function () {
-      location.hash = this.username;
       let self = this;
       let waiterName = self.username;
-      let password = this.password
+      let password = self.password
 
       let loginData = {
         username: waiterName,
@@ -88,20 +86,34 @@ var app = new Vue({
 
       return waiter.waiterNameLoginApiRoute(loginData)
         .then(function (results) {
-          let userData = results.data
-          console.log(userData.username)
-          self.username = loginData.username
-          self.firstname = userData.firstname
-          self.lastname = userData.lastname
-          self.email = userData.email
-          self.password = userData.password
-          self.position = userData.position
+            let responseData = results.data;
 
-          waiter.waiterNameApiGetRoute(waiterName).then(function (results) {
-            let shiftData = results.data.shifts
-            self.selectedDays = shiftData.shifts;
-          })
-        })
+            if (responseData.status === 'success') {
+              let userData = responseData.data;
+
+              console.log(userData)
+
+              //set the location hash to equal the username of the logged in user
+              location.hash = self.username;
+
+              //store user data in vue data object 
+              console.log(userData.firstname)
+              self.username = userData.username
+              self.firstname = userData.firstname
+              self.lastname = userData.lastname
+              self.email = userData.email
+              self.position = userData.position
+
+              //get user shifts if user exists
+              waiter.waiterNameApiGetRoute(waiterName).then(function (results) {
+                let shiftData = results.data.shifts
+                self.selectedDays = shiftData.shifts;
+              })
+
+            }
+        });
+
+
     },
 
     register: function () {
