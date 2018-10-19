@@ -64,16 +64,6 @@ var app = new Vue({
       }
     },
 
-    // login: function () {
-    //   location.hash = this.username;
-    //   let self = this;
-    //   let waiterName = self.username;
-    //   return waiter.waiterNameApiGetRoute(waiterName).then(function (results) {
-    //     let shiftData = results.data.shifts
-    //     self.selectedDays = shiftData.shifts;
-    //   })
-    // },  
-
     login: function () {
       let self = this;
       let waiterName = self.username;
@@ -125,6 +115,10 @@ var app = new Vue({
     logout: function () {
       this.loggedIn = false;
       this.username = '';
+      this.firstname = '';
+      this.lastname = '';
+      this.email = '';
+      this.password = '';
       this.selectedDays = [];
       location.hash = "";
     }

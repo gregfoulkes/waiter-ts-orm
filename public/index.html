@@ -4,17 +4,19 @@
   <meta charset='utf-8'>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <script src='https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.12/handlebars.js'></script>
-  <!-- <link rel="stylesheet" type="text/css" href="/semantic/semantic.min.css">
-  <link rel="stylesheet" type="text/css" href="/semantic/semantic.css"> -->
 
+  <!-- Reference semantic cdn -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.3/semantic.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.3/semantic.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.3/semantic.js" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.3/semantic.min.js" />
+  <!-- Reference JQuery -->
   <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
     crossorigin="anonymous"></script>
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
-  <!-- <script src="/semantic/semantic.min.js"></script> -->
-  <script src="css/some.css"></script>
+  <!-- Reference Vue.js -->
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-
   <style>
 
     #overlay {
@@ -30,6 +32,10 @@
     z-index: 2; 
     cursor: pointer;
 }
+
+  .addMargins{
+    margin:10px;
+  }
   
   </style>
 
@@ -37,52 +43,91 @@
 
 <body>
 
-  <div class="ui one column grid">
-    <div class="column">
 
-      <div class="ui segment">
-
-        <h1 class="ui center aligned header">
-          Select Days
-        </h1>
-
-      </div>
-    </div>
-  </div>
 
   <div id="selectDays">
 
-    <div v-if="loggedIn" >
-      <h3>{{username}}</h3>
+    <div v-if="loggedIn">
 
-      <div v-for="day in days" :key="days.id">
-        <label>{{day.dayname}}</label>
-        <input type="checkbox" v-model="selectedDays" :value="day.id" />
+      <div class="ui one column grid">
+        <div class="column">
+
+          <div class="ui segment">
+
+            <h1 class="ui center aligned header">
+              Select Days
+            </h1>
+
+          </div>
+        </div>
       </div>
 
-      <p> {{username}}'s selected days</p>
+      <h3  class="ui center aligned header" >{{username}}</h3>
 
-      {{selectedDays}}
+      <div class = "ui center aligned grid">
+          <div v-for="day in days" :key="days.id">
+              <label style = "width:80px;" class = " addMargins ui label">{{day.dayname}}</label>
+              <input class = 'addMargins' type="checkbox" v-model="selectedDays" :value="day.id" />
+            </div>
 
-      <div>
-        <button type='submit' v-on:click="setShifts">Set shifts</button>
-
-        <button v-on:click="logout">Logout</button>
       </div>
-    </div>
-    <div id="overlay"  v-if="!loggedIn ">
 
-      <strong>Please enter an username</strong>
+      <!-- <p> {{username}}'s selected days</p>
 
-        <div>
-          <label>Enter your Username:</label>
-          <input type="text" v-model="username" />
-          <label>Enter your Password:</label>
-          <input type="text" v-model="password" />
-          <button v-on:click="login ">Login</button>
+      {{selectedDays}} -->
+
+      <div class = "ui center aligned  grid" >
+
+        <div class = ' addMargins column'>
+            <button style = 'width:100px' class = 'addMargins ui button' type='submit' v-on:click="setShifts">Set shifts</button>
         </div>
 
+        <div class = 'addMargins column'>
+            <button class = ' ui button' v-on:click="logout">Logout</button>
+          </div>
+
+      </div>
     </div>
+
+    <!-- <div> -->
+      <div class="ui basic active modal"  v-if="!loggedIn ">
+
+        <div class="ui one column grid">
+          <div class="column">
+
+            <div class="ui segment">
+
+              <h1 class="ui center aligned header">
+                Login
+              </h1>
+
+            </div>
+          </div>
+        </div>
+        <div class='ui container'>
+
+          <div class='ui one column center aligned grid'>
+
+            <div class='column'>
+              <label class="addMargins ui label">Enter your Username:</label>
+              <input class="addMargins" type="text" v-model="username" />
+            </div>
+
+            <div class='column'>
+              <label class=" addMargins ui label">Enter your Password:</label>
+              <input class="addMargins" type="text" v-model="password" />
+            </div>
+
+            <div class='column'>
+              <button class="ui button" v-on:click="login ">Login</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    <!-- </div> -->
+
+
+
 
     <!-- <div v-if="!loggedIn">
       <strong>Please Register</strong>
@@ -108,12 +153,7 @@
   <script src="js/waiter-dom.js"></script>
 
   <script>
-  function on() {
-    document.getElementById("overlay").style.display = "block";
-}
-function off() {
-    document.getElementById("overlay").style.display = "none";
-}
+
 
   </script>
 
