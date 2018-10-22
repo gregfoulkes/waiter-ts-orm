@@ -115,7 +115,11 @@ var app = new Vue({
                 self.hideLoginScreen()
               })
 
-            }
+             }// else {
+            //  let error = document.querySelector('errorMessage')
+
+            //  error.innerHTML = 'Please Enter a Valid Username or Password'
+            // }
         });
     },
     showLoginScreen : function (){

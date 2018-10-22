@@ -47,17 +47,37 @@
 
     <!-- Login Modal -->
     <div id="myModal" class="modal" v-if="!loggedIn">
-      <div class='one column grid'>
+      <div class='ui center aligned three column grid'>
+<!-- 
+        <div class="left floated two wide column">
 
-        <div class="ui segment">
+        </div> -->
 
-          <h1 class="ui center aligned header">
+        <div class='sixteen wide column'>
+
+          <h1  class="ui block header">
             Login
+            <!-- <div style = 'float:right' class="ui basic buttons">
+                <button class="ui button">Register</button>
+              </div>           -->
           </h1>
+
+          <div class="sub header">Enter Your Username <br>
+            and Password to Login</div>
+           
 
         </div>
 
+
+
+        <!-- <div class="right floated two wide column">
+          <div class="ui basic buttons">
+            <button class="ui button">Register</button>
+          </div>
+        </div> -->
+
       </div>
+
 
       <div class='addMargins ui container'>
 
@@ -83,18 +103,26 @@
 
         <div class='ui center aligned stackable one column grid'>
 
-          <div class='column'>
-            <button style='width:100px' class='addMargins ui button' type='submit' v-on:click="setShifts">Set shifts</button>
-
-          </div>
 
           <div class='column'>
-            <button class=' ui button' v-on:click="logout">Logout</button>
-
+            <button class="ui button" v-on:click="login ">Login</button>
           </div>
 
         </div>
-      </div>
+
+        <!-- <div class='ui center aligned stackable one column grid'>
+
+            <div class="ui message errorMessage">
+                 <div class="header"> 
+                  Changes in Service
+                </div> 
+                <p class = 'errorMessage'></p>
+              </div>
+          </div> -->
+
+          <!-- </div> -->
+
+    
 
 
 
