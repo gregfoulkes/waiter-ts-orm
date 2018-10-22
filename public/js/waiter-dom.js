@@ -22,18 +22,32 @@ var app = new Vue({
     });
 
     self.setUsername(location.hash);
+    
+    self.showLoginScreen()
 
-    window.addEventListener('load', function () {
+    //self.showDaySelectScreen()
+
+    // window.addEventListener('load', function () {
 
       waiter.waiterNameApiGetRoute(self.username).then(function (results) {
         let shiftData = results.data.shifts
         self.selectedDays = shiftData.shifts;
       })
-    })
+    // })
 
     window.addEventListener("hashchange", function () {
       self.setUsername(location.hash);
     });
+  },
+  computed : {
+    // notLoggedIn : function() {
+    //   if (!this.username) {
+    //     alert('!');
+    //     // show your modal
+    //     return true;
+    //   }
+    //   return false;
+    // }
   },
   methods: {
 
@@ -98,12 +112,23 @@ var app = new Vue({
               waiter.waiterNameApiGetRoute(waiterName).then(function (results) {
                 let shiftData = results.data.shifts
                 self.selectedDays = shiftData.shifts;
+                self.hideLoginScreen()
               })
 
             }
         });
+    },
+    showLoginScreen : function (){
+    // var modal = document.getElementById('myModal');
+    // modal.style.display = "block";
+    },
 
-
+    hideLoginScreen: function () {
+      // if(this.loggedIn){
+        // var modal = document.getElementById('myModal');
+        // modal.style.display = "none";
+      // }
+     
     },
 
     register: function () {
@@ -121,7 +146,7 @@ var app = new Vue({
       this.password = '';
       this.selectedDays = [];
       location.hash = "";
+       this.showLoginScreen()
     }
-
   }
 })

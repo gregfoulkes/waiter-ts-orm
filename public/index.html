@@ -19,19 +19,18 @@
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
   <style>
 
-    #overlay {
-    position: fixed; 
-    display: block; 
-    width: 100%; 
-    height: 100%;
-    top: 0; 
+    .modal {
+    display: block; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
     left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(192, 22, 22, 0.65); 
-    z-index: 2; 
-    cursor: pointer;
-}
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  }
 
   .addMargins{
     margin:10px;
@@ -43,11 +42,67 @@
 
 <body>
 
-
-
   <div id="selectDays">
 
-    <div v-if="loggedIn">
+
+    <!-- Login Modal -->
+    <div id="myModal" class="modal" v-if="!loggedIn">
+      <div class='one column grid'>
+
+        <div class="ui segment">
+
+          <h1 class="ui center aligned header">
+            Login
+          </h1>
+
+        </div>
+
+      </div>
+
+      <div class='addMargins ui container'>
+
+        <div class="  ui center aligned  stackable one column grid">
+
+          <div class="column">
+            <label class=" ui label">Enter your Username:</label>
+          </div>
+
+          <div class="column">
+            <input class="" type="text" v-model="username" />
+          </div>
+
+          <div class="column">
+            <label class=" ui label">Enter your Password:</label>
+          </div>
+
+          <div class="column">
+            <input class="" type="text" v-model="password" />
+          </div>
+
+        </div>
+
+        <div class='ui center aligned stackable one column grid'>
+
+          <div class='column'>
+            <button style='width:100px' class='addMargins ui button' type='submit' v-on:click="setShifts">Set shifts</button>
+
+          </div>
+
+          <div class='column'>
+            <button class=' ui button' v-on:click="logout">Logout</button>
+
+          </div>
+
+        </div>
+      </div>
+
+
+
+    </div>
+
+    <!-- Select Days Screen -->
+
+    <div v-if='loggedIn'>
 
       <div class="ui one column grid">
         <div class="column">
@@ -62,90 +117,27 @@
         </div>
       </div>
 
-      <h3  class="ui center aligned header" >{{username}}</h3>
 
-      <div class = "ui center aligned grid">
-          <div v-for="day in days" :key="days.id">
-              <label style = "width:80px;" class = " addMargins ui label">{{day.dayname}}</label>
-              <input class = 'addMargins' type="checkbox" v-model="selectedDays" :value="day.id" />
-            </div>
-
-      </div>
-
-      <!-- <p> {{username}}'s selected days</p>
-
-      {{selectedDays}} -->
-
-      <div class = "ui center aligned  grid" >
-
-        <div class = ' addMargins column'>
-            <button style = 'width:100px' class = 'addMargins ui button' type='submit' v-on:click="setShifts">Set shifts</button>
+      <div class='container'>
+        <div class='ui center aligned stackable eight column  grid'>
+          <div v-for="day in days" :key="days.id" class='column'>
+            <label style='width:70px;' class=" addMargins ui label">{{day.dayname}}</label>
+            <input class='addMargins' type="checkbox" v-model="selectedDays" :value="day.id" />
+          </div>
         </div>
-
-        <div class = 'addMargins column'>
-            <button class = ' ui button' v-on:click="logout">Logout</button>
+        <div class='ui center aligned stackable one column grid'>
+          <div class='  column'>
+            <button style='width:100px;' class='addMargins ui button' type='submit' v-on:click="setShifts">Set shifts</button>
           </div>
 
+          <div class=' column'>
+            <button class=' ui button' v-on:click="logout">Logout</button>
+          </div>
+
+        </div>
       </div>
+
     </div>
-
-    <!-- <div> -->
-      <div class="ui basic active modal"  v-if="!loggedIn ">
-
-        <div class="ui one column grid">
-          <div class="column">
-
-            <div class="ui segment">
-
-              <h1 class="ui center aligned header">
-                Login
-              </h1>
-
-            </div>
-          </div>
-        </div>
-        <div class='ui container'>
-
-          <div class='ui one column center aligned grid'>
-
-            <div class='column'>
-              <label class="addMargins ui label">Enter your Username:</label>
-              <input class="addMargins" type="text" v-model="username" />
-            </div>
-
-            <div class='column'>
-              <label class=" addMargins ui label">Enter your Password:</label>
-              <input class="addMargins" type="text" v-model="password" />
-            </div>
-
-            <div class='column'>
-              <button class="ui button" v-on:click="login ">Login</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    <!-- </div> -->
-
-
-
-
-    <!-- <div v-if="!loggedIn">
-      <strong>Please Register</strong>
-
-      <div>
-        <label>Enter a Username:</label>
-        <input type="text" v-model="username" />
-        <label>Enter a Password:</label>
-        <input type="text" v-model="password" />
-        <label>Enter Your First Name:</label>
-        <input type="text" v-model="firstname" />
-        <label>Enter your Last Name:</label>
-        <input type="text" v-model="lastname" />
-        <label>Enter your E-Mail:</label>
-        <input type="text" v-model="email" />
-        <button v-on:click="login ">Login</button>
-      </div>
-    </div> -->
 
   </div>
 
