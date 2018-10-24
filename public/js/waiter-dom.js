@@ -10,6 +10,7 @@ var app = new Vue({
     lastname: '',
     email: '',
     position: '',
+    registerPassword:'',
     loggedIn: false,
     registerUser: false,
     days: [],
@@ -112,6 +113,34 @@ var app = new Vue({
         });
     },
 
+    submitRegistration: function() {
+
+      // this.username = username,
+      // this.firstname = firstname,
+      // this.lastname = lastname,
+      // this.email = email,
+      // this.password = password,
+      // this.position = position
+
+      let registerData = {
+        username:this.username,
+        firstname:this.firstname,
+        lastname:this.lastname,
+        email:this.email,
+        password:this.registerPassword,
+        position:this.position
+      }
+
+      console.log(registerData)
+
+      waiter.registerApiRoute(registerData)
+      .then(function(results){
+        alert(results.data.status)
+        console.log(results.data)
+      })
+
+    },
+
     register: function () {
 
       this.registerUser = true
@@ -137,7 +166,7 @@ var app = new Vue({
       // }
 
       // waiter.registerApiRoute(registerData)
-
+      // console.log(done)
     },
 
     logout: function () {
