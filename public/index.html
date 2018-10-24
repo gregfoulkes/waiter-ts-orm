@@ -62,21 +62,25 @@
 
         <div class="  ui center aligned  stackable one column grid">
 
-          <div class='column'>
-            <label class=" ui basic label">Enter Your Username:</label>
+          <div class="column">
+            <div class="ui labeled inverted input">
+              <div class="ui label">
+                Username
+              </div>
+              <input class="ui input" type="text" v-model="username" />
+            </div>
+
           </div>
 
           <div class="column">
-            <input style='height:27.5px; margin-left: 5px; border:none; border-radius:5px;' class="ui input" type="text"
-              v-model="username" />
-          </div>
 
-          <div class='column'>
-            <label class=" ui basic label">Enter Your Password:</label>
-          </div>
+            <div class="ui labeled inverted input">
+              <div class="ui label">
+                Password
+              </div>
+              <input class="" type="text" v-model="password" />
+            </div>
 
-          <div class="column">
-            <input style='height:28px; margin-left: 5px; border:none; border-radius:5px;' class="" type="text" v-model="password" />
           </div>
 
         </div>
@@ -88,48 +92,42 @@
             <button class="ui inverted black button" v-on:click="login ">Login</button>
           </div>
 
+          <div class='column'>
+            <button class="ui inverted black button" v-on:click="register">Register</button>
+          </div>
+
         </div>
-
-        <!-- <div class='ui center aligned stackable one column grid'>
-
-            <div class="ui message errorMessage">
-                 <div class="header"> 
-                  Changes in Service
-                </div> 
-                <p class = 'errorMessage'></p>
-              </div>
-          </div> -->
-
-        <!-- </div> -->
 
       </div>
 
     </div>
+
 
     <!-- Select Days Screen -->
 
     <div v-if='loggedIn'>
 
       <div class="ui one column grid">
+
         <div class="column">
 
           <div class="ui segment">
-
             <h1 class="ui center aligned header">
-              Select Days
+              Select the days you would like to work
             </h1>
-
           </div>
-        </div>
-      </div>
 
+        </div>
+
+      </div>
 
       <div class='ui container'>
 
         <div class='ui center aligned stackable eight column  grid'>
+    <!-- </div> -->
 
           <div v-for="day in days" :key="days.id" class='column'>
-            <label style='width:70px;' class=" addMargins ui label">{{day.dayname}}</label>
+            <label style='width:80px;' class=" addMargins ui label">{{day.dayname}}</label>
             <input class='addMargins' type="checkbox" v-model="selectedDays" :value="day.id" />
           </div>
 
@@ -148,16 +146,52 @@
         </div>
 
       </div>
-
     </div>
+<!-- User registration input -->
 
-    <script src="js/waiter-axios.js"></script>
-    <script src="js/waiter-dom.js"></script>
+      <div v-if='registerUser'>
 
-    <script>
+       <div class = 'ui container'>
+
+        <div class = 'ui center aligned stackable one column  grid'>
+
+          <div class = 'column'>
+
+              <!-- <div class="ui form">
+                  <div class="inline fields">
+                    <div class="eight wide field">
+                      <label>Name</label>
+                      <input type="text" placeholder="First Name">
+                    </div>
+                    <div class="three wide field">
+                      <input type="text" placeholder="Middle Name">
+                    </div>
+                    <div class="five wide field">
+                      <input type="text" placeholder="Last Name">
+                    </div>
+                  </div>
+                </div> -->
+          
+
+          </div>
 
 
-    </script>
+        </div>
+
+
+       </div>
+
+      </div>
+
+  </div>
+
+  <script src="js/waiter-axios.js"></script>
+  <script src="js/waiter-dom.js"></script>
+
+  <script>
+
+
+  </script>
 
 </body>
 

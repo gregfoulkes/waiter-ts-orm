@@ -91,7 +91,7 @@ export default class WaiterRoutes {
             let registerData = await authService.registerUser(req.body)
             res.json({
                 status: 'success',
-                data: registerData
+                // data: registerData
             });
             
         } catch (err) {

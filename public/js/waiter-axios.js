@@ -2,8 +2,8 @@
 
    function getAllDays() {
      try {
-       //decorator?
-       const response = axios.get("/api");
+
+      const response = axios.get("/api");
 
        return response;
      } catch (error) {
@@ -25,27 +25,31 @@
 
 
    function waiterNameApiPostRoute(shiftData) {
+
      try {
+
        return axios.post("/api/waiter/" + shiftData.username, {
          shift: shiftData
        });
 
      } catch (error) {
+
        alert(error);
      }
    }
 
    function waiterNameLoginApiRoute(loginData) {
-     //console.log(loginData)
-     try {
+
+    try {
 
        let result = axios.post("/api/login", {
          login: loginData
        });
-       //console.log(result)
+
        return result
 
      } catch (error) {
+
        alert(error);
      }
    }
@@ -58,25 +62,26 @@
        return response;
 
      } catch (error) {
+
        alert(error)
      }
 
    }
 
-  //  function registerApiRoute(registerData) {
+   function registerApiRoute(registerData) {
 
-  //   try {
-  //     const response = axios.get("/api/register", {
-  //       register: registerData
-  //     });
+     try {
+       const response = axios.post("/api/register", {
+         register: registerData
+       });
 
-  //     return response;
+       return response;
 
-  //   } catch (error) {
-  //     alert(error)
-  //   }
+     } catch (error) {
 
-  // }
+       alert(error)
+     }
+   }
 
    return {
      getAllDays,
@@ -84,7 +89,7 @@
      waiterNameApiPostRoute,
      getShiftsForDaysApiRoute,
      waiterNameLoginApiRoute,
-    //  waiterRegisterApiRoute
+     registerApiRoute
    }
 
  }

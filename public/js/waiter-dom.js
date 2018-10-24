@@ -11,6 +11,7 @@ var app = new Vue({
     email: '',
     position: '',
     loggedIn: false,
+    registerUser: false,
     days: [],
     selectedDays: []
   },
@@ -22,20 +23,18 @@ var app = new Vue({
     });
 
     self.setUsername(location.hash);
-    
-    self.showLoginScreen()
 
-      waiter.waiterNameApiGetRoute(self.username).then(function (results) {
-        let shiftData = results.data.shifts
-        self.selectedDays = shiftData.shifts;
-      })
+    waiter.waiterNameApiGetRoute(self.username).then(function (results) {
+      let shiftData = results.data.shifts
+      self.selectedDays = shiftData.shifts;
+    })
     // })
 
     window.addEventListener("hashchange", function () {
       self.setUsername(location.hash);
     });
   },
-  computed : {
+  computed: {
     // notLoggedIn : function() {
     //   if (!this.username) {
     //     alert('!');
@@ -86,40 +85,58 @@ var app = new Vue({
 
       return waiter.waiterNameLoginApiRoute(loginData)
         .then(function (results) {
-            let responseData = results.data;
+          let responseData = results.data;
 
-            if (responseData.status === 'success') {
-              let userData = responseData.data;
+          if (responseData.status === 'success') {
+            let userData = responseData.data;
 
-              console.log(userData)
+            //set the location hash to equal the username of the logged in user
+            location.hash = self.username;
 
-              //set the location hash to equal the username of the logged in user
-              location.hash = self.username;
+            //store user data in vue data object 
+            console.log(userData.firstname)
+            self.username = userData.username
+            self.firstname = userData.firstname
+            self.lastname = userData.lastname
+            self.email = userData.email
+            self.position = userData.position
 
-              //store user data in vue data object 
-              console.log(userData.firstname)
-              self.username = userData.username
-              self.firstname = userData.firstname
-              self.lastname = userData.lastname
-              self.email = userData.email
-              self.position = userData.position
+            //get user shifts if user exists
+            waiter.waiterNameApiGetRoute(waiterName).then(function (results) {
+              let shiftData = results.data.shifts
+              self.selectedDays = shiftData.shifts;
+              // self.hideLoginScreen()
+            })
 
-              //get user shifts if user exists
-              waiter.waiterNameApiGetRoute(waiterName).then(function (results) {
-                let shiftData = results.data.shifts
-                self.selectedDays = shiftData.shifts;
-                self.hideLoginScreen()
-              })
-
-             }// else {
-            //  let error = document.querySelector('errorMessage')
-
-            //  error.innerHTML = 'Please Enter a Valid Username or Password'
-            // }
+          }
         });
     },
 
     register: function () {
+
+      this.registerUser = true
+
+      console.log(this.registerUser)
+
+      document.getElementById("myModal").style.display = "none";
+
+      // this.username = username,
+      // this.firstname = firstname,
+      // this.lastname = lastname,
+      // this.email = email,
+      // this.password = password,
+      // this.position = position
+
+      // let registerData = {
+      //   username:this.username,
+      //   firstname:this.firstname,
+      //   lastname:this.lastname,
+      //   email:this.email,
+      //   password:this.password,
+      //   position:this.position
+      // }
+
+      // waiter.registerApiRoute(registerData)
 
     },
 
@@ -132,7 +149,7 @@ var app = new Vue({
       this.password = '';
       this.selectedDays = [];
       location.hash = "";
-      this.showLoginScreen()
+      // this.showLoginScreen()
     }
   }
 })
