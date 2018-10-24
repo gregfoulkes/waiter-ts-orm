@@ -3,7 +3,7 @@
 let waiter = waiterAxiosFunction()
 
 var app = new Vue({
-  el: '#selectDays',
+  el: '#WaiterApp',
   data: {
     username: '',
     firstname: '',
@@ -24,10 +24,6 @@ var app = new Vue({
     self.setUsername(location.hash);
     
     self.showLoginScreen()
-
-    //self.showDaySelectScreen()
-
-    // window.addEventListener('load', function () {
 
       waiter.waiterNameApiGetRoute(self.username).then(function (results) {
         let shiftData = results.data.shifts
@@ -122,22 +118,8 @@ var app = new Vue({
             // }
         });
     },
-    showLoginScreen : function (){
-    // var modal = document.getElementById('myModal');
-    // modal.style.display = "block";
-    },
-
-    hideLoginScreen: function () {
-      // if(this.loggedIn){
-        // var modal = document.getElementById('myModal');
-        // modal.style.display = "none";
-      // }
-     
-    },
 
     register: function () {
-
-
 
     },
 
@@ -150,7 +132,7 @@ var app = new Vue({
       this.password = '';
       this.selectedDays = [];
       location.hash = "";
-       this.showLoginScreen()
+      this.showLoginScreen()
     }
   }
 })
