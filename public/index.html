@@ -29,7 +29,7 @@
     height: 100%; /* Full height */
     overflow: auto; /* Enable scroll if needed */
     background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    background-color: rgba(0, 0, 0, 0.856); /* Black w/ opacity */
   }
 
   .addMargins{
@@ -60,10 +60,12 @@
             <!-- <div style = 'float:right' class="ui basic buttons">
                 <button class="ui button">Register</button>
               </div>           -->
+              <!-- <div class="sub header">Enter Your Username <br>
+                and Password to Login</div> -->
           </h1>
 
-          <div class="sub header">Enter Your Username <br>
-            and Password to Login</div>
+          <!-- <div class="sub header">Enter Your Username <br>
+            and Password to Login</div> -->
            
 
         </div>
@@ -84,13 +86,13 @@
         <div class="  ui center aligned  stackable one column grid">
 
           <div class="column">
-            <label class=" ui basic label">Enter your Username:</label>
-            <input class="" type="text" v-model="username" />
+              <label  class=" ui basic label">Enter your Username:</label>
+              <input style = 'height:28px; margin-left: 5px; border:none; border-radius:5px;' class="ui input" type="text" v-model="username" />
           </div>
 
           <div class="column">
-            <label class=" ui basic label">Enter your Password:</label>
-            <input class="" type="text" v-model="password" />
+                <label class=" ui basic label">Enter your Password:</label>
+                <input style = 'height:28px; margin-left: 5px; border:none; border-radius:5px;' class="" type="text" v-model="password" />
           </div>
 
         </div>
@@ -101,7 +103,14 @@
           <div class='column'>
             <button class="ui button" v-on:click="login ">Login</button>
           </div>
+<!-- 
+          <div class = 'column'>
 
+              <div class="ui message">
+                  <div class = 'header' > <a href="">Register</a> </div>
+                </div>
+
+          </div> -->
         </div>
 
         <!-- <div class='ui center aligned stackable one column grid'>
