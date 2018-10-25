@@ -84,7 +84,6 @@ export default class ShiftService {
             for (let i = 0; i < allShifts.length; i++) {
                 if (allDays[i].dayname == allShifts[i].weekday.dayname) {
                     waitersForDay.waiters.push(allShifts[i].waiter.firstname)
-
                 }
             }
             shiftList.push(waitersForDay);
@@ -95,7 +94,6 @@ export default class ShiftService {
     }
 
     async getShiftByUserName(username: string) {
-        console.log(username)
         try {
 
             const oneWaitersShifts = await getRepository(Shift)
@@ -105,7 +103,6 @@ export default class ShiftService {
                 .where("waiter.username = :username", { username: username })
                 .getMany();
 
-               // console.log( oneWaitersShifts)
             let shiftData = {
                 username: username,
                 shifts: []
@@ -115,7 +112,6 @@ export default class ShiftService {
                 let dayId = shift.weekday.id;
                 shiftData.shifts.push(dayId);
             })
-            //console.log(shiftData)
             return shiftData;
 
         } catch (error) {

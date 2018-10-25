@@ -13,7 +13,7 @@ import { Shift } from "../src/entity/Shift";
 import DayService from '../src/services/DayService'
 import ShiftService from '../src/services/ShiftService'
 import WaiterService from '../src/services/WaiterService'
-import  UserAuth  from "../src/services/AuthService";
+import UserAuth from "../src/services/AuthService";
 
 //??
 import "reflect-metadata";
@@ -27,7 +27,7 @@ describe('Waiter-Webbapp-Function', function () {
   let registerWaiterOne = {
     username: 'gregfoulkes',
     firstname: 'Greg',
-    lastname:'Foulkes',
+    lastname: 'Foulkes',
     email: 'greg_foulkes@gmail.com',
     password: '1234',
     position: 'waiter'
@@ -36,7 +36,7 @@ describe('Waiter-Webbapp-Function', function () {
   let registerWaiterTwo = {
     username: 'andrew',
     firstname: 'Andrew',
-    lastname:'Monamodi',
+    lastname: 'Monamodi',
     email: 'greg_foulkes@gmail.com',
     password: '1234',
     position: 'waiter'
@@ -320,38 +320,40 @@ describe('Authorisation-Functions', function () {
   })
 
   let oneUSer = {
-    username:'gregfoulkes',
-    firstname:'Greg',
-    lastname:'Foulkes',
-    email:'greg_foulkes@live.com',
-    password:'1234',
-    position:'waiter'
+    username: 'gregfoulkes',
+    firstname: 'Greg',
+    lastname: 'Foulkes',
+    email: 'greg_foulkes@live.com',
+    password: '1234',
+    position: 'waiter'
   }
 
-  it('should return true for the valid password entered', async function(){
+  it('should return true for the valid password entered', async function () {
     let user = new Waiter
 
     await userAuth.registerUser(oneUSer)
-    let checkThisUser = await userAuth.login({username:'gregfoulkes', password:'1234'})
-    assert.equal(checkThisUser.username,'gregfoulkes')
-    assert.equal(true,checkThisUser.match.found)
+    let checkThisUser = await userAuth.login({ username: 'gregfoulkes', password: '1234' })
+    assert.equal(checkThisUser.username, 'gregfoulkes')
+    assert.equal(true, checkThisUser.match.found)
 
   })
 
-  it('should return false for the invalid password entered', async function(){
+  it('should return false for the invalid password entered', async function () {
     let user = new Waiter
     await userAuth.registerUser(oneUSer)
-    let checkThisUser = await userAuth.login({username:'gregfoulkes', password:'123'})
-    assert.equal(false,checkThisUser)
+    let checkThisUser = await userAuth.login({ username: 'gregfoulkes', password: '123' })
+    assert.equal(false, checkThisUser)
   })
 
-  it('Should return a message to say username already exists', async function (){
+  it('Should return false as username already exists', async function () {
 
     await userAuth.registerUser(oneUSer)
     let secondAttempt = await userAuth.registerUser(oneUSer)
-    assert.equal(secondAttempt,'username exists. Please Choose a different username')
 
-  }) 
+    assert.equal(secondAttempt, false)
+
+
+  })
 
 });
 

@@ -40,8 +40,8 @@ export default class UserAuth {
 
         const user = new Waiter();
         let foundUser = await Waiter.findOne({ username: registrationDetails.username });
-        
-        if(foundUser === undefined) {
+
+        if (foundUser === undefined) {
             let hashPassword = bcrypt.hashSync(registrationDetails.password)
             user.username = registrationDetails.username;
             user.firstname = registrationDetails.firstname;
@@ -51,7 +51,7 @@ export default class UserAuth {
             user.position = registrationDetails.position
             return await user.save();
         } else {
-            return 'username exists. Please Choose a different username'
+            return false
         }
 
     }
