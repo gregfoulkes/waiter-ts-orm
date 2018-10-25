@@ -4,12 +4,12 @@ let waiter = waiterAxiosFunction()
 
 Vue.component('login-error', {
   // props : ['msg'],
-  data: function () {
-    return {
-      count: 0
-    }
-  },
-  template: '<div v-if="loginError" class="ui centered message"> <div class="header">Login Error</div><p>Please enter a valid username or password, or register.</p></div>'
+  // data: function () {
+  //   return {
+  //     count: 0
+  //   }
+  // },
+  template: '<div  class="ui centered message"> <div class="header">Login Error</div><p>Please enter a valid username or password, or register.</p></div>'
 })
 
 var app = new Vue({
@@ -26,6 +26,7 @@ var app = new Vue({
     days: [],
     selectedDays: [],
     loginError: false
+
   },
   mounted: function () {
     let self = this;
@@ -47,20 +48,7 @@ var app = new Vue({
     });
   },
   computed: {
-    // notLoggedIn : function() {
-    //   if (!this.loggedIn) {
-    //     alert('!');
-    //     // show your modal
-    //     return true;
-    //   }
-    //   return false;
-    // },
 
-    //     $get: function () {
-    //       this.registerUser;
-    //       this.loggedIn;
-    //       return this.registerUser || this.loggedIn;
-    //  }
   },
   methods: {
 
@@ -99,8 +87,6 @@ var app = new Vue({
       let waiterName = self.username;
       let password = self.password
 
-      //self.userAuthenticated = true
-
       let loginData = {
         username: waiterName,
         password: password
@@ -111,6 +97,7 @@ var app = new Vue({
           let responseData = results.data;
 
           if (responseData.status === 'success') {
+            self.loginError = false
             let userData = responseData.data;
 
             //set the location hash to equal the username of the logged in user
@@ -129,9 +116,7 @@ var app = new Vue({
               self.selectedDays = shiftData.shifts;
             })
           } else {
-            console.log(self.loginError)
             self.loginError = true
-
           }
         });
     },
@@ -166,8 +151,7 @@ var app = new Vue({
 
     logout: function () {
       this.loggedIn = false;
-      this.userAuthenticated = false
-
+      
       this.username = '';
       this.firstname = '';
       this.lastname = '';
