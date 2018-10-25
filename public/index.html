@@ -124,7 +124,7 @@
       <div class='ui container'>
 
         <div class='ui center aligned stackable eight column  grid'>
-    <!-- </div> -->
+          <!-- </div> -->
 
           <div v-for="day in days" :key="days.id" class='column'>
             <label style='width:80px;' class=" addMargins ui label">{{day.dayname}}</label>
@@ -147,74 +147,72 @@
 
       </div>
     </div>
-<!-- User registration input -->
 
-      <div v-if='registerUser'>
+    <!-- User registration input -->
 
-       <div class = 'ui container'>
+    <div v-if='registerUser'>
 
-        <div class = 'ui center aligned stackable two column  grid'>
-          <div class = 'row'>
-              <div class = 'column'>
+      <div class='ui container'>
 
-                  <label class = 'ui basic label'> Username</label>
-                  <input type="text" v-model = "username" >
-      
-                </div>
+        <form class="ui form segment">
 
-                <div class = 'column'>
+          <div class="two fields">
 
-                    <label class = 'ui basic label'>Password</label>
-                    <input type="text" v-model='registerPassword'>
-        
-                  </div>
-
-          </div>
-
-          <div class = 'row'>
-              <div class = 'column'>
-
-                  <label class = 'ui basic label'>First Name</label>
-                  <input type="text" v-model='firstname'>
-      
-                </div>
-
-                <div class = 'column'>
-
-                    <label class = 'ui basic label'>Last Name</label>
-                    <input type="text" v-model = 'lastname'>
-        
-                  </div>
-
-          </div>
-
-          <div class = 'row'>
-              <div class = 'column'>
-
-                  <label class = 'ui basic label'>E-mail</label>
-                  <input type="text" v-model = 'email'>
-      
-                </div>
-
-                <div class = 'column'>
-
-                    <label class = 'ui basic label'>Position</label>
-                    <input type="text" v-model = 'position'>
-        
-                  </div>
-
-          </div>
-          <div class=' column'>
-              <button class=' ui button' v-on:click="submitRegistration">Submit</button>
+            <div class="field">
+              <label>First Name</label>
+              <input placeholder="First Name" name="firstname" type="text" v-model="firstname">
             </div>
 
+            <div class="field">
+                <label>Last Name</label>
+                <input placeholder="Last Name" name="lastname" type="text" v-model="lastname">
+              </div>
 
-        </div>
+          </div>
 
+          <div class="two fields">
 
-       </div>
+            <div class="field">
+              <label>Username</label>
+              <input placeholder="Username" name="username" type="text" v-model="username">
+            </div>
+
+            <div class="field">
+              <label>Password</label>
+              <input type="password" name="password" v-model="password">
+            </div>
+
+          </div>
+
+          <div class="two fields">
+
+              <div class="field">
+                <label>Email</label>
+                <input placeholder="Email" name="email" type="text" v-model="email">
+              </div>
+  
+              <div class="field">
+                <label>Position</label>
+                <input type="text" name="Position" v-model = "position">
+              </div>
+  
+            </div>
+
+          <div class="inline field">
+            <div class="ui checkbox">
+              <input type="checkbox" name="terms">
+              <label>I agree to the terms and conditions</label>
+            </div>
+          </div>
+          <button class=' ui button' v-on:click="submitRegistration">Submit</button>
+
+          <!-- <div class="ui primary submit button">Submit</div> -->
+          <div class="ui error message"></div>
+        </form>
 
       </div>
+
+    </div>
 
   </div>
 

@@ -89,11 +89,10 @@ export default class WaiterRoutes {
 
         try {
 
-           console.log(req.body)
             let registerData = await authService.registerUser(req.body.register)
-             console.log(registerData)
             res.json({
                 status: 'success',
+                register:registerData
             });
             
         } catch (err) {

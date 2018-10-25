@@ -122,14 +122,14 @@ var app = new Vue({
         password:this.registerPassword,
         position:this.position
       }
-      console.log('------------------')
-      console.log(registerData)
-      console.log('------------------')
 
       waiter.registerApiRoute(registerData)
       .then(function(results){
-        alert(results.data.status)
-        console.log(results.data)
+        alert(results.data.register)
+if(results.data.register == false){
+
+  this.loggedIn = false
+}        
       })
 
     },
