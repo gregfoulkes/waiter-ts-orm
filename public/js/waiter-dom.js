@@ -9,7 +9,7 @@ Vue.component('login-error', {
       count: 0
     }
   },
-  template: '<div v-if="!userAuthenticated" class="ui centered message"> <div class="header">Login Error</div><p>Please enter a valid username or password, or register.</p></div>'
+  template: '<div v-if="loginError" class="ui centered message"> <div class="header">Login Error</div><p>Please enter a valid username or password, or register.</p></div>'
 })
 
 var app = new Vue({
@@ -25,7 +25,7 @@ var app = new Vue({
     registerUser: false,
     days: [],
     selectedDays: [],
-    userAuthenticated: false
+    loginError: false
   },
   mounted: function () {
     let self = this;
@@ -99,6 +99,8 @@ var app = new Vue({
       let waiterName = self.username;
       let password = self.password
 
+      //self.userAuthenticated = true
+
       let loginData = {
         username: waiterName,
         password: password
@@ -126,6 +128,10 @@ var app = new Vue({
               let shiftData = results.data.shifts
               self.selectedDays = shiftData.shifts;
             })
+          } else {
+            console.log(self.loginError)
+            self.loginError = true
+
           }
         });
     },
