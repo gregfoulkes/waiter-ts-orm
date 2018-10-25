@@ -2,6 +2,16 @@
 
 let waiter = waiterAxiosFunction()
 
+Vue.component('login-error', {
+  // props : ['msg'],
+  data: function () {
+    return {
+      count: 0
+    }
+  },
+  template: '<div v-if="!userAuthenticated" class="ui centered message"> <div class="header">Login Error</div><p>Please enter a valid username or password, or register.</p></div>'
+})
+
 var app = new Vue({
   el: '#WaiterApp',
   data: {
@@ -10,11 +20,12 @@ var app = new Vue({
     lastname: '',
     email: '',
     position: '',
-    registerPassword:'',
+    registerPassword: '',
     loggedIn: false,
     registerUser: false,
     days: [],
-    selectedDays: []
+    selectedDays: [],
+    userAuthenticated: false
   },
   mounted: function () {
     let self = this;
@@ -37,13 +48,19 @@ var app = new Vue({
   },
   computed: {
     // notLoggedIn : function() {
-    //   if (!this.username) {
+    //   if (!this.loggedIn) {
     //     alert('!');
     //     // show your modal
     //     return true;
     //   }
     //   return false;
-    // }
+    // },
+
+    //     $get: function () {
+    //       this.registerUser;
+    //       this.loggedIn;
+    //       return this.registerUser || this.loggedIn;
+    //  }
   },
   methods: {
 
@@ -53,13 +70,14 @@ var app = new Vue({
         username: self.username,
         days: self.selectedDays
       };
-      console.log(userShiftData)
+
       return waiter.waiterNameApiPostRoute(userShiftData)
         .then(function (results) {
-          waiter.waiterNameApiGetRoute(self.username).then(function (results) {
-            let shiftData = results.data.shifts
-            self.selectedDays = shiftData.shifts;
-          })
+          waiter.waiterNameApiGetRoute(self.username)
+            .then(function (results) {
+              let shiftData = results.data.shifts
+              self.selectedDays = shiftData.shifts;
+            })
         })
     },
 
@@ -68,6 +86,8 @@ var app = new Vue({
       if (parts.length === 2) {
         this.username = parts[1];
         this.loggedIn = true;
+        this.userAuthenticated = true
+        console.log(this.userAuthenticated)
       } else {
         this.username = '';
         this.loggedIn = false;
@@ -95,7 +115,6 @@ var app = new Vue({
             location.hash = self.username;
 
             //store user data in vue data object 
-            console.log(userData.firstname)
             self.username = userData.username
             self.firstname = userData.firstname
             self.lastname = userData.lastname
@@ -107,43 +126,42 @@ var app = new Vue({
               let shiftData = results.data.shifts
               self.selectedDays = shiftData.shifts;
             })
-
           }
         });
     },
 
-    submitRegistration: function() {
+    submitRegistration: function () {
 
       let registerData = {
-        username:this.username,
-        firstname:this.firstname,
-        lastname:this.lastname,
-        email:this.email,
-        password:this.registerPassword,
-        position:this.position
+        username: this.username,
+        firstname: this.firstname,
+        lastname: this.lastname,
+        email: this.email,
+        password: this.registerPassword,
+        position: this.position
       }
 
       waiter.registerApiRoute(registerData)
-      .then(function(results){
-        alert(results.data.register)
-if(results.data.register == false){
-
-  this.loggedIn = false
-}        
-      })
-
+        .then(function (results) {
+          alert(results.data.register)
+          if (results.data.register == false) {
+            this.registerUser = false
+            // this.loggedIn = false
+          }
+        })
     },
 
     register: function () {
 
       this.registerUser = true
-
       document.getElementById("myModal").style.display = "none";
 
     },
 
     logout: function () {
       this.loggedIn = false;
+      this.userAuthenticated = false
+
       this.username = '';
       this.firstname = '';
       this.lastname = '';
@@ -151,7 +169,6 @@ if(results.data.register == false){
       this.password = '';
       this.selectedDays = [];
       location.hash = "";
-      // this.showLoginScreen()
     }
   }
 })
