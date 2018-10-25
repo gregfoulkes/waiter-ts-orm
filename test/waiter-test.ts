@@ -191,7 +191,6 @@ describe('Waiter-Webbapp-Function', function () {
 
 
     let allShifts = await shiftService.getShiftByUserName('gregfoulkes')
-    //console.log(allShifts)
     assert.equal(2, allShifts.shifts.length)
 
   })
@@ -212,7 +211,6 @@ describe('Waiter-Webbapp-Function', function () {
     await shiftService.assignShift(shiftData)
     await shiftService.updateShiftsByUserName(shiftData2)
     let allShifts = await shiftService.getShiftByUserName('gregfoulkes')
-   //console.log(allShifts)
     assert.equal(2, allShifts.shifts.length)
 
   })
@@ -237,8 +235,6 @@ describe('Waiter-Webbapp-Function', function () {
     await shiftService.assignShift(shiftData2)
 
     let allShifts = await shiftService.getWeekdayShifts();
-
-   // console.log(allShifts)
 
   })
 
@@ -346,10 +342,16 @@ describe('Authorisation-Functions', function () {
     let user = new Waiter
     await userAuth.registerUser(oneUSer)
     let checkThisUser = await userAuth.login({username:'gregfoulkes', password:'123'})
-    console.log(checkThisUser)
     assert.equal(false,checkThisUser)
   })
 
+  it('Should return a message to say username already exists', async function (){
+
+    await userAuth.registerUser(oneUSer)
+    let secondAttempt = await userAuth.registerUser(oneUSer)
+    assert.equal(secondAttempt,'username exists. Please Choose a different username')
+
+  }) 
 
 });
 

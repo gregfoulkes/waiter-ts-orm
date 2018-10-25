@@ -70,15 +70,12 @@
 
    function registerApiRoute(registerData) {
 
+    console.log(registerData)
      try {
-       const response = axios.post("/api/register", {
-         register: registerData
-       });
-
-       return response;
-
-     } catch (error) {
-
+       let result = axios.post("/api/register", {register:registerData});
+     
+       return result
+      } catch (error) {
        alert(error)
      }
    }

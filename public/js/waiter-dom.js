@@ -106,7 +106,6 @@ var app = new Vue({
             waiter.waiterNameApiGetRoute(waiterName).then(function (results) {
               let shiftData = results.data.shifts
               self.selectedDays = shiftData.shifts;
-              // self.hideLoginScreen()
             })
 
           }
@@ -114,13 +113,6 @@ var app = new Vue({
     },
 
     submitRegistration: function() {
-
-      // this.username = username,
-      // this.firstname = firstname,
-      // this.lastname = lastname,
-      // this.email = email,
-      // this.password = password,
-      // this.position = position
 
       let registerData = {
         username:this.username,
@@ -130,8 +122,9 @@ var app = new Vue({
         password:this.registerPassword,
         position:this.position
       }
-
+      console.log('------------------')
       console.log(registerData)
+      console.log('------------------')
 
       waiter.registerApiRoute(registerData)
       .then(function(results){
@@ -145,28 +138,8 @@ var app = new Vue({
 
       this.registerUser = true
 
-      console.log(this.registerUser)
-
       document.getElementById("myModal").style.display = "none";
 
-      // this.username = username,
-      // this.firstname = firstname,
-      // this.lastname = lastname,
-      // this.email = email,
-      // this.password = password,
-      // this.position = position
-
-      // let registerData = {
-      //   username:this.username,
-      //   firstname:this.firstname,
-      //   lastname:this.lastname,
-      //   email:this.email,
-      //   password:this.password,
-      //   position:this.position
-      // }
-
-      // waiter.registerApiRoute(registerData)
-      // console.log(done)
     },
 
     logout: function () {

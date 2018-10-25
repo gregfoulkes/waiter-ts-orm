@@ -11,7 +11,7 @@ let connection: Connection
 export default class UserAuth {
 
     async login(loginDetails: ILogin) {
-        // console.log(loginDetails)
+
         let foundUser = await Waiter.findOne({ username: loginDetails.username });
 
         let checkPassword = await bcrypt.compareSync(loginDetails.password, foundUser.password)
@@ -37,16 +37,22 @@ export default class UserAuth {
 
     async registerUser(registrationDetails: IRegister) {
 
-        const user = new Waiter();
 
-        let hashPassword = bcrypt.hashSync(registrationDetails.password)
-        user.username = registrationDetails.username;
-        user.firstname = registrationDetails.firstname;
-        user.lastname = registrationDetails.lastname
-        user.email = registrationDetails.email;
-        user.password = hashPassword;
-        user.position = registrationDetails.position
-        return await user.save();
+        const user = new Waiter();
+        let foundUser = await Waiter.findOne({ username: registrationDetails.username });
+        
+        if(foundUser === undefined) {
+            let hashPassword = bcrypt.hashSync(registrationDetails.password)
+            user.username = registrationDetails.username;
+            user.firstname = registrationDetails.firstname;
+            user.lastname = registrationDetails.lastname
+            user.email = registrationDetails.email;
+            user.password = hashPassword;
+            user.position = registrationDetails.position
+            return await user.save();
+        } else {
+            return 'username exists. Please Choose a different username'
+        }
 
     }
 
