@@ -31,6 +31,9 @@ var app = new Vue({
   mounted: function () {
     let self = this;
 
+    setTimeout(() => this.loginError = false, 3000);
+
+
     waiter.getAllDays().then(function (results) {
       self.days = results.data.data;
     });
