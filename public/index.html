@@ -46,64 +46,9 @@
 
 
     <!-- Login Modal -->
-    <div id="myModal" class="modal" v-if="!loggedIn">
 
-      <div class='ui center aligned three column grid'>
-
-        <div class='sixteen wide column'>
-          <h1 style='width:100%; margin-top:10px' class="ui  black inverted header">
-            Login
-          </h1>
-        </div>
-      </div>
-
-
-      <div class=' ui container'>
-
-        <div class="  ui center aligned  stackable one column grid">
-
-          <div class="column">
-            <div class="ui labeled inverted input">
-              <div class="ui label">
-                Username
-              </div>
-              <input class="ui input" type="text" v-model="username" />
-            </div>
-
-          </div>
-
-          <div class="column">
-
-            <div class="ui labeled inverted input">
-              <div class="ui label">
-                Password
-              </div>
-              <input class="" type="password" v-model="password" />
-            </div>
-
-          </div>
-
-        </div>
-
-        <div class='ui center aligned stackable one column grid'>
-
-
-          <div class='column'>
-            <button class="ui inverted black button" v-on:click="login ">Login</button>
-          </div>
-
-          <div class='column'>
-            <button class="ui inverted black button" v-on:click="register">Register</button>
-          </div>
-
-        </div>
-
-      </div>
-
-      <login-error v-if="loginError" ></login-error>
-
-    </div>
-
+    <login v-if='!loggedIn'></login>
+  
 
     <!-- Select Days Screen -->
 
@@ -152,15 +97,15 @@
 
     <!-- User registration input -->
 
-    <!-- <div v-if='registerUser'> -->
-
-      <registration  v-if='registerUser'> </registration>
+      <registration v-if='registerUser'></registration>
      
     </div>
 
   </div>
 
   <script src="js/waiter-axios.js"></script>
+  <script src="components/login-component.js"></script>
+  <script src="components/registration-component.js"></script>
   <script src="js/waiter-dom.js"></script>
 
   <script>
