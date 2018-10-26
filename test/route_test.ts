@@ -16,6 +16,7 @@ var expect = chai.expect;
 
 const baseURL = process.env.public_url || 'http://localhost:6008';
 
+import {App} from '../src/index';
 
 
 // describe('Waiter Webapp Api Routes', function () {

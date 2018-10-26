@@ -2,11 +2,13 @@ import "reflect-metadata";
 import WaiterRoutes from './routes/waiterRoutes';
 
 import * as express from "express";
-import { Request, Response } from "express";
+import { Router, Request, Response } from 'express';
 import * as bodyParser from "body-parser";
 
 import { createConnection } from "typeorm";
 //const connection =  DbConnectionFactory('default')
+
+const router: Router = Router();
 
 let waiterRoutes = new WaiterRoutes()
 
@@ -40,4 +42,4 @@ async function start() {
 
 start()
 
-module.exports = app
+export const App: Router = router;
