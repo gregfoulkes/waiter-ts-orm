@@ -47,8 +47,8 @@
 
     <!-- Login Modal -->
 
-    <login v-if='!loggedIn && !registerUser'   ></login>
-    <registration v-if='registerUser'></registration>
+    <login v-on:register="showRegisterUser()" v-on:senddays="selectedDays = login()" v-if='!loggedIn && !registerUser'   ></login>
+    <registration  v-if='registerUser'></registration>
 
 
     <!-- Select Days Screen -->

@@ -29,7 +29,7 @@ Vue.component('registration', {
           alert(results.data.register)
           if (results.data.register == false) {
             this.registerUser = false
-            // this.loggedIn = false
+          // this.loggedIn = false
           }
         })
     }

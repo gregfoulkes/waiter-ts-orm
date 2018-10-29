@@ -2,7 +2,6 @@
 
 Vue.component('login', {
 
-  // props: ['username'],
   data: function () {
     return {
       username: '',
@@ -23,6 +22,8 @@ Vue.component('login', {
         password: password
       }
 
+      console.log(waiterName) 
+
       return waiter.waiterNameLoginApiRoute(loginData)
         .then(function (results) {
           let responseData = results.data;
@@ -41,21 +42,15 @@ Vue.component('login', {
             self.position = userData.position
 
             //get user shifts if user exists
-            waiter.waiterNameApiGetRoute(waiterName).then(function (results) {
+            waiter.waiterNameApiGetRoute(self.username).then(function (results) {
               let shiftData = results.data.shifts
               self.selectedDays = shiftData.shifts;
+              return self.selectedDays
             })
           } else {
             self.loginError = true
           }
         });
-    },
-
-    register: function () {
-
-      this.registerUser = true
-      document.getElementById("myModal").style.display = "none";
-
     },
 
   },
@@ -105,12 +100,14 @@ Vue.component('login', {
 
 
         <div class='column'>
-          <button class="ui inverted black button" v-on:click="login ">Login</button>
+          <button class="ui inverted black button" v-on:click="login" >Login</button>
+
         </div>
 
         <div class='column'>
-          <button class="ui inverted black button" v-on:click="register" >Register</button>
           
+          <button class="ui inverted black button" v-on:click="$emit('register')" >Register</button>
+
         </div>
 
       </div>

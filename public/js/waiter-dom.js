@@ -1,11 +1,10 @@
-
 let waiter = waiterAxiosFunction()
 
 Vue.component('login-error', {
 
   template: '<div  class="ui centered message"> <div class="header">Login Error</div><p>Please enter a valid username or password, or register.</p></div>'
 })
-var registerUser = false
+
 var app = new Vue({
   el: '#WaiterApp',
   data: {
@@ -16,16 +15,15 @@ var app = new Vue({
     position: '',
     registerPassword: '',
     loggedIn: false,
-    registerUser: '',
+    registerUser: false,
     days: [],
-    selectedDays: [],
-    loginError: false
+    selectedDays: []
   },
 
   mounted: function () {
     let self = this;
 
-    document.addEventListener("DOMContentLoaded", function(event) {
+    document.addEventListener("DOMContentLoaded", function (event) {
       console.log("DOM fully loaded and parsed");
     });
 
@@ -37,8 +35,8 @@ var app = new Vue({
     });
 
     self.setUsername(location.hash);
-    
-    if(self.username != ''){
+
+    if (self.username != '') {
       waiter.waiterNameApiGetRoute(self.username).then(function (results) {
         let shiftData = results.data.shifts
         self.selectedDays = shiftData.shifts;
@@ -79,44 +77,19 @@ var app = new Vue({
         this.username = parts[1];
         this.loggedIn = true;
         this.userAuthenticated = true
-        console.log(this.userAuthenticated)
       } else {
         this.username = '';
         this.loggedIn = false;
       }
     },
 
-    // submitRegistration: function () {
-
-    //   let registerData = {
-    //     username: this.username,
-    //     firstname: this.firstname,
-    //     lastname: this.lastname,
-    //     email: this.email,
-    //     password: this.registerPassword,
-    //     position: this.position
-    //   }
-
-    //   waiter.registerApiRoute(registerData)
-    //     .then(function (results) {
-    //       alert(results.data.register)
-    //       if (results.data.register == false) {
-    //         this.registerUser = false
-    //         // this.loggedIn = false
-    //       }
-    //     })
-    // },
-
-    register: function () {
-
+    showRegisterUser() {
       this.registerUser = true
-      //document.getElementById("myModal").style.display = "none";
-
     },
 
     logout: function () {
       this.loggedIn = false;
-      
+
       this.username = '';
       this.firstname = '';
       this.lastname = '';
