@@ -1,3 +1,5 @@
+
+
 Vue.component('login', {
 
   // props: ['username'],
@@ -6,9 +8,9 @@ Vue.component('login', {
       username: '',
       password: '',
       loginError: false,
-      registerUser: false
     }
   },
+
   methods: {
 
     login: function () {
@@ -32,7 +34,6 @@ Vue.component('login', {
             //set the location hash to equal the username of the logged in user
             location.hash = self.username;
 
-            //store user data in vue data object 
             self.username = userData.username
             self.firstname = userData.firstname
             self.lastname = userData.lastname
@@ -58,6 +59,7 @@ Vue.component('login', {
     },
 
   },
+
   template: `
 
     <div id="myModal" class="modal">
@@ -107,7 +109,8 @@ Vue.component('login', {
         </div>
 
         <div class='column'>
-          <button class="ui inverted black button" v-on:click="register">Register</button>
+          <button class="ui inverted black button" v-on:click="register" >Register</button>
+          
         </div>
 
       </div>

@@ -47,8 +47,9 @@
 
     <!-- Login Modal -->
 
-    <login v-if='!loggedIn'></login>
-  
+    <login v-if='!loggedIn && !registerUser'   ></login>
+    <registration v-if='registerUser'></registration>
+
 
     <!-- Select Days Screen -->
 
@@ -97,7 +98,6 @@
 
     <!-- User registration input -->
 
-      <registration v-if='registerUser'></registration>
      
     </div>
 

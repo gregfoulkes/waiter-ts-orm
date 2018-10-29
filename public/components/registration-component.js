@@ -7,11 +7,10 @@ Vue.component('registration', {
       lastname: '',
       email: '',
       position: '',
-      registerPassword: '',
-      loginError: false,
-      registerUser: true
+      registerPassword: ''
     }
   },
+  
   methods: {
 
     submitRegistration: function () {
@@ -32,13 +31,13 @@ Vue.component('registration', {
             this.registerUser = false
             // this.loggedIn = false
           }
-        }),
+        })
     }
 
   },
 
   template: `
-    <div class='ui container'>
+    <div class='ui container' style="z-index:2;">
   
     <form class="ui form segment">
   

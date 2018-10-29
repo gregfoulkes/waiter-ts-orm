@@ -1,4 +1,3 @@
-// let waiterAxios = require('js/waiter-axios.js')
 
 let waiter = waiterAxiosFunction()
 
@@ -6,7 +5,7 @@ Vue.component('login-error', {
 
   template: '<div  class="ui centered message"> <div class="header">Login Error</div><p>Please enter a valid username or password, or register.</p></div>'
 })
-
+var registerUser = false
 var app = new Vue({
   el: '#WaiterApp',
   data: {
@@ -17,12 +16,12 @@ var app = new Vue({
     position: '',
     registerPassword: '',
     loggedIn: false,
-    registerUser: false,
+    registerUser: '',
     days: [],
     selectedDays: [],
     loginError: false
-
   },
+
   mounted: function () {
     let self = this;
 
@@ -38,22 +37,23 @@ var app = new Vue({
     });
 
     self.setUsername(location.hash);
+    
     if(self.username != ''){
       waiter.waiterNameApiGetRoute(self.username).then(function (results) {
         let shiftData = results.data.shifts
         self.selectedDays = shiftData.shifts;
       })
     }
- 
-    // })
 
     window.addEventListener("hashchange", function () {
       self.setUsername(location.hash);
     });
   },
+
   computed: {
 
   },
+
   methods: {
 
     setShifts: function () {
@@ -86,31 +86,31 @@ var app = new Vue({
       }
     },
 
-    submitRegistration: function () {
+    // submitRegistration: function () {
 
-      let registerData = {
-        username: this.username,
-        firstname: this.firstname,
-        lastname: this.lastname,
-        email: this.email,
-        password: this.registerPassword,
-        position: this.position
-      }
+    //   let registerData = {
+    //     username: this.username,
+    //     firstname: this.firstname,
+    //     lastname: this.lastname,
+    //     email: this.email,
+    //     password: this.registerPassword,
+    //     position: this.position
+    //   }
 
-      waiter.registerApiRoute(registerData)
-        .then(function (results) {
-          alert(results.data.register)
-          if (results.data.register == false) {
-            this.registerUser = false
-            // this.loggedIn = false
-          }
-        })
-    },
+    //   waiter.registerApiRoute(registerData)
+    //     .then(function (results) {
+    //       alert(results.data.register)
+    //       if (results.data.register == false) {
+    //         this.registerUser = false
+    //         // this.loggedIn = false
+    //       }
+    //     })
+    // },
 
     register: function () {
 
       this.registerUser = true
-      document.getElementById("myModal").style.display = "none";
+      //document.getElementById("myModal").style.display = "none";
 
     },
 
