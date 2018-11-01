@@ -6,6 +6,7 @@ Vue.component('login', {
     return {
       username: '',
       password: '',
+      //selectedDays: [],
       loginError: false,
     }
   },
@@ -22,15 +23,20 @@ Vue.component('login', {
         password: password
       }
 
-      console.log(waiterName) 
+      console.log('Login Data') 
+      console.log(loginData) 
+      console.log('-------------') 
+
 
       return waiter.waiterNameLoginApiRoute(loginData)
         .then(function (results) {
           let responseData = results.data;
-
+          console.log(responseData)
+          console.log(responseData.status)
           if (responseData.status === 'success') {
-            self.loginError = false
+           // self.loginError = false
             let userData = responseData.data;
+            console.log('This ' + userData)
 
             //set the location hash to equal the username of the logged in user
             location.hash = self.username;
@@ -42,10 +48,14 @@ Vue.component('login', {
             self.position = userData.position
 
             //get user shifts if user exists
+            console.log(self.username)
             waiter.waiterNameApiGetRoute(self.username).then(function (results) {
+              console.log('done')
               let shiftData = results.data.shifts
+              console.log(shiftData)
               self.selectedDays = shiftData.shifts;
-              return self.selectedDays
+              console.log(self.selectedDays)
+             // return self.selectedDays
             })
           } else {
             self.loginError = true
@@ -88,7 +98,7 @@ Vue.component('login', {
           <div class="ui labeled inverted input">
             <div class="ui label">
               Password
-            </div>
+            </div>click
             <input class="" type="password" v-model="password" />
           </div>
 
@@ -100,6 +110,7 @@ Vue.component('login', {
 
 
         <div class='column'>
+
           <button class="ui inverted black button" v-on:click="login" >Login</button>
 
         </div>

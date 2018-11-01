@@ -64,7 +64,7 @@ Vue.component('registration', {
   
         <div class="field">
           <label>Password</label>
-          <input type="password" name="password" v-model="password">
+          <input type="text" name="password" v-model="password">
         </div>
   
       </div>

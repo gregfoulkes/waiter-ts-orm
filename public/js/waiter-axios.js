@@ -3,7 +3,7 @@
    function getAllDays() {
      try {
 
-      const response = axios.get("/api");
+       const response = axios.get("/api");
 
        return response;
      } catch (error) {
@@ -23,7 +23,6 @@
 
    }
 
-
    function waiterNameApiPostRoute(shiftData) {
 
      try {
@@ -40,7 +39,7 @@
 
    function waiterNameLoginApiRoute(loginData) {
 
-    try {
+     try {
 
        let result = axios.post("/api/login", {
          login: loginData
@@ -70,12 +69,14 @@
 
    function registerApiRoute(registerData) {
 
-    console.log(registerData)
+     console.log(registerData)
      try {
-       let result = axios.post("/api/register", {register:registerData});
-     
+       let result = axios.post("/api/register", {
+         register: registerData
+       });
+
        return result
-      } catch (error) {
+     } catch (error) {
        alert(error)
      }
    }

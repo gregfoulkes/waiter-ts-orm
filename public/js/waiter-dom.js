@@ -84,8 +84,20 @@ var app = new Vue({
     },
 
     showRegisterUser() {
-      this.registerUser = true
+      this.registerUser = true;
     },
+
+    isLoggedIn() {
+
+      this.loggedIn = true;
+
+    },
+
+    // setDays() {
+    
+    //   return selectedDays
+    
+    // },
 
     logout: function () {
       this.loggedIn = false;
