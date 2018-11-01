@@ -8,12 +8,12 @@ Vue.component('login-error', {
 var app = new Vue({
   el: '#WaiterApp',
   data: {
-    username: '',
-    firstname: '',
-    lastname: '',
-    email: '',
-    position: '',
-    registerPassword: '',
+    // username: '',
+    // firstname: '',
+    // lastname: '',
+    // email: '',
+    // position: '',
+    // registerPassword: '',
     loggedIn: false,
     registerUser: false,
     days: [],
@@ -46,6 +46,14 @@ var app = new Vue({
     window.addEventListener("hashchange", function () {
       self.setUsername(location.hash);
     });
+
+    // self.$on('loggedIn', function(params){
+      
+    //   alert('Logged in');
+    //   console.log(params);
+
+    // });
+
   },
 
   computed: {
@@ -53,7 +61,6 @@ var app = new Vue({
   },
 
   methods: {
-
     setShifts: function () {
       let self = this;
       let userShiftData = {
@@ -87,17 +94,22 @@ var app = new Vue({
       this.registerUser = true;
     },
 
-    isLoggedIn() {
+    isLoggedIn(loginData) {
+      console.log(loginData);
+      alert('wow!');
 
-      this.loggedIn = true;
+      // if(loginData.loginState){
+      //   this.loggedIn = true;
 
+      //   //get user shifts if user exists
+      //   console.log(self.username)
+      //  return waiter.waiterNameApiGetRoute(loginData.username)
+      //   .then(function (results) {
+      //     let shiftData = results.data.shifts
+      //     self.selectedDays = shiftData.shifts;
+      //   })
+      // }
     },
-
-    // setDays() {
-    
-    //   return selectedDays
-    
-    // },
 
     logout: function () {
       this.loggedIn = false;

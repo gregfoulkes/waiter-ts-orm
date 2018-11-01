@@ -34,6 +34,12 @@ async function connect () {
 
 async function InsertUser() {
 
+    // let hashed = bcrypt.hashSync('1234');
+    // let result = bcrypt.compareSync('1234', hashed)
+    // console.log(result);
+    // return 
+
+   try {
     let connection = await connect();
 
     let currentUser = await Waiter.findOne({ username: "gf" })
@@ -46,7 +52,7 @@ async function InsertUser() {
         user.firstname = 'Greg'
         user.lastname = 'Foulkes'
         user.email = 'gregfoulkes@gmail.com'
-        user.password = hashPassword;
+        user.password = hashPassword
         user.position = 'waiter'
         await user.save();
         console.log('User added.');
@@ -54,8 +60,10 @@ async function InsertUser() {
     } else {
         console.log('User already exists!');
     }
-
     connection.close();
+   } catch(err) { 
+      console.log(err);
+   }
 
 }
 

@@ -47,61 +47,19 @@
 
     <!-- Login Modal -->
 
-    <login v-on:register="showRegisterUser()" v-on:loginSend="isLoggedIn" v-if='!loggedIn && !registerUser'   ></login>
+    <login v-on:register="showRegisterUser()" v-on:loggedin="isLoggedIn" v-if='!loggedIn && !registerUser'   ></login>
     <registration  v-if='registerUser'></registration>
-
+    
+    <shift-days v-if='isWaiter' waiterName="firstName" ></shift-days>
+    <admin-view v-if='isWaiter' waiterName="firstName" ></admin-view>
+    
 
     <!-- Select Days Screen -->
-
-    <div v-if='loggedIn'>
-
-      <div class="ui one column grid">
-
-        <div class="column">
-
-          <div class="ui segment">
-            <h1 class="ui center aligned header">
-              Select the days you would like to work
-            </h1>
-          </div>
-
-        </div>
-
-      </div>
-
-      <div class='ui container'>
-
-        <div class='ui center aligned stackable eight column  grid'>
-          <!-- </div> -->
-
-          <div v-for="day in days" :key="days.id" class='column'>
-            <label style='width:80px;' class=" addMargins ui label">{{day.dayname}}</label>
-            <input class='addMargins' type="checkbox" v-model="selectedDays" :value="day.id" />
-          </div>
-
-        </div>
-
-        <div class='ui center aligned stackable one column grid'>
-
-          <div class='  column'>
-            <button style='width:100px;' class='addMargins ui button' type='submit' v-on:click="setShifts">Set shifts</button>
-          </div>
-
-          <div class=' column'>
-            <button class=' ui button' v-on:click="logout">Logout</button>
-          </div>
-
-        </div>
-
-      </div>
-    </div>
 
     <!-- User registration input -->
 
      
     </div>
-
-  </div>
 
   <script src="js/waiter-axios.js"></script>
   <script src="components/login-component.js"></script>

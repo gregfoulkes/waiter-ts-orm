@@ -6,59 +6,70 @@ Vue.component('login', {
     return {
       username: '',
       password: '',
-      //selectedDays: [],
       loginError: false,
+      loginStatus: {}
     }
   },
 
   methods: {
 
+    // onClickLogin () {
+    //   return this.login()
+    // },
+
     login: function () {
-      let self = this;
-      let waiterName = self.username;
-      let password = self.password
+      let waiterName = this.username;
+      let password = this.password
 
       let loginData = {
         username: waiterName,
-        password: password
+        password
       }
-
-      console.log('Login Data') 
-      console.log(loginData) 
-      console.log('-------------') 
-
+      
+      var self = this;
 
       return waiter.waiterNameLoginApiRoute(loginData)
         .then(function (results) {
+
           let responseData = results.data;
-          console.log(responseData)
-          console.log(responseData.status)
+
           if (responseData.status === 'success') {
-           // self.loginError = false
+
             let userData = responseData.data;
-            console.log('This ' + userData)
+
+           if(!userData){
+
+            this.loginError =true
+            alert('Enter a valid username or password')
+
+
+           }else{
 
             //set the location hash to equal the username of the logged in user
-            location.hash = self.username;
 
-            self.username = userData.username
-            self.firstname = userData.firstname
-            self.lastname = userData.lastname
-            self.email = userData.email
-            self.position = userData.position
+            this.username = userData.username
+            location.hash = this.username;
 
-            //get user shifts if user exists
-            console.log(self.username)
-            waiter.waiterNameApiGetRoute(self.username).then(function (results) {
-              console.log('done')
-              let shiftData = results.data.shifts
-              console.log(shiftData)
-              self.selectedDays = shiftData.shifts;
-              console.log(self.selectedDays)
-             // return self.selectedDays
-            })
+             this.loginStatus = {
+
+              username: this.username,
+              logginState: true,
+              erroStatus:this.loginError
+
+            }
+
+            self.$emit('loggedin', loginStatus);
+
+            // return loginStatus
+           }
+            
           } else {
-            self.loginError = true
+
+            this.loginStatus = {
+              errorStatus: this.loginError
+            }
+
+            return this.loginStatus
           }
         });
     },
@@ -98,7 +109,7 @@ Vue.component('login', {
           <div class="ui labeled inverted input">
             <div class="ui label">
               Password
-            </div>click
+            </div>
             <input class="" type="password" v-model="password" />
           </div>
 
@@ -117,6 +128,7 @@ Vue.component('login', {
 
         <div class='column'>
           
+
           <button class="ui inverted black button" v-on:click="$emit('register')" >Register</button>
 
         </div>
