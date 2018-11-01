@@ -50,8 +50,8 @@
     <login v-on:register="showRegisterUser()" v-on:loggedin="isLoggedIn" v-if='!loggedIn && !registerUser'   ></login>
     <registration  v-if='registerUser'></registration>
     
-    <shift-days v-if='isWaiter' waiterName="firstName" ></shift-days>
-    <admin-view v-if='isWaiter' waiterName="firstName" ></admin-view>
+    <!-- <shift-days v-if='isWaiter' waiterName="firstName" ></shift-days> -->
+    <!-- <admin-view v-if="isUser('Admin')"" username="firstName" ></admin-view> -->
     
 
     <!-- Select Days Screen -->
