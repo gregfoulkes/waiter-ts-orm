@@ -1,76 +1,73 @@
-
-
 Vue.component('login', {
 
   data: function () {
     return {
       username: '',
-      password: '',
       loginError: false,
+      password: '',
       loginStatus: {}
     }
   },
 
   methods: {
 
-    // onClickLogin () {
-    //   return this.login()
-    // },
-
     login: function () {
-      let waiterName = this.username;
-      let password = this.password
 
       let loginData = {
-        username: waiterName,
-        password
+        username:this.username,
+        password:this.password
       }
-      
-      var self = this;
 
+      var self = this;
+      console.log(loginData)
       return waiter.waiterNameLoginApiRoute(loginData)
         .then(function (results) {
 
           let responseData = results.data;
-
+          console.log(responseData)
           if (responseData.status === 'success') {
 
             let userData = responseData.data;
+            console.log(userData)
+            if (!userData) {
 
-           if(!userData){
+              self.loginError = true
+              alert('Enter a valid username or password')
 
-            this.loginError =true
-            alert('Enter a valid username or password')
+              this.loginStatus = {
+                logginState: false,
+                errorStatus: self.loginError
+              }
+
+              self.$emit('loggedin', loginStatus);
 
 
-           }else{
+            } else {
 
-            //set the location hash to equal the username of the logged in user
+              //set the location hash to equal the username of the logged in user
 
-            this.username = userData.username
-            location.hash = this.username;
+              this.username = userData.username
+              location.hash = this.username;
 
-             this.loginStatus = {
+              this.loginStatus = {
+                username: this.username,
+                loginState: true,
+                errorStatus: self.loginError
+              }
 
-              username: this.username,
-              logginState: true,
-              erroStatus:this.loginError
+              self.$emit('loggedin', loginStatus);
 
             }
 
-            self.$emit('loggedin', loginStatus);
+          } //else {
+          //self.loginError = false
+          // this.loginStatus = {
+          //   logginState: false,
+          //   errorStatus: self.loginError
+          // }
 
-            // return loginStatus
-           }
-            
-          } else {
-
-            this.loginStatus = {
-              errorStatus: this.loginError
-            }
-
-            return this.loginStatus
-          }
+          // self.$emit('loggedin', loginStatus);
+          //}
         });
     },
 

@@ -14,6 +14,7 @@ var app = new Vue({
     // email: '',
     // position: '',
     // registerPassword: '',
+    loginError:false,
     loggedIn: false,
     registerUser: false,
     days: [],
@@ -48,7 +49,7 @@ var app = new Vue({
     });
 
     // self.$on('loggedIn', function(params){
-      
+
     //   alert('Logged in');
     //   console.log(params);
 
@@ -96,19 +97,25 @@ var app = new Vue({
 
     isLoggedIn(loginData) {
       console.log(loginData);
-      alert('wow!');
+      alert('Wow!');
+      console.log(loginData.errorStatus)
 
-      // if(loginData.loginState){
-      //   this.loggedIn = true;
+      if (loginData.loginState) {
+        this.loggedIn = true;
 
-      //   //get user shifts if user exists
-      //   console.log(self.username)
-      //  return waiter.waiterNameApiGetRoute(loginData.username)
-      //   .then(function (results) {
-      //     let shiftData = results.data.shifts
-      //     self.selectedDays = shiftData.shifts;
-      //   })
-      // }
+        //get user shifts if user exists
+        return waiter.waiterNameApiGetRoute(loginData.username)
+          .then(function (results) {
+            let shiftData = results.data.shifts
+            self.selectedDays = shiftData.shifts;
+          })
+
+       } if (loginData.errorStatus) {
+
+        this.loggedIn = false
+        this.loginError = true
+
+      }
     },
 
     logout: function () {

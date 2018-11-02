@@ -11,17 +11,16 @@ let connection: Connection
 export default class UserAuth {
 
     async login(loginDetails: ILogin) {
-        console.log(loginDetails)
 
         let foundUser = await Waiter.findOne({ username: loginDetails.username });
 
-        console.log(foundUser);
+        if(foundUser == undefined){
+            return false
+        }
 
         let checkPassword = await bcrypt.compareSync(loginDetails.password, foundUser.password)
 
-        console.log(checkPassword);
-
-        if (!checkPassword) {
+        if (!checkPassword || checkPassword === undefined) {
             
             return false
         }
