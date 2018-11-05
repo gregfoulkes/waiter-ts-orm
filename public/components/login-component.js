@@ -3,8 +3,8 @@ Vue.component('login', {
   data: function () {
     return {
       username: '',
-      loginError: false,
       password: '',
+      loginError: false,
       loginStatus: {}
     }
   },
@@ -14,8 +14,8 @@ Vue.component('login', {
     login: function () {
 
       let loginData = {
-        username:this.username,
-        password:this.password
+        username: this.username,
+        password: this.password
       }
 
       var self = this;
@@ -24,11 +24,11 @@ Vue.component('login', {
         .then(function (results) {
 
           let responseData = results.data;
-          console.log(responseData)
+          //console.log(responseData)
           if (responseData.status === 'success') {
 
             let userData = responseData.data;
-            console.log(userData)
+            //console.log(userData)
             if (!userData) {
 
               self.loginError = true
@@ -41,7 +41,6 @@ Vue.component('login', {
 
               self.$emit('loggedin', loginStatus);
 
-
             } else {
 
               //set the location hash to equal the username of the logged in user
@@ -51,23 +50,18 @@ Vue.component('login', {
 
               this.loginStatus = {
                 username: this.username,
+                firstname: userData.firstname,
                 loginState: true,
                 errorStatus: self.loginError
               }
 
-              self.$emit('loggedin', loginStatus);
+              console.log(this.loginStatus)
 
+              self.$emit('loggedin', loginStatus);
+              isWaiter = true
             }
 
-          } //else {
-          //self.loginError = false
-          // this.loginStatus = {
-          //   logginState: false,
-          //   errorStatus: self.loginError
-          // }
-
-          // self.$emit('loggedin', loginStatus);
-          //}
+          }
         });
     },
 

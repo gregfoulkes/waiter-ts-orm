@@ -8,13 +8,14 @@ Vue.component('login-error', {
 var app = new Vue({
   el: '#WaiterApp',
   data: {
-    // username: '',
-    // firstname: '',
+    username: '',
+    firstname: '',
     // lastname: '',
     // email: '',
     // position: '',
     // registerPassword: '',
-    loginError:false,
+    isWaiter: false,
+    loginError: false,
     loggedIn: false,
     registerUser: false,
     days: [],
@@ -31,18 +32,18 @@ var app = new Vue({
     setTimeout(() => this.loginError = false, 3000);
 
 
-    waiter.getAllDays().then(function (results) {
-      self.days = results.data.data;
-    });
+    // waiter.getAllDays().then(function (results) {
+    //   self.days = results.data.data;
+    // });
 
     self.setUsername(location.hash);
 
-    if (self.username != '') {
-      waiter.waiterNameApiGetRoute(self.username).then(function (results) {
-        let shiftData = results.data.shifts
-        self.selectedDays = shiftData.shifts;
-      })
-    }
+    // if (self.username != '') {
+    //   waiter.waiterNameApiGetRoute(self.username).then(function (results) {
+    //     let shiftData = results.data.shifts
+    //     self.selectedDays = shiftData.shifts;
+    //   })
+    // }
 
     window.addEventListener("hashchange", function () {
       self.setUsername(location.hash);
@@ -62,22 +63,22 @@ var app = new Vue({
   },
 
   methods: {
-    setShifts: function () {
-      let self = this;
-      let userShiftData = {
-        username: self.username,
-        days: self.selectedDays
-      };
+    // setShifts: function () {
+    //   let self = this;
+    //   let userShiftData = {
+    //     username: self.username,
+    //     days: self.selectedDays
+    //   };
 
-      return waiter.waiterNameApiPostRoute(userShiftData)
-        .then(function (results) {
-          waiter.waiterNameApiGetRoute(self.username)
-            .then(function (results) {
-              let shiftData = results.data.shifts
-              self.selectedDays = shiftData.shifts;
-            })
-        })
-    },
+    //   return waiter.waiterNameApiPostRoute(userShiftData)
+    //     .then(function (results) {
+    //       waiter.waiterNameApiGetRoute(self.username)
+    //         .then(function (results) {
+    //           let shiftData = results.data.shifts
+    //           self.selectedDays = shiftData.shifts;
+    //         })
+    //     })
+    // },
 
     setUsername: function (hash) {
       let parts = hash.split('#');
@@ -96,21 +97,30 @@ var app = new Vue({
     },
 
     isLoggedIn(loginData) {
-      console.log(loginData);
+    //  console.log(loginData);
       alert('Wow!');
-      console.log(loginData.errorStatus)
+     // console.log(loginData.errorStatus)
 
       if (loginData.loginState) {
-        this.loggedIn = true;
+        this.loggedIn = loginData.loginState;
+        this.firstname = loginData.firstname;
+        this.username = loginData.username;
+        console.log('-----------')
+        console.log(this.username)
+        console.log('-----------')
+
+        this.isWaiter =true
 
         //get user shifts if user exists
         return waiter.waiterNameApiGetRoute(loginData.username)
           .then(function (results) {
             let shiftData = results.data.shifts
+            console.log(shiftData)
             self.selectedDays = shiftData.shifts;
-          })
 
-       } if (loginData.errorStatus) {
+          })
+      }
+      if (loginData.errorStatus) {
 
         this.loggedIn = false
         this.loginError = true
@@ -118,16 +128,22 @@ var app = new Vue({
       }
     },
 
-    logout: function () {
-      this.loggedIn = false;
+    isWaiter: function () {
 
-      this.username = '';
-      this.firstname = '';
-      this.lastname = '';
-      this.email = '';
-      this.password = '';
-      this.selectedDays = [];
-      location.hash = "";
+    },
+
+    logoutUser:function() {
+      this.loggedIn = false;
+      this.isWaiter = false;
+       this.username = '';
+       this.firstname = '';
+       location.hash = this.username
+      // this.firstname = '';
+      // this.lastname = '';
+      // this.email = '';
+      // this.password = '';
+      // this.selectedDays = [];
+      // location.hash = "";
     }
   }
 })

@@ -46,11 +46,13 @@
 
 
     <!-- Login Modal -->
+    <login  v-on:register="showRegisterUser()"  v-on:loggedin="isLoggedIn" v-if='!loggedIn && !registerUser' ></login>
 
-    <login v-on:register="showRegisterUser()" v-on:loggedin="isLoggedIn" v-if='!loggedIn && !registerUser'   ></login>
     <registration  v-if='registerUser'></registration>
     
-    <!-- <shift-days v-if='isWaiter' waiterName="firstName" ></shift-days> -->
+    <!-- <shifts v-if='isWaiter' waiterName="firstName" ></shifts> -->
+    <shifts v-if='isWaiter' v-bind:waitername="username" v-on:loggedout="logoutUser()" ></shifts>
+
     <!-- <admin-view v-if="isUser('Admin')"" username="firstName" ></admin-view> -->
     
 
@@ -64,6 +66,8 @@
   <script src="js/waiter-axios.js"></script>
   <script src="components/login-component.js"></script>
   <script src="components/registration-component.js"></script>
+  <script src="components/shift-days-component.js"></script>
+
   <script src="js/waiter-dom.js"></script>
 
   <script>

@@ -1,15 +1,64 @@
-Vue.component('shift-days', {
+Vue.component('shifts', {
+  props: ['waitername'],
+  data: function () {
 
-    data: function() {
+    return {
+      days: [],
+      selectedDays: []
+    }
+  },
 
-        return{
-            days: [],
-        selectedDays: []
-        }
+  computed: {
+    // ?  
+  },
+
+  mounted: function () {
+    // self = this;
+    console.log(this.waitername)
+    this.showDays();
+    this.showUserShifts(this.waitername)
+  },
+
+  methods: {
+
+    showDays: function () {
+      waiter.getAllDays().then(function (results) {
+        self.days = results.data.data;
+        console.log(self.days)
+      });
+    },
+
+    showUserShifts: function (username) {
+      waiter.waiterNameApiGetRoute(username).then(function (results) {
+        let shiftData = results.data.shifts
+        console.log(shiftData)
+
+        self.selectedDays = shiftData.shifts;
+      });
+    },
+
+    setShifts: function () {
 
     },
 
-    template: `
+    logout: function () {
+
+      this.$emit('loggedout')
+      //this.loggedIn = false;
+
+      // this.username = '';
+      // this.firstname = '';
+      // this.lastname = '';
+      // this.email = '';
+      // this.password = '';
+      // this.selectedDays = [];
+      // location.hash = "";
+    }
+
+  },
+
+  template: `
+    <div>
 
     <div class="ui one column grid">
 
@@ -50,6 +99,10 @@ Vue.component('shift-days', {
       </div>
 
     </div>
+
+
+    </div>
+    
     
     `
 
