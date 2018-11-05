@@ -19,7 +19,7 @@ Vue.component('login', {
       }
 
       var self = this;
-      console.log(loginData)
+      //console.log(loginData)
       return waiter.waiterNameLoginApiRoute(loginData)
         .then(function (results) {
 
@@ -55,10 +55,10 @@ Vue.component('login', {
                 errorStatus: self.loginError
               }
 
-              console.log(this.loginStatus)
+              //console.log(this.loginStatus)
 
               self.$emit('loggedin', loginStatus);
-              isWaiter = true
+              //this.isWaiter = true
             }
 
           }

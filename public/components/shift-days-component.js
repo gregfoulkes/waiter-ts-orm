@@ -14,7 +14,10 @@ Vue.component('shifts', {
 
   mounted: function () {
     // self = this;
+    console.log('---waitername---')
     console.log(this.waitername)
+    console.log('----------------')
+
     this.showDays();
     this.showUserShifts(this.waitername)
   },
@@ -22,37 +25,56 @@ Vue.component('shifts', {
   methods: {
 
     showDays: function () {
-      waiter.getAllDays().then(function (results) {
-        self.days = results.data.data;
-        console.log(self.days)
+      // let self = this;
+      waiter.getAllDays()
+      .then( (results) => {
+        this.days = results.data.data;
+        console.log('----Days-----')
+        console.log(this.days)
+        console.log('---------')
+
       });
     },
 
     showUserShifts: function (username) {
-      waiter.waiterNameApiGetRoute(username).then(function (results) {
+
+     return waiter.waiterNameApiGetRoute(username).then(function (results) {
         let shiftData = results.data.shifts
+
+        console.log('---ShiftData---')
         console.log(shiftData)
+        console.log('---------------')
 
         self.selectedDays = shiftData.shifts;
+
+        console.log('---Selected Days----')
+        console.log(self.selectedDays)
+        console.log('--------------------')
+
       });
     },
 
     setShifts: function () {
+      let self = this;
+      let userShiftData = {
+        username: self.username,
+        days: self.selectedDays
+      };
 
+      return waiter.waiterNameApiPostRoute(userShiftData)
+        .then(function (results) {
+          waiter.waiterNameApiGetRoute(self.username)
+            .then(function (results) {
+              let shiftData = results.data.shifts
+              self.selectedDays = shiftData.shifts;
+            })
+        })
     },
 
     logout: function () {
 
       this.$emit('loggedout')
-      //this.loggedIn = false;
 
-      // this.username = '';
-      // this.firstname = '';
-      // this.lastname = '';
-      // this.email = '';
-      // this.password = '';
-      // this.selectedDays = [];
-      // location.hash = "";
     }
 
   },
@@ -77,7 +99,6 @@ Vue.component('shifts', {
     <div class='ui container'>
 
       <div class='ui center aligned stackable eight column  grid'>
-        <!-- </div> -->
 
         <div v-for="day in days" :key="days.id" class='column'>
           <label style='width:80px;' class=" addMargins ui label">{{day.dayname}}</label>
@@ -102,8 +123,6 @@ Vue.component('shifts', {
 
 
     </div>
-    
-    
     `
 
 })

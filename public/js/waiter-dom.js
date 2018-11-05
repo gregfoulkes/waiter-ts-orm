@@ -18,8 +18,8 @@ var app = new Vue({
     loginError: false,
     loggedIn: false,
     registerUser: false,
-    days: [],
-    selectedDays: []
+    // days: [],
+    // selectedDays: []
   },
 
   mounted: function () {
@@ -105,20 +105,21 @@ var app = new Vue({
         this.loggedIn = loginData.loginState;
         this.firstname = loginData.firstname;
         this.username = loginData.username;
-        console.log('-----------')
+
+        console.log('-----Username------')
         console.log(this.username)
         console.log('-----------')
 
-        this.isWaiter =true
+        this.isWaiter = true
 
         //get user shifts if user exists
-        return waiter.waiterNameApiGetRoute(loginData.username)
-          .then(function (results) {
-            let shiftData = results.data.shifts
-            console.log(shiftData)
-            self.selectedDays = shiftData.shifts;
+        // return waiter.waiterNameApiGetRoute(loginData.username)
+        //   .then(function (results) {
+        //     let shiftData = results.data.shifts
+        //     console.log(shiftData)
+        //     self.selectedDays = shiftData.shifts;
 
-          })
+        //   })
       }
       if (loginData.errorStatus) {
 
@@ -128,9 +129,9 @@ var app = new Vue({
       }
     },
 
-    isWaiter: function () {
+    // isWaiter: function () {
 
-    },
+    // },
 
     logoutUser:function() {
       this.loggedIn = false;

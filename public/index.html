@@ -51,7 +51,7 @@
     <registration  v-if='registerUser'></registration>
     
     <!-- <shifts v-if='isWaiter' waiterName="firstName" ></shifts> -->
-    <shifts v-if='isWaiter' v-bind:waitername="username" v-on:loggedout="logoutUser()" ></shifts>
+    <shifts v-if='isWaiter && loggedIn' v-bind:waitername="username" v-on:loggedout="logoutUser()" ></shifts>
 
     <!-- <admin-view v-if="isUser('Admin')"" username="firstName" ></admin-view> -->
     
