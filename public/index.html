@@ -47,19 +47,10 @@
 
     <!-- Login Modal -->
     <login  v-on:register="showRegisterUser()"  v-on:loggedin="isLoggedIn" v-if='!loggedIn && !registerUser' ></login>
-
     <registration  v-if='registerUser'></registration>
-    
-    <!-- <shifts v-if='isWaiter' waiterName="firstName" ></shifts> -->
     <shifts v-if='isWaiter && loggedIn' v-bind:waitername="username" v-on:loggedout="logoutUser()" ></shifts>
 
     <!-- <admin-view v-if="isUser('Admin')"" username="firstName" ></admin-view> -->
-    
-
-    <!-- Select Days Screen -->
-
-    <!-- User registration input -->
-
      
     </div>
 

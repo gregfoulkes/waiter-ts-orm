@@ -13,13 +13,11 @@ Vue.component('shifts', {
   },
 
   mounted: function () {
-    // self = this;
-    console.log('---waitername---')
-    console.log(this.waitername)
-    console.log('----------------')
+     self = this;
+
 
     this.showDays();
-    this.showUserShifts(this.waitername)
+    this.showUserShifts(self.waitername)
   },
 
   methods: {
@@ -37,7 +35,8 @@ Vue.component('shifts', {
     },
 
     showUserShifts: function (username) {
-
+      console.log('---username---')
+      console.log(username)
      return waiter.waiterNameApiGetRoute(username).then(function (results) {
         let shiftData = results.data.shifts
 
@@ -57,13 +56,15 @@ Vue.component('shifts', {
     setShifts: function () {
       let self = this;
       let userShiftData = {
-        username: self.username,
+        username: self.waitername,
         days: self.selectedDays
       };
 
+      console.log(userShiftData)
+
       return waiter.waiterNameApiPostRoute(userShiftData)
         .then(function (results) {
-          waiter.waiterNameApiGetRoute(self.username)
+          waiter.waiterNameApiGetRoute(self.waitername)
             .then(function (results) {
               let shiftData = results.data.shifts
               self.selectedDays = shiftData.shifts;

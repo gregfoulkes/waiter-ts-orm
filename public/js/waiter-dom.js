@@ -63,22 +63,6 @@ var app = new Vue({
   },
 
   methods: {
-    // setShifts: function () {
-    //   let self = this;
-    //   let userShiftData = {
-    //     username: self.username,
-    //     days: self.selectedDays
-    //   };
-
-    //   return waiter.waiterNameApiPostRoute(userShiftData)
-    //     .then(function (results) {
-    //       waiter.waiterNameApiGetRoute(self.username)
-    //         .then(function (results) {
-    //           let shiftData = results.data.shifts
-    //           self.selectedDays = shiftData.shifts;
-    //         })
-    //     })
-    // },
 
     setUsername: function (hash) {
       let parts = hash.split('#');
@@ -97,9 +81,7 @@ var app = new Vue({
     },
 
     isLoggedIn(loginData) {
-    //  console.log(loginData);
-      alert('Wow!');
-     // console.log(loginData.errorStatus)
+      // alert('Wow!');
 
       if (loginData.loginState) {
         this.loggedIn = loginData.loginState;
