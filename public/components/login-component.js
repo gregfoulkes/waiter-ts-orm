@@ -124,6 +124,13 @@ Vue.component('login', {
 
         </div>
 
+        <div class='column'>
+          
+
+        <button class="ui inverted black button" v-on:click="$emit('admin')" >Admin</button>
+
+      </div>
+
       </div>
 
     </div>

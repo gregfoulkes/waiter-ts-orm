@@ -18,24 +18,30 @@
   <!-- Reference Vue.js -->
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
   <style>
-
     .modal {
-    display: block; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
-    left: 0;
-    top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0, 0, 0, 0.856); /* Black w/ opacity */
-  }
+      display: block;
+      /* Hidden by default */
+      position: fixed;
+      /* Stay in place */
+      z-index: 1;
+      /* Sit on top */
+      left: 0;
+      top: 0;
+      width: 100%;
+      /* Full width */
+      height: 100%;
+      /* Full height */
+      overflow: auto;
+      /* Enable scroll if needed */
+      background-color: rgb(0, 0, 0);
+      /* Fallback color */
+      background-color: rgba(0, 0, 0, 0.856);
+      /* Black w/ opacity */
+    }
 
-  .addMargins{
-    margin:10px;
-  }
-  
+    .addMargins {
+      margin: 10px;
+    }
   </style>
 
 </head>
@@ -46,18 +52,22 @@
 
 
     <!-- Login Modal -->
-    <login  v-on:register="showRegisterUser()"  v-on:loggedin="isLoggedIn" v-if='!loggedIn && !registerUser' ></login>
-    <registration  v-if='registerUser'></registration>
-    <shifts v-if='isWaiter && loggedIn' v-bind:waitername="username" v-on:loggedout="logoutUser()" ></shifts>
+    <admin v-if="isAdmin"></admin>
 
-    <!-- <admin-view v-if="isUser('Admin')"" username="firstName" ></admin-view> -->
-     
-    </div>
+    <login v-on:admin="showAdmin()" v-on:register="showRegisterUser()" v-on:loggedin="isLoggedIn" v-if='!loggedIn && !registerUser && !isAdmin'></login>
+
+    <registration v-if='registerUser'></registration>
+    <shifts v-if='isWaiter && loggedIn' v-bind:waitername="username" v-on:loggedout="logoutUser()"></shifts>
+
+
+  </div>
 
   <script src="js/waiter-axios.js"></script>
   <script src="components/login-component.js"></script>
   <script src="components/registration-component.js"></script>
   <script src="components/shift-days-component.js"></script>
+  <script src="components/admin-component.js"></script>
+
 
   <script src="js/waiter-dom.js"></script>
 
@@ -67,5 +77,8 @@
   </script>
 
 </body>
+
+
+
 
 </html>

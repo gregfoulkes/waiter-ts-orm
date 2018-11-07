@@ -13,7 +13,7 @@ Vue.component('shifts', {
   },
 
   mounted: function () {
-     self = this;
+    self = this;
 
 
     this.showDays();
@@ -25,19 +25,19 @@ Vue.component('shifts', {
     showDays: function () {
       // let self = this;
       waiter.getAllDays()
-      .then( (results) => {
-        this.days = results.data.data;
-        console.log('----Days-----')
-        console.log(this.days)
-        console.log('---------')
+        .then((results) => {
+          this.days = results.data.data;
+          console.log('----Days-----')
+          console.log(this.days)
+          console.log('---------')
 
-      });
+        });
     },
 
     showUserShifts: function (username) {
       console.log('---username---')
       console.log(username)
-     return waiter.waiterNameApiGetRoute(username).then(function (results) {
+      return waiter.waiterNameApiGetRoute(username).then(function (results) {
         let shiftData = results.data.shifts
 
         console.log('---ShiftData---')

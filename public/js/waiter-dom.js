@@ -14,6 +14,7 @@ var app = new Vue({
     // email: '',
     // position: '',
     // registerPassword: '',
+    isAdmin: false,
     isWaiter: false,
     loginError: false,
     loggedIn: false,
@@ -78,6 +79,14 @@ var app = new Vue({
 
     showRegisterUser() {
       this.registerUser = true;
+    },
+
+    showAdmin() {
+      let self = this;
+      self.isAdmin = true;
+
+      console.log(self.isAdmin)
+
     },
 
     isLoggedIn(loginData) {
