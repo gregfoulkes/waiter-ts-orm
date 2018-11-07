@@ -26,23 +26,29 @@ Vue.component('admin', {
 
     template: `
 
-    <div class = 'ui seven centered column grid' >
+    <div class = 'ui eight column centered grid' >
+
+        <div class='sixteen wide column'>
+            <h1 style='width:100%; margin-top:10px' class="ui  black inverted header">
+            Login
+            </h1>
+        </div>
 
         <div v-for="shift in shifts"> 
 
-            <div class = 'column'>{{shift.day}} </div>
+            <div class = 'two wide column'>{{shift.day}} </div>
 
                 <div v-for="waiter in shift.waiters" > 
 
-                <div class = 'column'>{{waiter}} </div>
+                <div class = 'two wide column'>{{waiter}} </div>
 
                 </div>
 
             </div>
    
-        < /div>
 
     </div>
+
    
     `
 })
